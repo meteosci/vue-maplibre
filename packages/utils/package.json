@@ -1,0 +1,22 @@
+{
+  "name": "@vue-maplibre/utils",
+  "version": "0.0.1",
+  "description": "vue-maplibre utils",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meteosci/vue-maplibre/issues"
+  },
+  "homepage": "https://meteosci.com/vue-maplibre",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/meteosci/vue-maplibre.git"
+  },
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "unpkg": "index.js",
+  "jsdelivr": "index.js",
+  "peerDependencies": {
+    "vue": "^3.2.0"
+  }
+}

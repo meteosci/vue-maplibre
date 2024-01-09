@@ -1,0 +1,6 @@
+dist
+node_modules
+packages/*/es
+packages/*/lib
+coverage
+packages/theme-default/src/fonts

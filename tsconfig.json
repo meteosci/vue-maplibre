@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "strict": true,
+    "module": "esnext",
+    "target": "es2018",
+    "baseUrl": ".",
+    "noImplicitAny": false,
+    "declaration": true,
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "lib": ["ES2018", "DOM", "DOM.Iterable"],
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": false,
+    "resolveJsonModule": true,
+    "strictNullChecks": false,
+    "removeComments": false,
+    "rootDir": ".",
+    "types": ["node"]
+  },
+  "include": ["packages", "typings"],
+  "exclude": ["node_modules", "**/dist"]
+}

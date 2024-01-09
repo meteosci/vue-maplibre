@@ -1,0 +1,93 @@
+{
+  "name": "vue-maplibre",
+  "version": "0.0.1",
+  "description": "A Vue 3 Component Library for maplibre-gl",
+  "homepage": "https://meteosci.com/vue-maplibre",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/meteosci/vue-maplibre.git"
+  },
+  "bugs": {
+    "url": "https://github.com/meteosci/vue-maplibre/issues"
+  },
+  "keywords": [
+    "vue-maplibre",
+    "map",
+    "maplibre-gl",
+    "webgl",
+    "gis",
+    "vue",
+    "webgis"
+  ],
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "require": "./lib/index.js",
+      "import": "./es/index.mjs"
+    },
+    "./es": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs"
+    },
+    "./lib": {
+      "types": "./lib/index.d.ts",
+      "require": "./lib/index.js"
+    },
+    "./es/*.mjs": {
+      "types": "./es/*.d.ts",
+      "import": "./es/*.mjs"
+    },
+    "./es/*": {
+      "types": [
+        "./es/*.d.ts",
+        "./es/*/index.d.ts"
+      ],
+      "import": "./es/*.mjs"
+    },
+    "./lib/*.js": {
+      "types": "./lib/*.d.ts",
+      "require": "./lib/*.js"
+    },
+    "./lib/*": {
+      "types": [
+        "./lib/*.d.ts",
+        "./lib/*/index.d.ts"
+      ],
+      "require": "./lib/*.js"
+    },
+    "./*": "./*"
+  },
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "style": "dist/index.css",
+  "unpkg": "dist/index.full.js",
+  "jsdelivr": "dist/index.full.js",
+  "sideEffects": [
+    "dist/*",
+    "theme-default/*.css",
+    "theme-default/src/*.scss",
+    "es/components/*/style/*",
+    "lib/components/*/style/*"
+  ],
+  "peerDependencies": {
+    "vue": "^3.2.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
+    "lodash-unified": "^1.0.3",
+    "maplibre-gl": "^3.6.1",
+    "mitt": "^3.0.1"
+  },
+  "vetur": {
+    "tags": "tags.json",
+    "attributes": "attributes.json"
+  },
+  "web-types": "web-types.json",
+  "browserslist": [
+    "> 1%",
+    "not ie 11",
+    "not op_mini all"
+  ]
+}
