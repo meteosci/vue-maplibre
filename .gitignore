@@ -1,0 +1,20 @@
+# Editor directories and files
+.idea
+.vscode
+
+# Package Manager
+node_modules
+.pnpm-debug.log*
+
+# System
+.DS_Store
+
+# Bundle
+dist
+coverage
+packages/vue-cesium/version.ts
+website-dist
+es
+lib
+
+.eslintcache
