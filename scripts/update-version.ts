@@ -1,13 +1,13 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 16:56:11
- * @LastEditTime: 2021-12-05 09:48:10
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-02-05 17:40:20
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\scripts\update-version.ts
+ * @FilePath: \vue-maplibre\scripts\update-version.ts
  */
 import fs from 'fs'
-import { vcPackage } from '../build/utils/paths'
+import { vmPackage } from '../build/utils/paths'
 import { cyan, red, yellow, green } from '../build/utils/log'
 import { getPackageManifest } from '../build/utils/pkg'
 
@@ -22,16 +22,16 @@ cyan('Start updating version')
 
 cyan(['NOTICE:', `$TAG_VERSION: ${tagVersion}`, `$GIT_HEAD: ${gitHead}`].join('\n'))
 ;(async () => {
-  yellow(`Updating package.json for vue-cesium`)
+  yellow(`Updating package.json for vue-maplibre`)
 
-  const json: Record<string, any> = getPackageManifest(vcPackage)
+  const json: Record<string, any> = getPackageManifest(vmPackage)
 
   json.version = tagVersion
   json.gitHead = gitHead
 
   if (!(process.argv.includes('-d') || process.argv.includes('--dry-run'))) {
     try {
-      await fs.promises.writeFile(vcPackage, JSON.stringify(json, null, 2), {
+      await fs.promises.writeFile(vmPackage, JSON.stringify(json, null, 2), {
         encoding: 'utf-8'
       })
     } catch (e) {

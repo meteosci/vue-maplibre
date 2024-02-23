@@ -1,14 +1,14 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2022-01-17 23:27:09
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-02-05 16:49:31
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\build\build-info.ts
+ * @FilePath: \vue-maplibre\build\build-info.ts
  */
 import path from 'path'
-import { vcOutput } from './utils/paths'
-import { VC_PKG } from './utils/constants'
+import { vmOutput } from './utils/paths'
+import { VM_PKG } from './utils/constants'
 import type { ModuleFormat } from 'rollup'
 
 export const modules = ['esm', 'cjs'] as const
@@ -37,10 +37,10 @@ export const buildConfig: Record<Module, BuildInfo> = {
     ext: 'mjs',
     output: {
       name: 'es',
-      path: path.resolve(vcOutput, 'es')
+      path: path.resolve(vmOutput, 'es')
     },
     bundle: {
-      path: `${VC_PKG}/es`
+      path: `${VM_PKG}/es`
     }
   },
   cjs: {
@@ -49,10 +49,10 @@ export const buildConfig: Record<Module, BuildInfo> = {
     ext: 'js',
     output: {
       name: 'lib',
-      path: path.resolve(vcOutput, 'lib')
+      path: path.resolve(vmOutput, 'lib')
     },
     bundle: {
-      path: `${VC_PKG}/lib`
+      path: `${VM_PKG}/lib`
     }
   }
 }

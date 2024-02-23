@@ -6,7 +6,7 @@ import glob from 'fast-glob'
 import { bold } from 'chalk'
 
 import { green, red, yellow } from './utils/log'
-import { buildOutput, vcRoot, pkgRoot, projRoot } from './utils/paths'
+import { buildOutput, vmRoot, pkgRoot, projRoot } from './utils/paths'
 
 import { excludeFiles, pathRewriter } from './utils/pkg'
 import type { SourceFile } from 'ts-morph'
@@ -26,7 +26,7 @@ export const generateTypesDefinitions = async () => {
       outDir,
       baseUrl: projRoot,
       paths: {
-        '@vue-cesium/*': ['packages/*']
+        '@vue-maplibre/*': ['packages/*']
       },
       skipLibCheck: true
       // strict: false
@@ -35,10 +35,10 @@ export const generateTypesDefinitions = async () => {
     skipAddingFilesFromTsConfig: true
   })
 
-  project.addSourceFilesAtPaths(['../typings/Cesium.d.ts', '../typings/cesium-shim.d.ts', '../typings/vue-shim.d.ts'])
+  project.addSourceFilesAtPaths(['../typings/vue-shim.d.ts'])
 
   const filePaths = excludeFiles(
-    await glob(['**/*.{js,ts,vue}', '!vue-cesium/**/*'], {
+    await glob(['**/*.{js,ts,vue}', '!vue-maplibre/**/*'], {
       cwd: pkgRoot,
       absolute: true,
       onlyFiles: true
@@ -46,7 +46,7 @@ export const generateTypesDefinitions = async () => {
   )
   const vcPaths = excludeFiles(
     await glob('**/*.{js,ts,vue}', {
-      cwd: vcRoot,
+      cwd: vmRoot,
       onlyFiles: true
     })
   )
@@ -81,7 +81,7 @@ export const generateTypesDefinitions = async () => {
       }
     }),
     ...vcPaths.map(async file => {
-      const content = await fs.readFile(path.resolve(vcRoot, file), 'utf-8')
+      const content = await fs.readFile(path.resolve(vmRoot, file), 'utf-8')
       sourceFiles.push(project.createSourceFile(path.resolve(pkgRoot, file), content))
     })
   ])

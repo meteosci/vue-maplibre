@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:23:35
- * @LastEditTime: 2024-01-09 23:31:17
+ * @LastEditTime: 2024-02-02 17:51:58
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\scripts\gen-version.ts

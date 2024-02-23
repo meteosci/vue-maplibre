@@ -1,14 +1,14 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2021-12-05 13:44:33
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-02-05 16:57:40
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\build\helper.ts
+ * @FilePath: \vue-maplibre\build\helper.ts
  */
 import path from 'path'
 import helper from 'components-helper'
-import { vcPackage, vcOutput, projRoot } from './utils/paths'
+import { vmPackage, vmOutput, projRoot } from './utils/paths'
 import { getPackageManifest } from './utils/pkg'
 import type { TaskFunction } from 'gulp'
 import type { InstallOptions } from 'components-helper/lib/type'
@@ -72,7 +72,7 @@ const reAttribute: InstallOptions['reAttribute'] = (value, key, item) => {
 }
 
 export const buildHelper: TaskFunction = done => {
-  const { name, version } = getPackageManifest(vcPackage)
+  const { name, version } = getPackageManifest(vmPackage)
 
   const tagVer = process.env.TAG_VERSION
   const _version = tagVer ? (tagVer.startsWith('v') ? tagVer.slice(1) : tagVer) : version!
@@ -82,8 +82,8 @@ export const buildHelper: TaskFunction = done => {
     version: _version,
     // entry: `${path.resolve(projRoot, 'website/docs/en-US/**')}/!(base|donations|i18n|installation|migration-from-2.x|quickstart|platforms).md`,
     entry: '../website/docs/en-US/**/!(base|donations|i18n|installation|migration-from-2.x|quickstart|platforms).md',
-    // outDir: vcOutput,
-    outDir: '../dist/vue-cesium',
+    // outDir: vmOutput,
+    outDir: '../dist/vue-maplibre',
     reComponentName,
     reDocUrl,
     reWebTypesSource,

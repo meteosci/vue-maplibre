@@ -1,10 +1,10 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2022-01-18 10:46:37
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-02-05 16:51:27
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\build\full-bundle.ts
+ * @FilePath: \vue-maplibre\build\full-bundle.ts
  */
 import path from 'path'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
@@ -17,22 +17,22 @@ import filesize from 'rollup-plugin-filesize'
 import { parallel } from 'gulp'
 import glob from 'fast-glob'
 import { camelCase, capitalize } from 'lodash'
-import { version } from '../packages/vue-cesium/version'
+import { version } from '../packages/vue-maplibre/version'
 import { reporter } from './plugins/size-reporter'
-import { VueCesiumAlias } from './plugins/vue-cesium-alias'
-import { vcRoot, vcOutput, localeRoot } from './utils/paths'
+import { alias } from './plugins/alias'
+import { vmRoot, vmOutput, localeRoot } from './utils/paths'
 import { formatBundleFilename, generateExternal, writeBundles } from './utils/rollup'
 import { withTaskName } from './utils/gulp'
-import { VC_BRAND_NAME } from './utils/constants'
+import { VM_BRAND_NAME } from './utils/constants'
 import { target } from './build-info'
 
-const banner = `/*! ${VC_BRAND_NAME} v${version} */\n`
+const banner = `/*! ${VM_BRAND_NAME} v${version} */\n`
 
 async function buildFullEntry(minify: boolean) {
   const bundle = await rollup({
-    input: path.resolve(vcRoot, 'index.ts'),
+    input: path.resolve(vmRoot, 'index.ts'),
     plugins: [
-      VueCesiumAlias(),
+      alias(),
       nodeResolve({
         extensions: ['.mjs', '.js', '.json', '.ts']
       }),
@@ -59,7 +59,7 @@ async function buildFullEntry(minify: boolean) {
   await writeBundles(bundle, [
     {
       format: 'umd',
-      file: path.resolve(vcOutput, 'dist', formatBundleFilename('index.full', minify, 'js')),
+      file: path.resolve(vmOutput, 'dist', formatBundleFilename('index.full', minify, 'js')),
       exports: 'named',
       name: 'VueCesium',
       globals: {
@@ -71,7 +71,7 @@ async function buildFullEntry(minify: boolean) {
     },
     {
       format: 'esm',
-      file: path.resolve(vcOutput, 'dist', formatBundleFilename('index.full', minify, 'mjs')),
+      file: path.resolve(vmOutput, 'dist', formatBundleFilename('index.full', minify, 'mjs')),
       sourcemap: minify,
       banner
     }
@@ -101,7 +101,7 @@ async function buildFullLocale(minify: boolean) {
       await writeBundles(bundle, [
         {
           format: 'umd',
-          file: path.resolve(vcOutput, 'dist/locale', formatBundleFilename(filename, minify, 'js')),
+          file: path.resolve(vmOutput, 'dist/locale', formatBundleFilename(filename, minify, 'js')),
           exports: 'named',
           name: `VueCesiumLocale${name}`,
           sourcemap: minify,
@@ -109,7 +109,7 @@ async function buildFullLocale(minify: boolean) {
         },
         {
           format: 'esm',
-          file: path.resolve(vcOutput, 'dist/locale', formatBundleFilename(filename, minify, 'mjs')),
+          file: path.resolve(vmOutput, 'dist/locale', formatBundleFilename(filename, minify, 'mjs')),
           sourcemap: minify,
           banner
         }

@@ -1,11 +1,11 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2022-11-10 00:51:16
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-02-05 16:41:54
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\build\utils\constants.ts
+ * @FilePath: \vue-maplibre\build\utils\constants.ts
  */
-export const VC_PREFIX = '@vue-cesium'
-export const VC_PKG = 'vue-cesium'
-export const VC_BRAND_NAME = 'VueCesium'
+export const VM_PREFIX = '@vue-maplibre'
+export const VM_PKG = 'vue-maplibre'
+export const VM_BRAND_NAME = 'VueMaplibre'

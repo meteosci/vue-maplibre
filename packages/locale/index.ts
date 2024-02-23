@@ -1,10 +1,10 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-10-27 15:54:11
- * @LastEditTime: 2022-02-10 10:52:35
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-02-02 15:12:14
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\packages\locale\index.ts
+ * @FilePath: \vue-maplibre\packages\locale\index.ts
  */
 import defaultLang from './lang/zh-hans'
 
@@ -15,7 +15,7 @@ export type TranslatePair = {
 export type Language = {
   name: string
   nativeName: string
-  vc: TranslatePair
+  vm: TranslatePair
 }
 
 let lang: Language = defaultLang as Language

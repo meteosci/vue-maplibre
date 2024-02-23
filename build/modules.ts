@@ -1,10 +1,10 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2022-01-18 14:59:16
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-02-05 17:03:52
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\build\modules.ts
+ * @FilePath: \vue-maplibre\build\modules.ts
  */
 import { rollup } from 'rollup'
 import vue from 'rollup-plugin-vue'
@@ -14,8 +14,8 @@ import commonjs from '@rollup/plugin-commonjs'
 import esbuild from 'rollup-plugin-esbuild'
 import filesize from 'rollup-plugin-filesize'
 import glob from 'fast-glob'
-import { vcRoot, pkgRoot } from './utils/paths'
-import { VueCesiumAlias } from './plugins/vue-cesium-alias'
+import { vmRoot, pkgRoot } from './utils/paths'
+import { alias } from './plugins/alias'
 import { generateExternal, writeBundles } from './utils/rollup'
 import { excludeFiles } from './utils/pkg'
 import { reporter } from './plugins/size-reporter'
@@ -33,7 +33,7 @@ export const buildModules = async () => {
   const bundle = await rollup({
     input,
     plugins: [
-      VueCesiumAlias(),
+      alias(),
       css(),
       vue({ target: 'browser' }),
       nodeResolve({
@@ -57,7 +57,7 @@ export const buildModules = async () => {
         dir: config.output.path,
         exports: module === 'cjs' ? 'named' : undefined,
         preserveModules: true,
-        preserveModulesRoot: vcRoot,
+        preserveModulesRoot: vmRoot,
         sourcemap: true,
         entryFileNames: `[name].${config.ext}`
       }

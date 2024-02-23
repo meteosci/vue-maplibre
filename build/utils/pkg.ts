@@ -1,14 +1,14 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2023-04-06 23:56:56
+ * @LastEditTime: 2024-02-05 16:46:26
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium\build\utils\pkg.ts
+ * @FilePath: \vue-maplibre\build\utils\pkg.ts
  */
 import findWorkspacePackages from '@pnpm/find-workspace-packages'
 import { buildConfig } from '../build-info'
-import { VC_PREFIX } from './constants'
+import { VM_PREFIX } from './constants'
 import { projRoot } from './paths'
 import type { Module } from '../build-info'
 import type { ProjectManifest } from '@pnpm/types'
@@ -43,8 +43,8 @@ export const pathRewriter = (module: Module) => {
   const config = buildConfig[module]
 
   return (id: string) => {
-    id = id.replaceAll(`${VC_PREFIX}/theme-default`, 'vue-cesium/theme-default')
-    id = id.replaceAll(`${VC_PREFIX}/`, `${config.bundle.path}/`)
+    id = id.replaceAll(`${VM_PREFIX}/theme-default`, 'vue-maplibre/theme-default')
+    id = id.replaceAll(`${VM_PREFIX}/`, `${config.bundle.path}/`)
     return id
   }
 }

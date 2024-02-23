@@ -1,22 +1,22 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2023-04-08 09:19:30
+ * @LastEditTime: 2024-02-05 16:47:20
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium\build\utils\rollup.ts
+ * @FilePath: \vue-maplibre\build\utils\rollup.ts
  */
-import { vcPackage } from './paths'
+import { vmPackage } from './paths'
 import { getPackageDependencies } from './pkg'
 
 import type { OutputOptions, RollupBuild } from 'rollup'
 
 export const generateExternal = async (options: { full: boolean }) => {
-  const { dependencies, peerDependencies } = getPackageDependencies(vcPackage)
+  const { dependencies, peerDependencies } = getPackageDependencies(vmPackage)
   return (id: string) => {
-    const packages: string[] = ['vue', 'echarts', ...peerDependencies]
+    const packages: string[] = ['vue', ...peerDependencies]
     if (!options.full) {
-      packages.push('vue-cesium/theme-default')
+      packages.push('vue-maplibre/theme-default')
       // dependencies
       packages.push('@vue', ...dependencies)
     }
