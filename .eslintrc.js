@@ -1,10 +1,10 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-09-16 09:28:13
- * @LastEditTime: 2022-02-06 02:07:48
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-04-15 18:01:26
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\.eslintrc.js
+ * @FilePath: \vue-maplibre\.eslintrc.js
  */
 module.exports = {
   parser: 'vue-eslint-parser',
@@ -71,24 +71,10 @@ module.exports = {
     // vue
     'vue/no-v-html': 'off',
     'vue/singleline-html-element-content-newline': 'off',
-    'vue/html-self-closing': [
-      'error',
-      {
-        html: {
-          void: 'never',
-          normal: 'never',
-          component: 'always'
-        }
-      }
-    ],
-    'vue/max-attributes-per-line': [
-      'error',
-      {
-        singleline: 4,
-        multiline: 1
-      }
-    ],
+    'vue/html-self-closing': 'off',
+    'vue/max-attributes-per-line': 'off',
     'vue/require-default-prop': 'off',
-    'vue/html-closing-bracket-spacing': 'error'
+    'vue/html-closing-bracket-spacing': 'error',
+    'vue/multi-word-component-names': 'off'
   }
 }

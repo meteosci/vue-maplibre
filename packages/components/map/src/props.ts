@@ -31,7 +31,7 @@ export default {
   },
   customAttribution: {
     type: [String, Array] as PropType<string | string[]>,
-    default: true
+    default: 'MapLibre'
   },
   maplibreLogo: {
     type: Boolean,
@@ -110,7 +110,6 @@ export default {
   },
   cooperativeGestures: {
     type: [Boolean, Object] as PropType<boolean | GestureOptions>,
-    default: true
   },
   trackResize: {
     type: Boolean,
@@ -198,17 +197,6 @@ export default {
     default: [4096, 4096]
   },
   containerId: String,
-  // skeleton: {
-  //   type: [Boolean, Object] as PropType<boolean | VcSkeletonProps>,
-  //   default: () =>
-  //     ({
-  //       dark: false,
-  //       animation: 'wave',
-  //       square: true,
-  //       bordered: true,
-  //       color: undefined
-  //     } as VcSkeletonProps)
-  // },
   touchHoldArg: {
     type: String,
     default: '1000'

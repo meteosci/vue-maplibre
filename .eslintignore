@@ -8,3 +8,4 @@ packages/*/lib
 coverage
 packages/theme-default/src/fonts
 pnpm-lock.yaml
+public

@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "noImplicitAny": false,
     "declaration": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "esModuleInterop": true,
     "jsx": "preserve",
     "sourceMap": true,

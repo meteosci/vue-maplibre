@@ -3,13 +3,11 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-02-20 14:48:15
+ * @LastEditTime: 2024-04-15 15:57:12
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import { mergeDescriptors } from '@vue-maplibre/utils'
 import {
-  Prop,
-  PropType,
   VNode,
   computed,
   createCommentVNode,
@@ -45,13 +43,16 @@ export default defineComponent({
     touchEnd: evt => true
   },
   setup(props, { emit, attrs, slots, expose }) {
-    const instance = getCurrentInstance() as VmComponentInternalInstance
+    const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     instance.maplibreEvents = [...mapEvents]
 
     const isReady = ref(false)
     const mapRef = ref<HTMLElement>()
 
     const logger = useLog(instance)
+    const vmMitt: Emitter<VmMittEvents> = mitt()
+    instance.children = []
+
     const globalConfig = useGlobalConfig()
     const { bindEvents, registerEvents } = useEvents(instance, props)
 
@@ -60,8 +61,6 @@ export default defineComponent({
       createResolve = _resolve
       reject = _reject
     })
-
-    const vmMitt: Emitter<VmMittEvents> = mitt()
 
     const containerId = computed<string>(() => {
       return props.containerId || (instance.attrs.id as string) || 'mapContainer'
@@ -141,6 +140,7 @@ export default defineComponent({
         options[vueProp] = props[vueProp]
       })
 
+      console.log('options', options)
       const map = new Map(options)
 
       instance.map = map
@@ -230,18 +230,9 @@ export default defineComponent({
 
     return () => {
       const children: Array<VNode> = []
-      // if (isPlainObject(props.skeleton) && !isReady.value) {
-      //   children.push(
-      //     h(VcSkeleton, {
-      //       ...props.skeleton,
-      //       style: { background: props.skeleton.color, width: '100%', height: '100%' }
-      //     })
-      //   )
-      // } else {
-      //   children.push(createCommentVNode('v-if'))
-      // }
+
       children.push(
-        createCommentVNode('vc-viewer'),
+        createCommentVNode('vm-map'),
         withDirectives(
           h(
             'div',
