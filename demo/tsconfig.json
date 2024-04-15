@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "ESNEXT",
+    "target": "ESNEXT",
+    "noImplicitAny": false,
+    "declaration": true,
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "sourceMap": false,
+    "lib": ["ESNEXT", "DOM", "DOM.Iterable"],
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "baseUrl": "./",
+    "types": ["vite/client"],
+    "paths": {
+      "@src/*": ["src/*"],
+      "@api/*": ["src/api/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@composables/*": ["src/composables/*"],
+      "@config/*": ["src/config/*"],
+      "@directives/*": ["src/directives/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
+      "@router/*": ["src/router/*"],
+      "@store/*": ["src/store/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"],
+      "vue$": ["node_modules/vue/dist/vue.runtime.esm-bundler.js"]
+    }
+  },
+  "exclude": ["public"],
+  "include": ["src/**/*", "typings/*"]
+}
