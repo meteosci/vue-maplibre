@@ -3,11 +3,12 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-15 15:57:12
+ * @LastEditTime: 2024-04-16 11:59:56
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import { mergeDescriptors } from '@vue-maplibre/utils'
 import {
+  ExtractPropTypes,
   VNode,
   computed,
   createCommentVNode,
@@ -20,7 +21,7 @@ import {
   ref,
   withDirectives
 } from 'vue'
-import { Map, MapOptions, NavigationControl } from 'maplibre-gl'
+import { Map, MapEventType, MapOptions, MapLayerEventType, Listener } from 'maplibre-gl'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { useGlobalConfig } from '@vue-maplibre/composables/private/use-global-config'
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -31,20 +32,19 @@ import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { TouchHold } from '@vue-maplibre/directives'
 import mapProps from './props'
 import { vmKey } from '@vue-maplibre/utils/private/config'
-import mapEvents from './events'
+import mapEmits from './events'
 import mitt, { Emitter } from 'mitt'
 import { useEvents } from '@vue-maplibre/composables'
+
+const emits = { ...commonEmits, ...mapEmits, touchEnd: evt => true }
 
 export default defineComponent({
   name: 'VmMap',
   props: mapProps,
-  emits: {
-    ...commonEmits,
-    touchEnd: evt => true
-  },
+  emits,
   setup(props, { emit, attrs, slots, expose }) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
-    instance.maplibreEvents = [...mapEvents]
+    instance.maplibreEvents = [...Object.keys(mapEmits)]
 
     const isReady = ref(false)
     const mapRef = ref<HTMLElement>()
@@ -140,7 +140,6 @@ export default defineComponent({
         options[vueProp] = props[vueProp]
       })
 
-      console.log('options', options)
       const map = new Map(options)
 
       instance.map = map
@@ -150,7 +149,7 @@ export default defineComponent({
         map
       }
 
-      registerEvents(true)
+      registerEvents(true, props.eventLayerId)
 
       const listenerReady = getInstanceListener(instance, 'ready')
       listenerReady && emit('ready', readyObj)
@@ -251,3 +250,16 @@ export default defineComponent({
     }
   }
 })
+
+export type VmMapEmits = typeof emits
+
+export type VmMapProps = Partial<ExtractPropTypes<typeof mapProps>>
+
+export type VcViewerRef = VmComponentPublicInstance<VmMapProps>
+
+export interface VmMapSlots {
+  /**
+   * Default slot content of the component.
+   */
+  default: () => VNode[]
+}
