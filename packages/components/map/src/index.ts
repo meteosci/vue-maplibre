@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-16 11:59:56
+ * @LastEditTime: 2024-04-16 17:13:12
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import { mergeDescriptors } from '@vue-maplibre/utils'
@@ -21,10 +21,10 @@ import {
   ref,
   withDirectives
 } from 'vue'
-import { Map, MapEventType, MapOptions, MapLayerEventType, Listener } from 'maplibre-gl'
+import { Map, MapOptions } from 'maplibre-gl'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { useGlobalConfig } from '@vue-maplibre/composables/private/use-global-config'
-import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
+import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmReadyObject } from '@vue-maplibre/utils/types'
 import { getInstanceListener } from '@vue-maplibre/utils/private/vm'
 import { isPlainObject, kebabCase } from 'lodash-unified'
 import { hSlot } from '@vue-maplibre/utils/private/render'
@@ -33,8 +33,7 @@ import { TouchHold } from '@vue-maplibre/directives'
 import mapProps from './props'
 import { vmKey } from '@vue-maplibre/utils/private/config'
 import mapEmits from './events'
-import mitt, { Emitter } from 'mitt'
-import { useEvents } from '@vue-maplibre/composables'
+import useEvent from '@vue-maplibre/composables/private/use-event'
 
 const emits = { ...commonEmits, ...mapEmits, touchEnd: evt => true }
 
@@ -50,11 +49,13 @@ export default defineComponent({
     const mapRef = ref<HTMLElement>()
 
     const logger = useLog(instance)
-    const vmMitt: Emitter<VmMittEvents> = mitt()
+
     instance.children = []
 
     const globalConfig = useGlobalConfig()
-    const { bindEvents, registerEvents } = useEvents(instance, props)
+    const { bindEvents, registerEvents } = useEvent(instance, props)
+
+    const vmMitt = globalConfig.value.vmMitt
 
     let createResolve, reject
     const creatingPromise = new Promise<VmMapProvider>((_resolve, _reject) => {
@@ -97,20 +98,6 @@ export default defineComponent({
         get: () => instance.map
       }
     })
-
-    const getServices = function (): VmMapProvider {
-      return mergeDescriptors(
-        {},
-        {
-          get map() {
-            return instance.map
-          },
-          get creatingPromise() {
-            return creatingPromise
-          }
-        }
-      )
-    }
 
     const beforeLoad = async () => {
       logger.debug('beforeLoad - vm-map')
@@ -212,6 +199,20 @@ export default defineComponent({
 
     const onTouchHold = e => {
       emit('touchEnd', e)
+    }
+
+    const getServices = function (): VmMapProvider {
+      return mergeDescriptors(
+        {},
+        {
+          get map() {
+            return instance.map
+          },
+          get creatingPromise() {
+            return creatingPromise
+          }
+        }
+      )
     }
 
     provide<VmMapProvider>(vmKey, getServices())

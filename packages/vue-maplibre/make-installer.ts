@@ -1,17 +1,17 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-09-16 09:28:13
- * @LastEditTime: 2024-02-05 16:32:14
+ * @LastEditTime: 2024-04-16 17:09:36
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\packages\vue-maplibre\make-installer.ts
  */
-
 import { version } from './version'
 import type { App, Plugin } from 'vue'
-import type { ConfigProviderContext } from '@vue-maplibre/utils/private/config'
 import { provideGlobalConfig } from '@vue-maplibre/composables/private/use-global-config'
 import useLog from '@vue-maplibre/composables/private/use-log'
+import mitt, { Emitter } from 'mitt'
+import { ConfigProviderContext, VmMittEvents } from '@vue-maplibre/utils/types'
 const logger = useLog(undefined)
 
 const INSTALLED_KEY = Symbol('INSTALLED_KEY')
@@ -20,7 +20,11 @@ const makeInstaller = (components: Plugin[] = []) => {
   const install = (app: App, opts?: ConfigProviderContext) => {
     if (app[INSTALLED_KEY]) return
 
-    const defaultConfig: ConfigProviderContext = {}
+    const vmMitt: Emitter<VmMittEvents> = mitt()
+
+    const defaultConfig: ConfigProviderContext = {
+      vmMitt
+    }
 
     app[INSTALLED_KEY] = true
 

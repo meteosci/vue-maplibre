@@ -3,13 +3,14 @@
  * @Date: 2024-02-02 16:11:56
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-02-20 15:19:12
+ * @LastEditTime: 2024-04-16 17:16:22
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
-import type { Ref, Plugin, CSSProperties, ComponentInternalInstance, ComponentPublicInstance } from 'vue'
-import type { Map, NavigationControl } from 'maplibre-gl'
+import type { Ref, Plugin, ComponentInternalInstance, ComponentPublicInstance } from 'vue'
+import type { Map } from 'maplibre-gl'
 import type { Emitter } from 'mitt'
+import type { Language } from '@vue-maplibre/locale'
 
 export interface AnyObject {
   [propName: string]: any
@@ -83,7 +84,16 @@ export type VmComponentPublicInstance<T = any> = ComponentPublicInstance<
   }
 >
 
-export interface VmMapProvider {
+export interface ConfigProviderContext {
+  locale?: Language
+  reloadMode?: 'once' | 'all'
+  __mapUnloadingPromise?: Promise<boolean>
+  vmMitt?: Emitter<VmMittEvents>
+  [propName: string]: any
+}
+
+
+export interface VmMapProvider extends ConfigProviderContext {
   map: Map
   creatingPromise?: Promise<Map>
 }
