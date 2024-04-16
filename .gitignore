@@ -12,7 +12,7 @@ node_modules
 # Bundle
 dist
 coverage
-packages/vue-cesium/version.ts
+packages/vue-maplibre/version.ts
 website-dist
 es
 lib

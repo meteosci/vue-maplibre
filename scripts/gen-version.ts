@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:23:35
- * @LastEditTime: 2024-02-02 17:51:58
+ * @LastEditTime: 2024-04-16 17:36:19
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\scripts\gen-version.ts
@@ -13,6 +13,7 @@ const tagVer = process.env.TAG_VERSION
 let version = ''
 
 if (tagVer) {
+  console.log('tagVer', tagVer)
   version = tagVer.startsWith('v') ? tagVer.slice(1) : tagVer
 } else {
   version = pkg.version
