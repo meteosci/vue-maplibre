@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-08 23:26:13
- * @LastEditTime: 2024-04-15 15:39:02
+ * @LastEditTime: 2024-04-16 09:46:31
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\demo\src\main.ts
@@ -11,7 +11,7 @@ import { Quasar, Notify, Dialog, LocalStorage, Loading, AppFullscreen } from 'qu
 import quasarLang from 'quasar/lang/zh-CN'
 import { ElCascader, ElTreeSelect, provideGlobalConfig } from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import VueMaplibre from 'vue-maplibre'
+import VueMaplibre from '@meteosci/vue-maplibre'
 
 import 'element-plus/dist/index.css'
 // Import store and router instances

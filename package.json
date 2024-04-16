@@ -62,7 +62,7 @@
     "lodash-unified": "^1.0.3",
     "maplibre-gl": "^4.1.2",
     "mitt": "^3.0.1",
-    "vue-maplibre": "workspace:*"
+    "@meteosci/vue-maplibre": "workspace:*"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.2",

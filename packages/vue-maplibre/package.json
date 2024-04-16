@@ -1,5 +1,5 @@
 {
-  "name": "vue-maplibre",
+  "name": "@meteosci/vue-maplibre",
   "version": "0.0.1",
   "description": "A Vue 3 Component Library for maplibre-gl",
   "homepage": "https://meteosci.com/vue-maplibre",

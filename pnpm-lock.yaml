@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@meteosci/vue-maplibre':
+        specifier: workspace:*
+        version: link:packages/vue-maplibre
       '@vue-maplibre/components':
         specifier: workspace:*
         version: link:packages/components
@@ -47,9 +50,6 @@ importers:
       mitt:
         specifier: ^3.0.1
         version: 3.0.1
-      vue-maplibre:
-        specifier: workspace:*
-        version: link:packages/vue-maplibre
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.2.2
