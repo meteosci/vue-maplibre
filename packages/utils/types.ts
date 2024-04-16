@@ -3,7 +3,7 @@
  * @Date: 2024-02-02 16:11:56
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-16 17:16:22
+ * @LastEditTime: 2024-04-16 23:21:45
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
@@ -46,12 +46,15 @@ export interface VmComponentInternalInstance extends ComponentInternalInstance {
   map: Map
   maplibreEvents?: Array<string>
   renderByParent?: boolean
-  vmMitt: Emitter<VmMittEvents>
-  maplibreObject?(): Promise<unknown>
+  nowaiting?: boolean
+  className?: string
+  maplibreObject?: unknown
+  vmMitt?: Emitter<VmMittEvents>
   createMaplibreObject?(): Promise<unknown>
   mount?(): Promise<boolean | undefined>
   unmount?(): Promise<boolean | undefined>
   children?: Array<VmComponentInternalInstance>
+  alreadyListening: string[]
   removeCallbacks: Array<AnyFunction<any>>
 }
 
@@ -76,11 +79,11 @@ export type VmComponentPublicInstance<T = any> = ComponentPublicInstance<
     /**
      * The maplibreObject created by component.
      */
-    maplibreObject: any
+    maplibreObject: unknown
     /**
      * Get the maplibreObject created by component.
      */
-    getMaplibreObject(): any
+    getMaplibreObject(): unknown
   }
 >
 
@@ -100,5 +103,6 @@ export interface VmMapProvider extends ConfigProviderContext {
 
 export interface VmReadyObject {
   map: Map
-  maplibreObject?: any
+  maplibreObject?: unknown
+  vm?: VmComponentInternalInstance
 }
