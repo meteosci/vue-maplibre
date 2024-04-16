@@ -5,7 +5,7 @@
     "target": "ESNEXT",
     "noImplicitAny": false,
     "declaration": true,
-    "moduleResolution": "Node16",
+    "moduleResolution": "Bundler",
     "esModuleInterop": true,
     "jsx": "preserve",
     "sourceMap": false,
