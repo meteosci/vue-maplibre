@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 15:12:31
- * @LastEditTime: 2024-02-05 16:26:02
+ * @LastEditTime: 2024-04-16 10:55:49
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\typings\global.d.ts
@@ -16,7 +16,9 @@ import {
   AllowedComponentProps,
   ComponentCustomProps
 } from 'vue'
-import { VmMap } from 'vue-maplibre'
+
+
+import { VmMapProps, VmMapSlots } from '@meteosci/vue-maplibre'
 
 export type StringDictionary<T extends string> = Required<{ [index in T]: string }>
 
@@ -69,7 +71,8 @@ export type GlobalComponentConstructor<Props = EmptyObject, Slots = EmptyObject>
 // GlobalComponents for Volar
 declare module 'vue' {
   export interface GlobalComponents {
-    // VcConfigProvider: GlobalComponentConstructor<VcConfigProviderProps, VcConfigProviderSlots>
+    // VmConfigProvider: GlobalComponentConstructor<VmConfigProviderProps, VmConfigProviderSlots>
+    VmMap: GlobalComponentConstructor<VmMapProps, VmMapSlots>
   }
 }
 
