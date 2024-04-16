@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 10:47:28
- * @LastEditTime: 2024-02-05 16:47:41
+ * @LastEditTime: 2024-04-16 18:02:48
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\utils\paths.ts
@@ -31,4 +31,5 @@ export const composablePackage = resolve(composableRoot, 'package.json')
 export const localePackage = resolve(localeRoot, 'package.json')
 export const directivePackage = resolve(directiveRoot, 'package.json')
 export const vmPackage = resolve(vmRoot, 'package.json')
+export const vmPackagePublish = resolve(vmRoot, 'package-publish.json')
 export const utilPackage = resolve(utilRoot, 'package.json')

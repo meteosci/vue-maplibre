@@ -58,7 +58,7 @@
     },
     "./*": "./*"
   },
-  "main": "./index.js",
+  "main": "lib/index.js",
   "module": "es/index.mjs",
   "style": "dist/index.css",
   "unpkg": "dist/index.full.js",
