@@ -1,12 +1,12 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-02-05 16:46:26
+ * @LastEditTime: 2024-04-16 15:24:14
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\utils\pkg.ts
  */
-import findWorkspacePackages from '@pnpm/find-workspace-packages'
+import { findWorkspacePackages } from '@pnpm/find-workspace-packages'
 import { buildConfig } from '../build-info'
 import { VM_PREFIX } from './constants'
 import { projRoot } from './paths'

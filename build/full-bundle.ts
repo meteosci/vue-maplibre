@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-02-05 16:51:27
+ * @LastEditTime: 2024-04-16 15:40:38
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\full-bundle.ts
@@ -25,6 +25,7 @@ import { formatBundleFilename, generateExternal, writeBundles } from './utils/ro
 import { withTaskName } from './utils/gulp'
 import { VM_BRAND_NAME } from './utils/constants'
 import { target } from './build-info'
+import { TaskFunction } from 'undertaker'
 
 const banner = `/*! ${VM_BRAND_NAME} v${version} */\n`
 
@@ -61,7 +62,7 @@ async function buildFullEntry(minify: boolean) {
       format: 'umd',
       file: path.resolve(vmOutput, 'dist', formatBundleFilename('index.full', minify, 'js')),
       exports: 'named',
-      name: 'VueCesium',
+      name: 'VueMaplibre',
       globals: {
         vue: 'Vue',
         echarts: 'echarts'
@@ -103,7 +104,7 @@ async function buildFullLocale(minify: boolean) {
           format: 'umd',
           file: path.resolve(vmOutput, 'dist/locale', formatBundleFilename(filename, minify, 'js')),
           exports: 'named',
-          name: `VueCesiumLocale${name}`,
+          name: `VueMaplibreLocale${name}`,
           sourcemap: minify,
           banner
         },
