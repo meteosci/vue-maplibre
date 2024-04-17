@@ -3,10 +3,23 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-17 10:29:13
+ * @LastEditTime: 2024-04-18 00:25:24
  * @FilePath: \vue-maplibre\CHANGELOG.zh-CN.md
 -->
+
 ## 更新日志
+
+### 0.0.4
+
+_2024-04-18_
+
+#### 新特性
+
+- 新增 `vm-layer-gltf` 图层组件。
+
+#### Bug 修复
+
+- 修复 `useVueMaplibre` 方法获取不到地图对象 map 的问题。
 
 ### 0.0.3
 

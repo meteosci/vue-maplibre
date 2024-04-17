@@ -364,8 +364,8 @@ export default {
    * or a URL to such JSON.
    */
   mapStyle: {
-    type: [String, Object] as PropType<string | StyleSpecification>,
-    default: 'https://demotiles.maplibre.org/style.json'
+    type: [String, Object] as PropType<string | StyleSpecification>
+    // default: 'https://demotiles.maplibre.org/style.json'
   },
   /**
    * If `false`, the map's pitch (tilt) control with "drag to rotate" interaction will be disabled.

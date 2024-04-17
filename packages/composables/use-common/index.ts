@@ -3,10 +3,10 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-17 16:38:47
+ * @LastEditTime: 2024-04-17 21:56:50
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
-import { VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
+import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '../private/use-log'
 import useTimeout from '../use-timeout'
 import useVueMaplibre from '../use-vue-maplibre'
@@ -14,9 +14,10 @@ import { useLocale } from '../use-locale'
 import useEvent from '@vue-maplibre/composables/private/use-event'
 import { getVmParentInstance } from '@vue-maplibre/utils/private/vm'
 import { isEqual, isFunction } from 'lodash-es'
-import { WatchStopHandle, onUnmounted } from 'vue'
+import { WatchStopHandle, inject, onUnmounted } from 'vue'
 import { mergeDescriptors } from '@vue-maplibre/utils/merge-descriptors'
 import { Map } from 'maplibre-gl'
+import { vmKey } from '@vue-maplibre/utils/private/config'
 
 export default function (props, { emit, attrs }, instance: VmComponentInternalInstance) {
   const logger = useLog(instance)
@@ -303,15 +304,18 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
     getMaplibreObject: () => instance.maplibreObject
   })
 
+  const $services = !isMapRoot ?  inject<VmMapProvider>(vmKey) : undefined
+
   const getServices = () => {
     return mergeDescriptors({}, {
+      ...$services,
       ...$vm,
       creatingPromise
     })
   }
 
   return {
-    $vm,
+    $services,
     load,
     unload,
     reload,

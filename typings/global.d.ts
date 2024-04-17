@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 15:12:31
- * @LastEditTime: 2024-04-16 10:55:49
+ * @LastEditTime: 2024-04-17 21:48:38
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\typings\global.d.ts
@@ -18,7 +18,7 @@ import {
 } from 'vue'
 
 
-import { VmMapProps, VmMapSlots } from '@meteosci/vue-maplibre'
+import { VmMapProps, VmMapSlots, VmLayerGltfProps } from '@meteosci/vue-maplibre'
 
 export type StringDictionary<T extends string> = Required<{ [index in T]: string }>
 
@@ -73,6 +73,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     // VmConfigProvider: GlobalComponentConstructor<VmConfigProviderProps, VmConfigProviderSlots>
     VmMap: GlobalComponentConstructor<VmMapProps, VmMapSlots>
+    VmLayerGltf: GlobalComponentConstructor<VmLayerGltfProps>
   }
 }
 

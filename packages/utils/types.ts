@@ -3,12 +3,12 @@
  * @Date: 2024-02-02 16:11:56
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-16 23:21:45
+ * @LastEditTime: 2024-04-17 17:38:11
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
 import type { Ref, Plugin, ComponentInternalInstance, ComponentPublicInstance } from 'vue'
-import type { Map } from 'maplibre-gl'
+import type { Evented, Map } from 'maplibre-gl'
 import type { Emitter } from 'mitt'
 import type { Language } from '@vue-maplibre/locale'
 
@@ -19,6 +19,12 @@ export interface AnyObject {
 export type LooseDictionary = { [index in string]: any }
 
 export type AnyFunction<T = void> = (...args: any[]) => T
+
+export type Listener = {
+  target: Evented
+  eventName: string
+  handler: AnyFunction
+}
 
 export type SFCWithInstall<T> = T & Plugin
 
@@ -105,4 +111,22 @@ export interface VmReadyObject {
   map: Map
   maplibreObject?: unknown
   vm?: VmComponentInternalInstance
+}
+
+
+/**
+ * CustomLayer 自定义图层构造函数参数
+ */
+export interface CustomLayerOptions {
+  /**
+   * 图层的id
+   */
+  id?: string
+}
+
+export interface GLTFLayerOptions extends CustomLayerOptions {
+  url?: string
+  position?: [number, number, number]
+  rotate?: [number, number, number]
+  scale?: number
 }
