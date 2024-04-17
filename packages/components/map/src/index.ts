@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-17 10:19:30
+ * @LastEditTime: 2024-04-17 16:38:09
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import {
@@ -31,6 +31,7 @@ import { vmKey } from '@vue-maplibre/utils/private/config'
 import mapEmits from './events'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
 import { getInstanceListener } from '@vue-maplibre/utils/private/vm'
+import { mergeDescriptors } from '@vue-maplibre/utils'
 
 const emits = {
   ...commonEmits,
@@ -260,9 +261,17 @@ export default defineComponent({
       }
     }
 
-    provide<VmMapProvider>(vmKey, commonState.getServices())
+    const getServices = () => {
+      return mergeDescriptors(commonState.getServices(), {
+        get map() {
+          return instance.map
+        }
+      })
+    }
+
+    provide<VmMapProvider>(vmKey, getServices())
     instance.appContext.config.globalProperties.$VueMaplibre = instance.appContext.config.globalProperties.$VueMaplibre || {}
-    instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = commonState.getServices()
+    instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
 
     return () => {
       const children: Array<VNode> = []

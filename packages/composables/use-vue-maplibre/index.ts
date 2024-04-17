@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-04-06 09:21:02
- * @LastEditTime: 2024-04-17 01:40:45
+ * @LastEditTime: 2024-04-17 16:03:21
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\packages\composables\use-vue-maplibre\index.ts
@@ -25,7 +25,7 @@ export default function useVueMaplibre(containerId?: string): VmMapProvider {
     if (containerId) {
       const mapProvider = instance.appContext.config.globalProperties?.$VueMaplibre?.[containerId]
       if (!mapProvider && instance.className !== 'Map') {
-        logger.warn(`vm-map with containerId: ${containerId} was not found.`)
+        // logger.warn(`vm-map with containerId: ${containerId} was not found.`)
       }
 
       return {
