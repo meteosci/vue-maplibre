@@ -53,10 +53,10 @@ export default {
     type: Boolean,
     default: true
   },
-  customAttribution: {
-    type: [String, Array] as PropType<string | string[]>,
-    default: 'MapLibre'
-  },
+  // customAttribution: {
+  //   type: [String, Array] as PropType<string | string[]>,
+  //   default: 'MapLibre'
+  // },
   /**
    * If `true`, the MapLibre logo will be shown.
    * @defaultValue false
