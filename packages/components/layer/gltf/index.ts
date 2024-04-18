@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 00:16:45
+ * @LastEditTime: 2024-04-18 11:51:16
  * @FilePath: \vue-maplibre\packages\components\layer\gltf\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -14,7 +14,6 @@ import { GLTFLayerOptions, VmComponentInternalInstance, VmComponentPublicInstanc
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { Layer } from '@vue-maplibre/shared'
 import { kebabCase } from 'lodash-es'
-import { hSlot } from '@vue-maplibre/utils/private/render'
 import CustomGLTFLayer from '@vue-maplibre/shared/layer/GLTFLayer'
 
 const emits = {
@@ -54,16 +53,17 @@ export default defineComponent({
     })
 
     instance.createMaplibreObject = async () => {
+      logger.debug(`${instance.proxy?.$options.name}-creating`)
       return new Layer.GLTFLayer(props as GLTFLayerOptions)
     }
 
     instance.mount = async () => {
       const { map } = commonState.$services
       const layer = instance.maplibreObject as CustomGLTFLayer
-      map.on('load', () => {
+      map.on('style.load', () => {
         map.addLayer(layer)
       })
-
+      logger.debug(`${instance.proxy?.$options.name}-mounted`)
       return true
     }
 
@@ -72,20 +72,11 @@ export default defineComponent({
       const layer = instance.maplibreObject as CustomGLTFLayer
 
       map.removeLayer(layer.id)
-      logger.debug('vm-map-unloaded')
+      logger.debug(`${instance.proxy?.$options.name}-unmounted`)
       return true
     }
-    return () =>
-      ctx.slots.default
-        ? h(
-            'i',
-            {
-              class: kebabCase(instance.proxy?.$options.name || ''),
-              style: { display: 'none !important' }
-            },
-            hSlot(ctx.slots.default)
-          )
-        : createCommentVNode(kebabCase(instance.proxy?.$options.name || 'v-if'))
+
+    return () => createCommentVNode(kebabCase(instance.proxy?.$options.name || ''))
   }
 })
 
