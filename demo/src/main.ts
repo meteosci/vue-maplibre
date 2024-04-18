@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-08 23:26:13
- * @LastEditTime: 2024-04-16 09:46:31
+ * @LastEditTime: 2024-04-18 22:25:31
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\demo\src\main.ts
@@ -12,7 +12,7 @@ import quasarLang from 'quasar/lang/zh-CN'
 import { ElCascader, ElTreeSelect, provideGlobalConfig } from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import VueMaplibre from '@meteosci/vue-maplibre'
-
+import '@vue-maplibre/theme-default/src/index.scss'
 import 'element-plus/dist/index.css'
 // Import store and router instances
 import { pinia } from '@store/index'
