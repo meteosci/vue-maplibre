@@ -3,11 +3,23 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 00:25:24
+ * @LastEditTime: 2024-04-19 00:00:21
  * @FilePath: \vue-maplibre\CHANGELOG.zh-CN.md
 -->
 
 ## 更新日志
+
+### 0.0.5
+
+_2024-04-xx_
+
+#### 新特性
+
+- 新增 `vm-control-navigation` 导航控件组件。
+
+#### Bug 修复
+
+- 组件生命周期重复执行的问题。
 
 ### 0.0.4
 

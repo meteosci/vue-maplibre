@@ -3,11 +3,23 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 00:25:32
+ * @LastEditTime: 2024-04-19 00:05:38
  * @FilePath: \vue-maplibre\CHANGELOG.en-US.md
 -->
 
 ## Changelog
+
+### 0.0.5
+
+_2024-04-xx_
+
+#### New features
+
+- Added the `vm-control-navigation` navigation control component.
+
+#### Bug fixes
+
+- Fixed the issue that components being loaded multiple times.
 
 ### 0.0.4
 
@@ -15,7 +27,7 @@ _2024-04-18_
 
 #### New features
 
-- Added vm-layer-gltf layer component.
+- Added `vm-layer-gltf` layer component.
 
 #### Bug fixes
 
@@ -39,7 +51,7 @@ _2024-04-16_
 
 #### New features
 
-- Added map component vm-map.
+- Added map component `vm-map`.
 
 ### 0.0.1
 
