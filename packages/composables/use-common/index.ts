@@ -3,10 +3,10 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-17 21:56:50
+ * @LastEditTime: 2024-04-18 23:56:01
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
-import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmReadyObject } from '@vue-maplibre/utils/types'
+import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '../private/use-log'
 import useTimeout from '../use-timeout'
 import useVueMaplibre from '../use-vue-maplibre'
@@ -18,6 +18,7 @@ import { WatchStopHandle, inject, onUnmounted } from 'vue'
 import { mergeDescriptors } from '@vue-maplibre/utils/merge-descriptors'
 import { Map } from 'maplibre-gl'
 import { vmKey } from '@vue-maplibre/utils/private/config'
+import mitt, { Emitter } from 'mitt'
 
 export default function (props, { emit, attrs }, instance: VmComponentInternalInstance) {
   const logger = useLog(instance)
@@ -37,7 +38,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
   instance.removeCallbacks = []
   const unwatchFns: Array<WatchStopHandle> = []
 
-  instance.vmMitt = $vm.vmMitt
+  instance.vmMitt = isMapRoot ? $vm.vmMitt : mitt()
   const parentInstance = isMapRoot? instance : getVmParentInstance(instance)
   const { bindEvents, registerEvents } = useEvent(instance, props)
 
@@ -174,7 +175,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
           const unwatch = instance.proxy?.$watch(
             vueProp,
             async (val, oldVal) => {
-              console.log(val, oldVal, prop)
+
               // Wait for child components to be created.
               // 等待子组件创建完成。否则在父组件的 `ready` 事件中就改变的属性将不起作用。
               await (instance.proxy as VmComponentPublicInstance).creatingPromise
@@ -288,7 +289,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
         resolve(true)
         instance.isUnmounted = true
         instance.unloadingPromise = undefined
-        // vmMitt.all.clear()
+        instance.vmMitt.all.clear()
       })
     })
     instance.alreadyListening = []
