@@ -49,7 +49,7 @@ export default defineComponent({
   emits,
 
   setup(props, ctx) {
-    const instance = getCurrentInstance() as VmComponentInternalInstance
+    const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const mapRef = ref<HTMLElement>()
     const logger = useLog(instance)
     const { t } = useLocale()

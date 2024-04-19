@@ -13,7 +13,7 @@ import { vmKey } from '@vue-maplibre/utils/private/config'
 import { useGlobalConfig } from '../private/use-global-config'
 
 export default function useVueMaplibre(containerId?: string): VmMapProvider {
-  const instance = getCurrentInstance() as VmComponentInternalInstance
+  const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
   const provides = instance?.parent === null ? instance.vnode.appContext && instance.vnode.appContext.provides : (instance?.parent as any)?.provides
   if ((!provides || !(vmKey in provides)) && !containerId) {
     containerId = 'mapContainer'

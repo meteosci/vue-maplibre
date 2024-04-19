@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 23:32:35
+ * @LastEditTime: 2024-04-19 23:48:51
  * @FilePath: \vue-maplibre\packages\components\control\navigation\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -24,7 +24,7 @@ export default defineComponent({
   props,
   emits,
   setup(props, ctx) {
-    const instance = getCurrentInstance() as VmComponentInternalInstance
+    const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = []

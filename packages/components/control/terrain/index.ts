@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-19 09:26:03
+ * @LastEditTime: 2024-04-19 23:49:33
  * @FilePath: \vue-maplibre\packages\components\control\terrain\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -24,7 +24,7 @@ export default defineComponent({
   props,
   emits,
   setup(props, ctx) {
-    const instance = getCurrentInstance() as VmComponentInternalInstance
+    const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = []

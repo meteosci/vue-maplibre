@@ -25,7 +25,7 @@ export default defineComponent({
   props,
   emits,
   setup(props, ctx) {
-    const instance = getCurrentInstance() as VmComponentInternalInstance
+    const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = []
