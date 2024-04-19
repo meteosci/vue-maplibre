@@ -24,7 +24,6 @@
     "vue": "^3.4.0"
   },
   "dependencies": {
-    "deck.gl": "^9.0.8",
     "gl-matrix": "^3.4.3",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
