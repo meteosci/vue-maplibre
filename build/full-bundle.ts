@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-04-16 15:40:38
+ * @LastEditTime: 2024-04-19 23:34:53
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\full-bundle.ts
@@ -65,7 +65,7 @@ async function buildFullEntry(minify: boolean) {
       name: 'VueMaplibre',
       globals: {
         vue: 'Vue',
-        echarts: 'echarts'
+        'maplibre-gl': 'maplibregl'
       },
       sourcemap: minify,
       banner
