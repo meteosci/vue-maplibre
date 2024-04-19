@@ -3,7 +3,7 @@
  * @Date: 2024-02-05 16:28:53
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 11:53:28
+ * @LastEditTime: 2024-04-19 09:28:03
  * @FilePath: \vue-maplibre\packages\vue-maplibre\component.ts
  */
 
@@ -17,8 +17,8 @@ import { VmMap } from '@vue-maplibre/components/map'
 import { VmLayerGltf } from '@vue-maplibre/components/layer'
 
 // Control
-import { VmControlNavigation } from '@vue-maplibre/components/control'
+import { VmControlNavigation, VmControlTerrain } from '@vue-maplibre/components/control'
 
 import type { Plugin } from 'vue'
 
-export default [VmMap, VmLayerGltf, VmControlNavigation] as Plugin[]
+export default [VmMap, VmLayerGltf, VmControlNavigation, VmControlTerrain] as Plugin[]

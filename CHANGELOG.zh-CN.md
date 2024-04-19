@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-19 00:00:21
+ * @LastEditTime: 2024-04-19 16:10:40
  * @FilePath: \vue-maplibre\CHANGELOG.zh-CN.md
 -->
 
@@ -16,6 +16,7 @@ _2024-04-xx_
 #### 新特性
 
 - 新增 `vm-control-navigation` 导航控件组件。
+- 新增 `vm-control-terrain` 地形控件组件。
 
 #### Bug 修复
 

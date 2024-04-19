@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-19 00:05:38
+ * @LastEditTime: 2024-04-19 16:11:28
  * @FilePath: \vue-maplibre\CHANGELOG.en-US.md
 -->
 
@@ -16,6 +16,7 @@ _2024-04-xx_
 #### New features
 
 - Added the `vm-control-navigation` navigation control component.
+- Added the `vm-control-terrain` terrain control component.
 
 #### Bug fixes
 
