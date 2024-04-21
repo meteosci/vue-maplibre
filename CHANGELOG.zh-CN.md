@@ -15,8 +15,7 @@ _2024-04-21_
 
 #### 新特性
 
-- 新增 `vm-control-navigation` 导航控件组件。
-- 新增 `vm-control-terrain` 地形控件组件。
+- 新增 symbol 图层组件 `vm-layer-symbol`。
 
 ### 0.0.5
 

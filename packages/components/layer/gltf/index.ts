@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 11:51:16
+ * @LastEditTime: 2024-04-21 18:42:49
  * @FilePath: \vue-maplibre\packages\components\layer\gltf\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -24,12 +24,13 @@ export default defineComponent({
   name: 'VmLayerGltf',
   props,
   emits,
-  setup(props, ctx) {
+  setup(props: VmLayerGltfProps, ctx) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = []
-    instance.className = 'GLTFLayer'
+
+    instance.className = 'GLTFLayer' // 最终其实是 CustomStyleLayer
     instance.alreadyListening = []
 
     const commonState = useCommon(props, ctx, instance)
