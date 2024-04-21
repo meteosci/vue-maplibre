@@ -3,15 +3,24 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-19 16:10:40
+ * @LastEditTime: 2024-04-21 16:25:30
  * @FilePath: \vue-maplibre\CHANGELOG.zh-CN.md
 -->
 
 ## 更新日志
 
+### 0.0.6
+
+_2024-04-21_
+
+#### 新特性
+
+- 新增 `vm-control-navigation` 导航控件组件。
+- 新增 `vm-control-terrain` 地形控件组件。
+
 ### 0.0.5
 
-_2024-04-xx_
+_2024-04-20_
 
 #### 新特性
 

@@ -50,7 +50,6 @@
   },
   "dependencies": {
     "@meteosci/vue-maplibre": "workspace:*",
-    "@types/three": "^0.163.0",
     "@vue-maplibre/components": "workspace:*",
     "@vue-maplibre/composables": "workspace:*",
     "@vue-maplibre/demo": "workspace:*",
@@ -85,6 +84,7 @@
     "@types/lodash": "^4.17.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.12.7",
+    "@types/three": "^0.163.0",
     "@types/undertaker": "^1.2.11",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
