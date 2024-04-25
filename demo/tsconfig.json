@@ -36,5 +36,5 @@
     }
   },
   "exclude": ["public"],
-  "include": ["src/**/*", "typings/*"]
+  "include": ["src/**/*", "typings/*", "typings/global.d.ts"]
 }

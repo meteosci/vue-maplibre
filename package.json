@@ -1,6 +1,6 @@
 {
   "name": "vue-maplibre",
-  "packageManager": "pnpm@6.30.1",
+  "packageManager": "pnpm@9.0.4",
   "workspaces": [
     "packages/*",
     "play",
