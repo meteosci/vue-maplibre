@@ -3,7 +3,7 @@
  * @Date: 2024-01-09 15:58:40
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-15 15:01:59
+ * @LastEditTime: 2024-04-26 00:33:40
  * @FilePath: \vue-maplibre\demo\src\api\modules\mock-menus\layers.ts
  */
 import { Menu } from '@src/types'
@@ -21,19 +21,19 @@ export default {
   caption: '测试图层',
   title: '测试图层',
   type: 10,
-  redirect: '/layers/station',
+  redirect: '/layers/native',
   children: [
     {
       id: uuidv4(),
-      component: '/layers/station',
+      component: '/layers/native',
       icon: 'layers',
       hidden: false,
-      name: 'layers-station',
-      path: '/layers/station',
-      permission: 'permission-layers-station',
+      name: 'layers-native',
+      path: '/layers/native',
+      permission: 'permission-layers-native',
       sort: 1000,
-      caption: '站点图层',
-      title: '站点图层',
+      caption: '图层组件',
+      title: '图层组件',
       type: 10
     }
   ]

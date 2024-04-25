@@ -3,11 +3,19 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-21 20:16:12
+ * @LastEditTime: 2024-04-26 00:35:28
  * @FilePath: \vue-maplibre\CHANGELOG.en-US.md
 -->
 
 ## Changelog
+
+### 0.0.7
+
+_2024-04-xx_
+
+#### New features
+
+- Added native layer component `vm-layer-native`, consolidating all native layers into one.
 
 ### 0.0.6
 

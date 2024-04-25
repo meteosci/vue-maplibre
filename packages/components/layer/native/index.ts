@@ -3,14 +3,14 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-21 20:14:03
- * @FilePath: \vue-maplibre\packages\components\layer\symbol\index.ts
+ * @LastEditTime: 2024-04-26 00:31:52
+ * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
 import props from './props'
 import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
-import { VmComponentInternalInstance, VmComponentPublicInstance } from '@vue-maplibre/utils/types'
+import { AnyObject, VmComponentInternalInstance, VmComponentPublicInstance } from '@vue-maplibre/utils/types'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { kebabCase } from 'lodash-es'
 import { AddLayerObject } from 'maplibre-gl'
@@ -20,15 +20,15 @@ const emits = {
 }
 
 export default defineComponent({
-  name: 'VmLayerSymbol',
+  name: 'VmLayerNative',
   props,
   emits,
-  setup(props: VmLayerSymbolProps, ctx) {
+  setup(props: VmLayerNativeProps, ctx) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = []
-    instance.className = 'SymbolStyleLayer'
+    instance.className = 'VmLayerNative'
     instance.alreadyListening = ['layout', 'paint']
 
     const commonState = useCommon(props, ctx, instance)
@@ -88,11 +88,20 @@ export default defineComponent({
       const { map } = commonState.$services
 
       const layerOptions = {
-        type: 'symbol',
+        type: props.type,
         ...props
       } as AddLayerObject
 
-      map.addLayer(layerOptions, props.beforeId)
+      const options: AnyObject = {}
+
+      Object.keys(props).forEach(vueProp => {
+        if (props[vueProp] === undefined || props[vueProp] === null) {
+          return
+        }
+        options[vueProp] = props[vueProp]
+      })
+
+      map.addLayer(options as AddLayerObject)
 
       return map.getLayer(layerOptions.id)
     }
@@ -113,8 +122,8 @@ export default defineComponent({
   }
 })
 
-export type VmLayerSymbolEmits = typeof emits
+export type VmLayerNativeEmits = typeof emits
 
-export type VmLayerSymbolProps = Partial<ExtractPropTypes<typeof props>>
+export type VmLayerNativeProps = Partial<ExtractPropTypes<typeof props>>
 
-export type VmLayerSymbolRef = VmComponentPublicInstance<VmLayerSymbolProps>
+export type VmLayerNativeRef = VmComponentPublicInstance<VmLayerNativeProps>

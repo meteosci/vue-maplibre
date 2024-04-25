@@ -3,11 +3,19 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-21 16:25:30
+ * @LastEditTime: 2024-04-26 00:34:29
  * @FilePath: \vue-maplibre\CHANGELOG.zh-CN.md
 -->
 
 ## 更新日志
+
+### 0.0.7
+
+_2024-04-xx_
+
+#### 新特性
+
+- 新增 native 图层组件 `vm-layer-native`，所有原生图层合并成一个。
 
 ### 0.0.6
 

@@ -1,10 +1,10 @@
 <!--
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-20 16:15:37
- * @LastEditTime: 2024-03-26 09:28:07
+ * @LastEditTime: 2024-04-25 23:10:09
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \template-project\src\layouts\header\Index.vue
+ * @FilePath: \vue-maplibre\demo\src\layouts\header\Index.vue
 -->
 <template>
   <q-toolbar class="main-header">
@@ -63,7 +63,7 @@ import { useRoute } from 'vue-router'
 import { ref, computed, onMounted, watch } from 'vue'
 import { store } from '@src/store'
 import { storeToRefs } from 'pinia'
-import useTimeout from 'quasar/src/composables/use-timeout'
+import { useTimeout } from 'quasar'
 import { ThemeOptions } from '@src/types'
 
 defineOptions({

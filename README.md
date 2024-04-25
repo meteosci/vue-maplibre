@@ -3,9 +3,13 @@
  * @Date: 2023-11-23 01:56:39
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-16 22:43:51
+ * @LastEditTime: 2024-04-25 21:03:41
  * @FilePath: \vue-maplibre\README.md
 -->
+
+<p align="center">
+  <img width="256px" src="vue-maplibre-logo.svg">
+</p>
 
 <p align="center" style="font-weight: bold;">@meteosci/vue-maplibre - A Vue 3.x based component library of MaplibreGL for developers.</p>
 
