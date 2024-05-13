@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 10:22:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-26 00:34:29
+ * @LastEditTime: 2024-05-13 17:53:13
  * @FilePath: \vue-maplibre\CHANGELOG.zh-CN.md
 -->
 
@@ -11,7 +11,7 @@
 
 ### 0.0.7
 
-_2024-04-xx_
+_2024-05-13_
 
 #### 新特性
 
