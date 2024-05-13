@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-21 18:42:49
+ * @LastEditTime: 2024-04-22 14:09:30
  * @FilePath: \vue-maplibre\packages\components\layer\gltf\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -61,9 +61,7 @@ export default defineComponent({
     instance.mount = async () => {
       const { map } = commonState.$services
       const layer = instance.maplibreObject as CustomGLTFLayer
-      map.on('style.load', () => {
-        map.addLayer(layer)
-      })
+      map.addLayer(layer)
       logger.debug(`${instance.proxy?.$options.name}-mounted`)
       return true
     }
