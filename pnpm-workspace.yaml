@@ -1,6 +1,7 @@
 
 packages:
-  - 'packages/**'
+  - 'packages/*'
   - demo
   - docs
+  - build
   - '!**/__tests__/**'

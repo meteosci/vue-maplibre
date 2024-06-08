@@ -1,28 +1,31 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-10-11 09:17:23
- * @LastEditTime: 2024-02-05 17:08:09
+ * @LastEditTime: 2024-06-08 16:27:53
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\packages\theme-default\gulpfile.ts
  */
 
 import path from 'path'
+import { Transform } from 'stream'
 import chalk from 'chalk'
 import { src, dest, series, parallel } from 'gulp'
 import gulpSass from 'gulp-sass'
 import dartSass from 'sass'
 import autoprefixer from 'gulp-autoprefixer'
-import cleanCSS from 'gulp-clean-css'
 import rename from 'gulp-rename'
-import postcss from 'gulp-postcss'
+import consola from 'consola'
+import postcss from 'postcss'
+import cssnano from 'cssnano'
+import gulpPostcss from 'gulp-postcss'
+import { vmOutput } from '@vue-maplibre/build/utils/paths'
 
-import { vmOutput } from '../../build/utils/paths'
 const distFolder = path.resolve(__dirname, 'dist')
 const distBundle = path.resolve(vmOutput, 'theme-default')
 
 /**
- * compile theme-chalk scss & minify
+ * compile theme-default scss & minify
  * not use sass.sync().on('error', sass.logError) to throw exception
  * @returns
  */
@@ -31,13 +34,9 @@ function buildThemeChalk() {
   const noElPrefixFile = /(index|base|display)/
   return src(path.resolve(__dirname, 'src/*.scss'))
     .pipe(sass.sync())
-    .pipe(postcss())
+    .pipe(gulpPostcss())
     .pipe(autoprefixer({ cascade: false }))
-    .pipe(
-      cleanCSS({}, details => {
-        console.log(`${chalk.cyan(details.name)}: ${chalk.yellow(details.stats.originalSize / 1000)} KB -> ${chalk.green(details.stats.minifiedSize / 1000)} KB`)
-      })
-    )
+    .pipe(compressWithCssnano())
     .pipe(
       rename(path => {
         if (!noElPrefixFile.test(path.basename)) {
@@ -47,6 +46,52 @@ function buildThemeChalk() {
     )
     .pipe(dest(distFolder))
 }
+
+/**
+ * using `postcss` and `cssnano` to compress CSS
+ * @returns
+ */
+function compressWithCssnano() {
+  const processor = postcss([
+    cssnano({
+      preset: [
+        'default',
+        {
+          // avoid color transform
+          colormin: false,
+          // avoid font transform
+          minifyFontValues: false,
+        },
+      ],
+    }),
+  ])
+  return new Transform({
+    objectMode: true,
+    transform(chunk, _encoding, callback) {
+      const file = chunk
+      if (file.isNull()) {
+        callback(null, file)
+        return
+      }
+      if (file.isStream()) {
+        callback(new Error('Streaming not supported'))
+        return
+      }
+      const cssString = file.contents!.toString()
+      processor.process(cssString, { from: file.path }).then(result => {
+        const name = path.basename(file.path)
+        file.contents = Buffer.from(result.css)
+        consola.success(
+          `${chalk.cyan(name)}: ${chalk.yellow(
+            cssString.length / 1000
+          )} KB -> ${chalk.green(result.css.length / 1000)} KB`
+        )
+        callback(null, file)
+      })
+    },
+  })
+}
+
 
 /**
  * copy from packages/theme-chalk/lib to dist/theme-chalk

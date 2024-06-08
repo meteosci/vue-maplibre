@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-04-19 23:34:53
+ * @LastEditTime: 2024-06-08 10:55:51
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\full-bundle.ts
@@ -10,8 +10,10 @@ import path from 'path'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { rollup } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
-import vue from 'rollup-plugin-vue'
-import esbuild from 'rollup-plugin-esbuild'
+import vue from '@vitejs/plugin-vue'
+import VueMacros from 'unplugin-vue-macros/rollup'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import esbuild, { minify as minifyPlugin } from 'rollup-plugin-esbuild'
 import replace from '@rollup/plugin-replace'
 import filesize from 'rollup-plugin-filesize'
 import { parallel } from 'gulp'
@@ -23,46 +25,71 @@ import { alias } from './plugins/alias'
 import { vmRoot, vmOutput, localeRoot } from './utils/paths'
 import { formatBundleFilename, generateExternal, writeBundles } from './utils/rollup'
 import { withTaskName } from './utils/gulp'
-import { VM_BRAND_NAME } from './utils/constants'
+import { PKG_BRAND_NAME, PKG_CAMELCASE_LOCAL_NAME, PKG_CAMELCASE_NAME } from './utils/constants'
 import { target } from './build-info'
 import { TaskFunction } from 'undertaker'
 
-const banner = `/*! ${VM_BRAND_NAME} v${version} */\n`
+const banner = `/*! ${PKG_BRAND_NAME} v${version} */\n`
 
 async function buildFullEntry(minify: boolean) {
+  const plugins = [
+    alias(),
+    VueMacros({
+      setupComponent: false,
+      setupSFC: false,
+      plugins: {
+        vue: vue({
+          isProduction: true
+        }),
+        vueJsx: vueJsx()
+      }
+    }),
+    nodeResolve({
+      extensions: ['.mjs', '.js', '.json', '.ts']
+    }),
+    commonjs(),
+    esbuild({
+      exclude: [],
+      sourceMap: minify,
+      target,
+      loaders: {
+        '.vue': 'ts'
+      },
+      define: {
+        'process.env.NODE_ENV': JSON.stringify('production')
+      },
+      treeShaking: true,
+      legalComments: 'eof'
+    }),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      // options
+      preventAssignment: true
+    }),
+    filesize()
+  ]
+
+  if (minify) {
+    plugins.push(
+      minifyPlugin({
+        target,
+        sourceMap: true
+      })
+    )
+  }
+
   const bundle = await rollup({
     input: path.resolve(vmRoot, 'index.ts'),
-    plugins: [
-      alias(),
-      nodeResolve({
-        extensions: ['.mjs', '.js', '.json', '.ts']
-      }),
-      vue({
-        target: 'browser',
-        exposeFilename: false
-      }),
-      commonjs(),
-      esbuild({
-        minify,
-        sourceMap: minify,
-        target
-      }),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('production'),
-
-        // options
-        preventAssignment: true
-      }),
-      filesize()
-    ],
-    external: await generateExternal({ full: true })
+    plugins,
+    external: await generateExternal({ full: true }),
+    treeshake: true
   })
   await writeBundles(bundle, [
     {
       format: 'umd',
       file: path.resolve(vmOutput, 'dist', formatBundleFilename('index.full', minify, 'js')),
       exports: 'named',
-      name: 'VueMaplibre',
+      name: PKG_CAMELCASE_NAME,
       globals: {
         vue: 'Vue',
         'maplibre-gl': 'maplibregl'
@@ -103,8 +130,8 @@ async function buildFullLocale(minify: boolean) {
         {
           format: 'umd',
           file: path.resolve(vmOutput, 'dist/locale', formatBundleFilename(filename, minify, 'js')),
-          exports: 'named',
-          name: `VueMaplibreLocale${name}`,
+          exports: 'default',
+          name: `${PKG_CAMELCASE_LOCAL_NAME}${name}`,
           sourcemap: minify,
           banner
         },

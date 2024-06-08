@@ -1,30 +1,27 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-02-05 17:19:11
+ * @LastEditTime: 2024-06-08 11:44:06
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\plugins\alias.ts
  */
-import { VM_PKG, VM_PREFIX } from '../utils/constants'
+import { PKG_NAME, PKG_PREFIX } from '../utils/constants'
 import type { Plugin } from 'rollup'
 
 export function alias(): Plugin {
-  const THEME_DUFAULT = `${VM_PREFIX}/theme-default`
+  const themeDefault = 'theme-default'
+  const sourceThemeDefault = `${PKG_PREFIX}/${themeDefault}` as const
+  const bundleThemeDefault = `${PKG_NAME}/${themeDefault}` as const
 
   return {
     name: 'vue-maplibre-alias-plugin',
-    resolveId(id, importer, options) {
-      if (!id.startsWith(VM_PREFIX)) return
-
-      if (id.startsWith(THEME_DUFAULT)) {
-        return {
-          id: id.replaceAll(THEME_DUFAULT, `${VM_PKG}/theme-default`),
-          external: 'absolute'
-        }
+    resolveId(id) {
+      if (!id.startsWith(sourceThemeDefault)) return
+      return {
+        id: id.replaceAll(sourceThemeDefault, bundleThemeDefault),
+        external: 'absolute'
       }
-
-      return this.resolve(id, importer, { skipSelf: true, ...options })
     }
   }
 }

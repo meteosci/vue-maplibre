@@ -1,14 +1,14 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-04-19 17:52:09
+ * @LastEditTime: 2024-06-08 11:49:12
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\build-info.ts
  */
 import path from 'path'
 import { vmOutput } from './utils/paths'
-import { VM_PKG } from './utils/constants'
+import { PKG_NAME } from './utils/constants'
 import type { ModuleFormat } from 'rollup'
 
 export const modules = ['esm', 'cjs'] as const
@@ -40,7 +40,7 @@ export const buildConfig: Record<Module, BuildInfo> = {
       path: path.resolve(vmOutput, 'es')
     },
     bundle: {
-      path: `${VM_PKG}/es`
+      path: `${PKG_NAME}/es`
     }
   },
   cjs: {
@@ -52,7 +52,7 @@ export const buildConfig: Record<Module, BuildInfo> = {
       path: path.resolve(vmOutput, 'lib')
     },
     bundle: {
-      path: `${VM_PKG}/lib`
+      path: `${PKG_NAME}/lib`
     }
   }
 }

@@ -1,13 +1,15 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-02-05 17:03:52
+ * @LastEditTime: 2024-06-08 16:11:57
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\modules.ts
  */
 import { rollup } from 'rollup'
-import vue from 'rollup-plugin-vue'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import VueMacros from 'unplugin-vue-macros/rollup'
 import css from 'rollup-plugin-css-only'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
@@ -35,16 +37,28 @@ export const buildModules = async () => {
     plugins: [
       alias(),
       css(),
-      vue({ target: 'browser' }),
+      VueMacros({
+        setupComponent: false,
+        setupSFC: false,
+        plugins: {
+          vue: vue({
+            isProduction: true
+          }),
+          vueJsx: vueJsx()
+        }
+      }),
       nodeResolve({
         extensions: ['.mjs', '.js', '.json', '.ts']
       }),
       commonjs(),
       esbuild({
         sourceMap: true,
-        target
+        target,
+        loaders: {
+          '.vue': 'ts'
+        }
       }),
-      filesize({ reporter })
+      // filesize({ reporter })
     ],
     external: await generateExternal({ full: false }),
     treeshake: false
