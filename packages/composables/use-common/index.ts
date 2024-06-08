@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 23:56:01
+ * @LastEditTime: 2024-05-13 16:58:56
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -39,7 +39,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
   const unwatchFns: Array<WatchStopHandle> = []
 
   instance.vmMitt = isMapRoot ? $vm.vmMitt : mitt()
-  const parentInstance = isMapRoot? instance : getVmParentInstance(instance)
+  const parentInstance = isMapRoot ? instance : getVmParentInstance(instance)
   const { bindEvents, registerEvents } = useEvent(instance, props)
 
   const beforeLoad = async () => {
@@ -175,7 +175,6 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
           const unwatch = instance.proxy?.$watch(
             vueProp,
             async (val, oldVal) => {
-
               // Wait for child components to be created.
               // 等待子组件创建完成。否则在父组件的 `ready` 事件中就改变的属性将不起作用。
               await (instance.proxy as VmComponentPublicInstance).creatingPromise
@@ -305,14 +304,17 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
     getMaplibreObject: () => instance.maplibreObject
   })
 
-  const $services = !isMapRoot ?  inject<VmMapProvider>(vmKey) : undefined
+  const $services = !isMapRoot ? inject<VmMapProvider>(vmKey) : undefined
 
   const getServices = () => {
-    return mergeDescriptors({}, {
-      ...$services,
-      ...$vm,
-      creatingPromise
-    })
+    return mergeDescriptors(
+      {},
+      {
+        ...$services,
+        ...$vm,
+        creatingPromise
+      }
+    )
   }
 
   return {

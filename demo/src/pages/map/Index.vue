@@ -3,7 +3,7 @@
  * @Date: 2023-08-09 10:18:36
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 22:21:50
+ * @LastEditTime: 2024-04-22 13:53:37
  * @FilePath: \vue-maplibre\demo\src\pages\map\Index.vue
 -->
 <template>
@@ -20,7 +20,7 @@
       <div v-if="mapReady" class="widget-container">
         <WidgetDemo></WidgetDemo>
       </div>
-      <VmLayerGltf :position="position"></VmLayerGltf>
+      <VmLayerGltf :position="position" url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"></VmLayerGltf>
       <VmControlNavigation></VmControlNavigation>
     </VmMap>
   </div>

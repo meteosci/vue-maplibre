@@ -1,7 +1,15 @@
+/*
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-04-18 00:29:16
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-05-29 14:46:01
+ * @FilePath: \vue-maplibre\packages\shared\layer\CustomLayer.ts
+ */
 import { Map, CustomLayerInterface } from 'maplibre-gl'
 import { mat4 } from 'gl-matrix'
-import Base from '../Base'
 import { CustomLayerOptions, GLTFLayerOptions } from '@vue-maplibre/utils/types'
+import { Base } from '../core'
 
 /**
  * CustomLayer 是一个继承自 Base 类的自定义图层基类。

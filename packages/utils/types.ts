@@ -3,7 +3,7 @@
  * @Date: 2024-02-02 16:11:56
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-17 17:38:11
+ * @LastEditTime: 2024-05-13 17:20:23
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
@@ -18,7 +18,7 @@ export interface AnyObject {
 
 export type LooseDictionary = { [index in string]: any }
 
-export type AnyFunction<T = void> = (...args: any[]) => T
+export type AnyFunction<T = any> = (...args: any[]) => T
 
 export type Listener = {
   target: Evented
@@ -39,9 +39,9 @@ export type VueClassProp = string | Array<VueClassProp> | VueClassObjectProp
 
 export type VueStyleObjectProp = Partial<CSSStyleDeclaration>
 
-export type VmMittEvents = {
+export type VmMittEvents<T = any> = T & {
   ready: VmReadyObject
-  [key: string]: any
+  destroyed: VmComponentInternalInstance
 }
 
 export interface VmComponentInternalInstance extends ComponentInternalInstance {
@@ -101,7 +101,6 @@ export interface ConfigProviderContext {
   [propName: string]: any
 }
 
-
 export interface VmMapProvider extends ConfigProviderContext {
   map: Map
   creatingPromise?: Promise<Map>
@@ -112,7 +111,6 @@ export interface VmReadyObject {
   maplibreObject?: unknown
   vm?: VmComponentInternalInstance
 }
-
 
 /**
  * CustomLayer 自定义图层构造函数参数
