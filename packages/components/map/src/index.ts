@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-17 16:38:09
+ * @LastEditTime: 2024-06-08 09:41:25
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import {
@@ -216,8 +216,8 @@ export default defineComponent({
       const { map } = instance
 
       instance.map.off('zoom', mapChanged)
-      instance.map.on('pitch', mapChanged)
-      instance.map.on('move', mapChanged)
+      instance.map.off('pitch', mapChanged)
+      instance.map.off('move', mapChanged)
 
       if (map) {
         map._controls.forEach(control => {
