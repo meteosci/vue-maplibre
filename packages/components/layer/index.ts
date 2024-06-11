@@ -3,13 +3,13 @@
  * @Date: 2024-04-19 00:10:48
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-25 22:03:00
+ * @LastEditTime: 2024-06-08 11:01:30
  * @FilePath: \vue-maplibre\packages\components\layer\index.ts
  */
 import { App } from 'vue'
 import LayerNative from './native'
 import LayerGltf from './gltf'
-
+import { Map } from 'maplibre-gl'
 
 import { SFCWithInstall } from '@vue-maplibre/utils/types'
 
