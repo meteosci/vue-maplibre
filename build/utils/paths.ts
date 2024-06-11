@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 10:47:28
- * @LastEditTime: 2024-04-16 18:02:48
+ * @LastEditTime: 2024-06-08 16:35:17
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\utils\paths.ts
@@ -19,6 +19,11 @@ export const vmRoot = resolve(pkgRoot, 'vue-maplibre')
 export const utilRoot = resolve(pkgRoot, 'utils')
 export const sharedRoot = resolve(pkgRoot, 'shared')
 
+// Docs
+export const docsDirName = 'docs'
+export const docRoot = resolve(projRoot, docsDirName)
+export const vpRoot = resolve(docRoot, '.vitepress')
+
 /** dist */
 export const buildOutput = resolve(projRoot, 'dist')
 /** dist/vue-maplibre */
@@ -33,3 +38,4 @@ export const directivePackage = resolve(directiveRoot, 'package.json')
 export const vmPackage = resolve(vmRoot, 'package.json')
 export const vmPackagePublish = resolve(vmRoot, 'package-publish.json')
 export const utilPackage = resolve(utilRoot, 'package.json')
+export const docPackage = resolve(docRoot, 'package.json')
