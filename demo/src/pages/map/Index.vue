@@ -3,7 +3,7 @@
  * @Date: 2023-08-09 10:18:36
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-22 13:53:37
+ * @LastEditTime: 2024-06-12 14:51:45
  * @FilePath: \vue-maplibre\demo\src\pages\map\Index.vue
 -->
 <template>
@@ -20,7 +20,7 @@
       <div v-if="mapReady" class="widget-container">
         <WidgetDemo></WidgetDemo>
       </div>
-      <VmLayerGltf :position="position" url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"></VmLayerGltf>
+      <VmLayerGltf v-if="mapReady" :position="position" url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"></VmLayerGltf>
       <VmControlNavigation></VmControlNavigation>
     </VmMap>
   </div>
@@ -48,10 +48,15 @@ const onLoad = e => {
 
 const onMapReady = e => {
   console.log('onMapReady', e)
-  mapReady.value = true
+  const { map } = e
+  map.on('load', () => {
+    mapReady.value = true
+    // 强制刷新一次
+    map.resize()
+    mapReady.value = true
+  })
 }
 // window.zoom = zoom
-window.mapRef = mapRef
 </script>
 
 <style lang="scss">

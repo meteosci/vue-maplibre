@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "gulp --require sucrase/register/ts"
+    "build": "gulp --require @esbuild-kit/cjs-loader"
   },
   "bugs": {
     "url": "https://github.com/meteosci/vue-maplibre/issues"

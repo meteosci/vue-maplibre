@@ -1,14 +1,14 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-04-19 23:34:01
+ * @LastEditTime: 2024-06-11 14:25:41
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\utils\rollup.ts
  */
 import { vmPackage } from './paths'
 import { getPackageDependencies } from './pkg'
-
+import { PKG_NAME } from './constants'
 import type { OutputOptions, RollupBuild } from 'rollup'
 
 export const generateExternal = async (options: { full: boolean }) => {
@@ -16,7 +16,7 @@ export const generateExternal = async (options: { full: boolean }) => {
   return (id: string) => {
     const packages: string[] = ['vue', 'maplibre-gl', ...peerDependencies]
     if (!options.full) {
-      packages.push('vue-maplibre/theme-default')
+      packages.push(`${PKG_NAME}/theme-default`)
       // dependencies
       packages.push('@vue', ...dependencies)
     }

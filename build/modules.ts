@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-06-08 16:11:57
+ * @LastEditTime: 2024-06-11 13:42:30
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\modules.ts
@@ -14,13 +14,11 @@ import css from 'rollup-plugin-css-only'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import esbuild from 'rollup-plugin-esbuild'
-import filesize from 'rollup-plugin-filesize'
 import glob from 'fast-glob'
 import { vmRoot, pkgRoot } from './utils/paths'
 import { alias } from './plugins/alias'
 import { generateExternal, writeBundles } from './utils/rollup'
 import { excludeFiles } from './utils/pkg'
-import { reporter } from './plugins/size-reporter'
 import { buildConfigEntries, target } from './build-info'
 import type { OutputOptions } from 'rollup'
 

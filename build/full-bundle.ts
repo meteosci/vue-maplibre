@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-06-08 10:55:51
+ * @LastEditTime: 2024-06-11 13:42:29
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\build\full-bundle.ts
@@ -66,7 +66,7 @@ async function buildFullEntry(minify: boolean) {
       // options
       preventAssignment: true
     }),
-    filesize()
+    // filesize()
   ]
 
   if (minify) {
@@ -123,7 +123,7 @@ async function buildFullLocale(minify: boolean) {
             sourceMap: minify,
             target
           }),
-          filesize({ reporter })
+          // filesize({ reporter })
         ]
       })
       await writeBundles(bundle, [

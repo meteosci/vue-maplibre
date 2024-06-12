@@ -24,11 +24,8 @@ export const generateTypesDefinitions = async () => {
       noEmitOnError: false,
       outDir,
       baseUrl: projRoot,
-      // paths: {
-      //   [`${PKG_PREFIX}/*`]: ['packages/*']
-      // },
       paths: {
-        '@vue-maplibre/*': ['packages/*']
+        [`${PKG_PREFIX}/*`]: ['packages/*']
       },
       skipLibCheck: true,
       noImplicitAny: false
