@@ -5,7 +5,7 @@
     "packages/*",
     "play",
     "docs",
-    "build",
+    "internal/*",
     "demo"
   ],
   "description": "A Vue 3 Component Library for maplibre-gl",
@@ -17,8 +17,8 @@
     "update:version": "tsx scripts/update-version.ts",
     "clean": "pnpm run clean:dist && pnpm run -r --parallel clean",
     "clean:dist": "rimraf dist",
-    "build": "pnpm run -C build start",
-    "build:theme": "pnpm run build -C packages/theme-default",
+    "build": "pnpm run -C internal/build start",
+    "build:theme": "pnpm run -C packages/theme-default build",
     "build:indices": "tsx build/indices.ts",
     "format": "prettier --write .",
     "lint": "eslint ./packages ./demo --ext .vue,.js,.ts,.jsx,.tsx --max-warnings 0 --cache",
@@ -29,7 +29,7 @@
     "stub": "pnpm run -r --parallel stub",
     "prepare": "husky",
     "preinstall": "npx only-allow pnpm -y",
-    "postinstall": "pnpm stub && concurrently \"pnpm gen:version\""
+    "postinstall": "pnpm stub && concurrently \"pnpm gen:version\" \"pnpm run -C internal/metadata dev\""
   },
   "license": "MIT",
   "homepage": "https://meteosci.com/vue-maplibre",

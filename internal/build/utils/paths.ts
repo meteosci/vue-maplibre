@@ -1,14 +1,14 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 10:47:28
- * @LastEditTime: 2024-06-08 16:35:17
+ * @LastEditTime: 2024-06-12 23:18:38
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-maplibre\build\utils\paths.ts
+ * @FilePath: \vue-maplibre\internal\build\utils\paths.ts
  */
 import { resolve } from 'path'
 
-export const projRoot = resolve(__dirname, '..', '..')
+export const projRoot = resolve(__dirname, '..', '..', '..')
 export const pkgRoot = resolve(projRoot, 'packages')
 export const compRoot = resolve(pkgRoot, 'components')
 export const themeRoot = resolve(pkgRoot, 'theme-default')

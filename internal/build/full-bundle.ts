@@ -1,10 +1,10 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:11:08
- * @LastEditTime: 2024-06-11 13:42:29
+ * @LastEditTime: 2024-06-14 11:06:58
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-maplibre\build\full-bundle.ts
+ * @FilePath: \vue-maplibre\internal\build\full-bundle.ts
  */
 import path from 'path'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
@@ -19,7 +19,7 @@ import filesize from 'rollup-plugin-filesize'
 import { parallel } from 'gulp'
 import glob from 'fast-glob'
 import { camelCase, capitalize } from 'lodash'
-import { version } from '../packages/vue-maplibre/version'
+import { version } from '../../packages/vue-maplibre/version'
 import { reporter } from './plugins/size-reporter'
 import { alias } from './plugins/alias'
 import { vmRoot, vmOutput, localeRoot } from './utils/paths'
@@ -92,7 +92,8 @@ async function buildFullEntry(minify: boolean) {
       name: PKG_CAMELCASE_NAME,
       globals: {
         vue: 'Vue',
-        'maplibre-gl': 'maplibregl'
+        'maplibre-gl': 'maplibregl',
+        three: 'THREE'
       },
       sourcemap: minify,
       banner

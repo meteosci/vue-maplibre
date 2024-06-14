@@ -1,13 +1,13 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-04-13 22:43:29
- * @LastEditTime: 2023-04-14 00:49:29
+ * @LastEditTime: 2024-06-14 11:10:02
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium\packages\locale\__test__\locale.spec.ts
+ * @FilePath: \vue-maplibre\packages\locale\__test__\locale.spec.ts
  */
 import { t, use } from '../index'
-import zhCn from '../lang/zh-hans'
+import zhCn from '../lang/zh-cn'
 import en from '../lang/en-us'
 import { describe, expect, test } from 'vitest'
 

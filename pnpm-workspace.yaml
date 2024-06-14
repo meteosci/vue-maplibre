@@ -3,5 +3,5 @@ packages:
   - 'packages/*'
   - demo
   - docs
-  - build
+  - internal/*
   - '!**/__tests__/**'

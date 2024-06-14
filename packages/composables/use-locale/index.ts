@@ -1,13 +1,13 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-11-07 15:49:08
- * @LastEditTime: 2024-04-16 22:52:14
+ * @LastEditTime: 2024-06-14 11:09:56
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\packages\composables\use-locale\index.ts
  */
 import { computed, isRef, ref, unref } from 'vue'
-import Chinese from '@vue-maplibre/locale/lang/zh-hans'
+import Chinese from '@vue-maplibre/locale/lang/zh-cn'
 import { get } from 'lodash-unified'
 import type { Ref } from 'vue'
 import type { Language } from '@vue-maplibre/locale'
