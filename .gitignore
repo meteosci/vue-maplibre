@@ -1,6 +1,6 @@
 # Editor directories and files
 .idea
-.vscode
+# .vscode
 
 # Package Manager
 node_modules
