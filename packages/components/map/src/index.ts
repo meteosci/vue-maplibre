@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-08 09:41:25
+ * @LastEditTime: 2024-06-14 15:29:44
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import {
@@ -21,7 +21,7 @@ import {
 } from 'vue'
 import { Map, MapOptions } from 'maplibre-gl'
 import useLog from '@vue-maplibre/composables/private/use-log'
-import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider } from '@vue-maplibre/utils/types'
+import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmReadyObject } from '@vue-maplibre/utils/types'
 import { kebabCase } from 'lodash-unified'
 import { hSlot } from '@vue-maplibre/utils/private/render'
 import { commonEmits } from '@vue-maplibre/utils/private/emits'
@@ -299,9 +299,68 @@ export default defineComponent({
 
 export type VmMapEmits = typeof emits
 
-export type VmMapProps = Partial<ExtractPropTypes<typeof mapProps>>
+export type VmMapProps = Partial<
+  ExtractPropTypes<
+    typeof mapProps & {
+      /**
+       * Triggers before the maplibreObject is loaded.
+       * @param instance
+       * @returns
+       */
+      onBeforeLoad: (instance: VmComponentInternalInstance) => void
+      /**
+       * Triggers when the maplibreObject is successfully loaded.
+       * @param readyObj
+       * @returns
+       */
+      onReady: (readyObj: VmReadyObject) => void
+      /**
+       * Triggers when the maplibreObject loading failed.
+       * @param e
+       * @returns
+       */
+      onUnready: (e: any) => void
+      /**
+       * Triggers when the maplibreObject is destroyed.
+       * @param instance
+       * @returns
+       */
+      onDestroyed: (instance: VmComponentInternalInstance) => void
+      /**
+       * Triggers when the zoom changed.
+       * @param zoom
+       * @returns
+       */
+      'onUpdate:zoom': (zoom: number) => void
+      /**
+       * Triggers when the center changed.
+       * @param center
+       * @returns
+       */
+      'onUpdate:center': (center: number) => void
+      /**
+       * Triggers when the bearing changed.
+       * @param bearing
+       * @returns
+       */
+      'onUpdate:bearing': (bearing: number) => void
+      /**
+       * Triggers when the pitch changed.
+       * @param pitch
+       * @returns
+       */
+      'onUpdate:pitch': (pitch: number) => void
+      /**
+       * Triggers when touch end.
+       * @param evt
+       * @returns
+       */
+      onTouchEnd: (evt: TouchEvent) => void
+    }
+  >
+>
 
-export type VcViewerRef = VmComponentPublicInstance<VmMapProps>
+export type VmMapRef = VmComponentPublicInstance<VmMapProps>
 
 export interface VmMapSlots {
   /**

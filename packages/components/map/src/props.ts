@@ -74,7 +74,7 @@ export default {
     default: 'bottom-left'
   },
   /**
-   * If `true`, map creation will fail if the performance of MapLibre GL JS would be dramatically worse than expected
+   * If `true`, map creation will fail if the performance of MapLibre GL JS would be dramatically worse than expected.
    * (i.e. a software renderer would be used).
    * @defaultValue false
    */
@@ -355,7 +355,7 @@ export default {
    * @defaultValue 'sans-serif'
    */
   localIdeographFontFamily: {
-    type: String,
+    type: [String, Boolean],
     default: 'sans-serif'
   },
   /**

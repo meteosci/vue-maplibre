@@ -3,7 +3,7 @@
  * @Date: 2024-02-02 16:11:56
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-05-13 17:20:23
+ * @LastEditTime: 2024-06-14 15:39:51
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
@@ -67,7 +67,7 @@ export interface VmComponentInternalInstance extends ComponentInternalInstance {
 export type VmComponentPublicInstance<T = any> = ComponentPublicInstance<
   T & {
     /**
-     * Load components manually.
+     * Load the component manually.
      */
     load(): Promise<VmReadyObject | boolean>
     /**
@@ -75,7 +75,7 @@ export type VmComponentPublicInstance<T = any> = ComponentPublicInstance<
      */
     unload(): Promise<boolean>
     /**
-     * Reload components manually.
+     * Reload the component manually.
      */
     reload(): Promise<boolean>
     /**
