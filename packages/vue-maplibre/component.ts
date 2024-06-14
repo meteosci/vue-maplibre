@@ -3,12 +3,12 @@
  * @Date: 2024-02-05 16:28:53
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-25 23:09:38
+ * @LastEditTime: 2024-06-14 17:15:22
  * @FilePath: \vue-maplibre\packages\vue-maplibre\component.ts
  */
 
 // config
-// import VcConfigProvider from '@vue-cesium/components/config-provider'
+import VmConfigProvider from '@vue-maplibre/components/config-provider'
 
 // Map
 import { VmMap } from '@vue-maplibre/components/map'
@@ -21,4 +21,4 @@ import { VmControlNavigation, VmControlTerrain } from '@vue-maplibre/components/
 
 import type { Plugin } from 'vue'
 
-export default [VmMap, VmLayerGltf, VmLayerNative, VmControlNavigation, VmControlTerrain] as Plugin[]
+export default [VmConfigProvider, VmMap, VmLayerGltf, VmLayerNative, VmControlNavigation, VmControlTerrain] as Plugin[]

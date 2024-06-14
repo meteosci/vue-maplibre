@@ -17,7 +17,7 @@ import {
   ComponentCustomProps
 } from 'vue'
 
-import { VmMapProps, VmMapSlots, VmLayerGltfProps, VmLayerNativeProps, VmControlNavigationProps, VmControlTerrainProps } from '@meteosci/vue-maplibre'
+import { VmConfigProviderProps, VmConfigProviderSlots, VmMapProps, VmMapSlots, VmLayerGltfProps, VmLayerNativeProps, VmControlNavigationProps, VmControlTerrainProps } from '@meteosci/vue-maplibre'
 
 export type StringDictionary<T extends string> = Required<{ [index in T]: string }>
 
@@ -70,10 +70,13 @@ export type GlobalComponentConstructor<Props = EmptyObject, Slots = EmptyObject>
 // GlobalComponents for Volar
 declare module 'vue' {
   export interface GlobalComponents {
-    // VmConfigProvider: GlobalComponentConstructor<VmConfigProviderProps, VmConfigProviderSlots>
+    VmConfigProvider: GlobalComponentConstructor<VmConfigProviderProps, VmConfigProviderSlots>
+
     VmMap: GlobalComponentConstructor<VmMapProps, VmMapSlots>
+
     VmLayerGltf: GlobalComponentConstructor<VmLayerGltfProps>
     VmLayerNative: GlobalComponentConstructor<VmLayerNativeProps>
+
     VmControlNavigation: GlobalComponentConstructor<VmControlNavigationProps>
     VmControlTerrain: GlobalComponentConstructor<VmControlTerrainProps>
   }
