@@ -1,0 +1,14 @@
+{
+  "en-US": {
+    "source": "Source",
+    "contributors": "Contributors",
+    "component": "Component",
+    "docs": "Docs"
+  },
+  "zh-CN": {
+    "source": "Source",
+    "contributors": "Contributors",
+    "component": "Component",
+    "docs": "Docs"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "en-US": [
+    {
+      "text": "Guide",
+      "link": "/guide/installation",
+      "activeMatch": "/guide/"
+    },
+    {
+      "text": "Component",
+      "link": "/component/map",
+      "activeMatch": "/component/"
+    },
+    {
+      "text": "Resource",
+      "link": "/resource/index",
+      "activeMatch": "/resource/"
+    }
+  ],
+  "zh-CN": [
+    {
+      "text": "指南",
+      "link": "/guide/installation",
+      "activeMatch": "/guide/"
+    },
+    {
+      "text": "组件",
+      "link": "/component/map",
+      "activeMatch": "/component/"
+    },
+    {
+      "text": "资源",
+      "link": "/resource/index",
+      "activeMatch": "/resource/"
+    }
+  ]
+}

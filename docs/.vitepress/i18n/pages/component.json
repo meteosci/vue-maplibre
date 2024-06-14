@@ -1,0 +1,78 @@
+{
+  "en-US": {
+    "basic": {
+      "text": "Basic",
+      "children": [
+        {
+          "link": "/button",
+          "text": "Button"
+        },
+        {
+          "link": "/map",
+          "text": "Map"
+        }
+      ]
+    },
+    "configuration": {
+      "text": "Configuration",
+      "children": [
+        {
+          "link": "/config-provider",
+          "text": "Config Provider"
+        }
+      ]
+    },
+    "others": {
+      "text": "Others",
+      "children": [
+        {
+          "link": "/divider",
+          "text": "Divider"
+        },
+        {
+          "link": "/watermark",
+          "text": "Watermark",
+          "promotion": "2.4.0"
+        }
+      ]
+    }
+  },
+  "zh-CN": {
+    "basic": {
+      "text": "基础",
+      "children": [
+        {
+          "link": "/button",
+          "text": "按钮"
+        },
+        {
+          "link": "/map",
+          "text": "地图"
+        }
+      ]
+    },
+    "configuration": {
+      "text": "Configuration",
+      "children": [
+        {
+          "link": "/config-provider",
+          "text": "Config Provider"
+        }
+      ]
+    },
+    "others": {
+      "text": "Others",
+      "children": [
+        {
+          "link": "/divider",
+          "text": "Divider"
+        },
+        {
+          "link": "/watermark",
+          "text": "Watermark",
+          "promotion": "2.4.0"
+        }
+      ]
+    }
+  }
+}
