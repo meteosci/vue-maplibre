@@ -4,9 +4,7 @@
   "scripts": {
     "dev": "vitepress dev .",
     "build": "NODE_ENV=production && vitepress build . && tsx .vitepress/build/rebuild-pwa.ts",
-    "serve": "NODE_ENV=production vitepress serve . --port 5001",
-    "gen-locale": "rimraf .vitepress/i18n && tsx .vitepress/build/crowdin-generate.ts",
-    "crowdin-credentials": "tsx .vitepress/build/crowdin-credentials.ts"
+    "serve": "NODE_ENV=production vitepress serve . --port 5001"
   },
   "dependencies": {
     "@docsearch/js": "^3.1.0",
@@ -24,7 +22,6 @@
     "vue": "^3.2.37"
   },
   "devDependencies": {
-    "@crowdin/cli": "^3.7.10",
     "@docsearch/react": "^3.1.0",
     "@vue-maplibre/build": "workspace:*",
     "@iconify-json/ri": "^1.1.3",
