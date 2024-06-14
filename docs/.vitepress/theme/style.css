@@ -67,4 +67,12 @@
 
 .map-demo-container {
   height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+p:first-child{
+  margin-top: 0px;
+}
+p:last-child{
+  margin-bottom: 0px;
 }

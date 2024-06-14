@@ -53,6 +53,7 @@
     "@vue-maplibre/components": "workspace:*",
     "@vue-maplibre/composables": "workspace:*",
     "@vue-maplibre/demo": "workspace:*",
+    "@vue-maplibre/docs": "workspace:*",
     "@vue-maplibre/directives": "workspace:*",
     "@vue-maplibre/locale": "workspace:*",
     "@vue-maplibre/shared": "workspace:*",

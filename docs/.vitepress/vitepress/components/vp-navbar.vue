@@ -3,7 +3,7 @@
  * @Date: 2024-06-08 19:56:02
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-13 22:21:47
+ * @LastEditTime: 2024-06-14 19:50:06
  * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\vp-navbar.vue
 -->
 <script setup lang="ts">
@@ -44,7 +44,7 @@ const currentLink = computed(() => {
         <a :href="currentLink">
           <img
             class="logo"
-            src="/images/vue-maplibre-logo-mini.svg"
+            src="/images/vue-maplibre-logo.svg"
             alt="Vue Maplibre Logo"
           />
         </a>
@@ -71,7 +71,6 @@ const currentLink = computed(() => {
   align-items: center;
   height: var(--header-height);
   > a {
-    height: 72px;
     width: 128px;
   }
   .logo {

@@ -4,7 +4,7 @@
     "copy-error": "Your browser does not support copy :("
   },
   "zh-CN": {
-    "copy-success": "Copied!",
-    "copy-error": "Your browser does not support copy :("
+    "copy-success": "已复制!",
+    "copy-error": "您的浏览器不支持复制 :("
   }
 }

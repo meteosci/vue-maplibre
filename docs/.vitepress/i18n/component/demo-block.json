@@ -15,12 +15,12 @@
     "view-source": "查看源代码",
     "hide-source": "隐藏源代码",
     "edit-in-editor": "在 Playground 中编辑",
-    "edit-on-github": "\u5728 GitHub \u4E2D\u7F16\u8F91",
-    "edit-in-codepen": "\u5728 Codepen.io \u4E2D\u7F16\u8F91",
-    "copy-code": "\u590D\u5236\u4EE3\u7801",
-    "switch-button-option-text": "\u5207\u6362\u5230\u9009\u9879\u5F0F API",
-    "switch-button-setup-text": "\u5207\u6362\u5230\u7EC4\u5408\u5F0F API",
-    "copy-success": "\u5DF2\u590D\u5236\uFF01",
-    "copy-error": "\u6B64\u6D4F\u89C8\u5668\u4E0D\u652F\u6301\u81EA\u52A8\u590D\u5236\uFF01"
+    "edit-on-github": "在 GitHub 中编辑",
+    "edit-in-codepen": "在 Codepen.io 中编辑",
+    "copy-code": "复制代码",
+    "switch-button-option-text": "切换到选项式 API",
+    "switch-button-setup-text": "切换到组合式 API",
+    "copy-success": "已复制",
+    "copy-error": "此浏览器不支持自动复制"
   }
 }

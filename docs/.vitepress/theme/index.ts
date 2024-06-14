@@ -3,18 +3,20 @@
  * @Date: 2024-06-08 19:56:02
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-12 22:43:11
+ * @LastEditTime: 2024-06-14 18:07:22
  * @FilePath: \vue-maplibre\docs\.vitepress\theme\index.ts
  */
 import ElementPlus from 'element-plus'
 import VueMaplibre from '@meteosci/vue-maplibre'
-
 import VPApp, { NotFound, globals } from '../vitepress'
 import { define } from '../utils/types'
+import type { Theme } from 'vitepress'
+
 import 'uno.css'
 import './style.css'
-import '@meteosci/vue-maplibre/dist/index.css'
-import type { Theme } from 'vitepress'
+import '@vue-maplibre/theme-default/src/index.scss'
+import './normalize.scss'
+
 
 export default define<Theme>({
   NotFound,
@@ -26,5 +28,5 @@ export default define<Theme>({
     globals.forEach(([name, Comp]) => {
       app.component(name, Comp)
     })
-  },
+  }
 })

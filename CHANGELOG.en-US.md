@@ -1,19 +1,23 @@
-<!--
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-04-17 10:22:05
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-05-13 17:53:25
- * @FilePath: \vue-maplibre\CHANGELOG.en-US.md
--->
-
 ## Changelog
+
+### 0.0.8
+
+_2024-06-15_
+
+#### Features
+
+- Added global configuration component vm-config-provider.
+- Added project documentation.
+
+#### Bug fixes
+
+- Fixed the issue that event unregistration when the vm-map component is destroyed. [#1](https://github.com/meteosci/vue-maplibre/issues/1)
 
 ### 0.0.7
 
 _2024-05-13_
 
-#### New features
+#### Features
 
 - Added native layer component `vm-layer-native`, consolidating all native layers into one.
 
@@ -21,7 +25,7 @@ _2024-05-13_
 
 _2024-04-21_
 
-#### New features
+#### Features
 
 - Added the `vm-layer-symbol` component.
 
@@ -29,7 +33,7 @@ _2024-04-21_
 
 _2024-04-20_
 
-#### New features
+#### Features
 
 - Added the `vm-control-navigation` navigation control component.
 - Added the `vm-control-terrain` terrain control component.
@@ -42,7 +46,7 @@ _2024-04-20_
 
 _2024-04-18_
 
-#### New features
+#### Features
 
 - Added `vm-layer-gltf` layer component.
 
@@ -54,7 +58,7 @@ _2024-04-18_
 
 _2024-04-17_
 
-#### New features
+#### Features
 
 - Partially responsive updates for properties in the `vm-map` component.
 
@@ -66,7 +70,7 @@ _2024-04-17_
 
 _2024-04-16_
 
-#### New features
+#### Features
 
 - Added map component `vm-map`.
 
@@ -74,6 +78,6 @@ _2024-04-16_
 
 _2024-04-16_
 
-#### New features
+#### Features
 
 - Project initialization.

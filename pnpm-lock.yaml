@@ -23,6 +23,9 @@ importers:
       '@vue-maplibre/directives':
         specifier: workspace:*
         version: link:packages/directives
+      '@vue-maplibre/docs':
+        specifier: workspace:*
+        version: link:docs
       '@vue-maplibre/locale':
         specifier: workspace:*
         version: link:packages/locale
@@ -428,8 +431,8 @@ importers:
         specifier: ^2.3.1
         version: 2.3.1(vue@3.4.27)
       '@meteosci/vue-maplibre':
-        specifier: npm:@meteosci/vue-maplibre@latest
-        version: 0.0.7(@types/lodash-es@4.17.12)(vue@3.4.27)
+        specifier: workspace:*
+        version: link:../packages/vue-maplibre
       '@vue/shared':
         specifier: ^3.2.37
         version: 3.4.27
@@ -3515,23 +3518,6 @@ packages:
       rw: 1.3.3
       sort-object: 3.0.3
       tinyqueue: 2.0.3
-    dev: false
-
-  /@meteosci/vue-maplibre@0.0.7(@types/lodash-es@4.17.12)(vue@3.4.27):
-    resolution: {integrity: sha512-a3qVWko7EwgHrnTpW0xwmuGnra/CkIV7DT4le5DuzQtiol5t5dkYxqKyJDsL+e2Mwy8h5fF6lscFAWkvavxEIw==}
-    peerDependencies:
-      vue: ^3.4.0
-    dependencies:
-      gl-matrix: 3.4.3
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      lodash-unified: 1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.21)(lodash@4.17.21)
-      maplibre-gl: 4.3.2
-      mitt: 3.0.1
-      three: 0.163.0
-      vue: 3.4.27(typescript@5.4.5)
-    transitivePeerDependencies:
-      - '@types/lodash-es'
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:

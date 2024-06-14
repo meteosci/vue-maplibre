@@ -1,13 +1,17 @@
-<!--
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-04-17 10:22:05
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-05-13 17:53:13
- * @FilePath: \vue-maplibre\CHANGELOG.zh-CN.md
--->
-
 ## 更新日志
+
+### 0.0.8
+
+_2024-06-15_
+
+#### 新特性
+
+- 新增全局配置组件 `vm-config-provider` 。
+- 增加项目文档。
+
+#### Bug 修复
+
+- 地图组件 `vm-map` 销毁时事件取消注册写法错误问题。[#1](https://github.com/meteosci/vue-maplibre/issues/1)
 
 ### 0.0.7
 

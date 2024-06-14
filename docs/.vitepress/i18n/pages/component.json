@@ -1,24 +1,20 @@
 {
   "en-US": {
-    "basic": {
-      "text": "Basic",
-      "children": [
-        {
-          "link": "/button",
-          "text": "Button"
-        },
-        {
-          "link": "/map",
-          "text": "Map"
-        }
-      ]
-    },
     "configuration": {
       "text": "Configuration",
       "children": [
         {
           "link": "/config-provider",
           "text": "Config Provider"
+        }
+      ]
+    },
+    "basic": {
+      "text": "Basic",
+      "children": [
+        {
+          "link": "/map",
+          "text": "Map"
         }
       ]
     },
@@ -38,30 +34,26 @@
     }
   },
   "zh-CN": {
+    "configuration": {
+      "text": "配置",
+      "children": [
+        {
+          "link": "/config-provider",
+          "text": "全局配置"
+        }
+      ]
+    },
     "basic": {
       "text": "基础",
       "children": [
-        {
-          "link": "/button",
-          "text": "按钮"
-        },
         {
           "link": "/map",
           "text": "地图"
         }
       ]
     },
-    "configuration": {
-      "text": "Configuration",
-      "children": [
-        {
-          "link": "/config-provider",
-          "text": "Config Provider"
-        }
-      ]
-    },
     "others": {
-      "text": "Others",
+      "text": "其他",
       "children": [
         {
           "link": "/divider",

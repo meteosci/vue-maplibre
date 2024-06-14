@@ -18,9 +18,9 @@
     "masterGo2024Intro": "MasterGo component library with optimized adaptive layouts, more complete component states, and variant switching."
   },
   "zh-CN": {
-    "title": "Resources",
-    "lineOne": "More resources are still under development. ",
-    "lineTwo": "If you are interested in participating in the design of Element Plus, be our guest to contact us via <span><a href=\"mailto:element-plus@outlook.com\" target=\"_blank\">element-plus@outlook.com</a></span>.",
+    "title": "资源",
+    "lineOne": "更多设计资源正在处于开发状态。",
+    "lineTwo": "如果您有兴趣参与 Vue Maplibre 的设计，请通过 <span><a href='mailto:370681295@qq.com' target='_blank'>370681295@qq.com</a></span> 联系我们。",
     "download": "Download",
     "axure": "Axure Components",
     "axureIntro": "By importing Element Plus in Axure, you can easily apply all the components we provide during interaction design.",

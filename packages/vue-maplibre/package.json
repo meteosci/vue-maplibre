@@ -19,6 +19,7 @@
     "vue",
     "webgis"
   ],
+  "main": "index.ts",
   "license": "MIT",
   "peerDependencies": {
     "vue": "^3.4.0"
