@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-19 23:48:51
+ * @LastEditTime: 2024-06-14 21:43:04
  * @FilePath: \vue-maplibre\packages\components\control\navigation\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -26,10 +26,20 @@ export default defineComponent({
   setup(props, ctx) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const logger = useLog(instance)
-    const { t } = useLocale()
+    const { t, locale } = useLocale()
     instance.maplibreEvents = []
     instance.className = 'NavigationControl'
     instance.alreadyListening = []
+
+    watch(
+      () => locale.value,
+      val => {
+        const control = instance.maplibreObject as NavigationControl
+        if (control) {
+          commonState.reload()
+        }
+      }
+    )
 
     const commonState = useCommon(props, ctx, instance)
 

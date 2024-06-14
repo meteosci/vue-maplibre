@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-14 15:29:44
+ * @LastEditTime: 2024-06-14 22:01:37
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import {
@@ -22,7 +22,7 @@ import {
 import { Map, MapOptions } from 'maplibre-gl'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmReadyObject } from '@vue-maplibre/utils/types'
-import { kebabCase } from 'lodash-unified'
+import { kebabCase, map } from 'lodash-unified'
 import { hSlot } from '@vue-maplibre/utils/private/render'
 import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { TouchHold } from '@vue-maplibre/directives'
@@ -52,7 +52,7 @@ export default defineComponent({
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const mapRef = ref<HTMLElement>()
     const logger = useLog(instance)
-    const { t } = useLocale()
+    const { t, locale } = useLocale()
     instance.maplibreEvents = [...Object.keys(mapEmits)]
     instance.className = 'Map'
     instance.alreadyListening = [
@@ -174,8 +174,17 @@ export default defineComponent({
       }
     )
 
-    const commonState = useCommon(props, ctx, instance)
+    watch(
+      () => locale.value,
+      val => {
+        const map = instance.map
+        if (map) {
+          map._locale = val.vm.mapLocale as any
+        }
+      }
+    )
 
+    const commonState = useCommon(props, ctx, instance)
     if (commonState === void 0) {
       logger.error(`${instance.className} ${t('vm.loadError')}`)
       return
@@ -197,6 +206,10 @@ export default defineComponent({
         }
         options[vueProp] = props[vueProp]
       })
+
+      if (!options.locale) {
+        options.locale = locale.value.vm.mapLocale
+      }
 
       const map = new Map(options)
 
