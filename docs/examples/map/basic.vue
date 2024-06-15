@@ -1,6 +1,6 @@
 <template>
   <div class="map-demo-container">
-    <vm-map map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom"></vm-map>
+    <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom"></VmMap>
   </div>
 </template>
 

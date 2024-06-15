@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 // import { ElMessageBox } from 'element-plus'
 import nprogress from 'nprogress'
 // import dayjs from 'dayjs'
@@ -15,11 +15,14 @@ import VPSubNav from './vp-subnav.vue'
 import VPSidebar from './vp-sidebar.vue'
 import VPContent from './vp-content.vue'
 import VPSponsors from './vp-sponsors.vue'
+import { useLang } from '../composables/lang'
+import zhCn from '@vue-maplibre/locale/lang/zh-cn'
+import en from '@vue-maplibre/locale/lang/en-us'
 
 // const USER_PREFER_GITHUB_PAGE = 'USER_PREFER_GITHUB_PAGE'
 const [isSidebarOpen, toggleSidebar] = useToggle(false)
 const { hasSidebar } = useSidebar()
-// const lang = useLang()
+const lang = useLang()
 
 // const mirrorUrl = 'element-plus.gitee.io'
 // const isMirrorUrl = () => {
@@ -34,7 +37,7 @@ useToggleWidgets(isSidebarOpen, () => {
   }
 })
 
-useEventListener('keydown', (e) => {
+useEventListener('keydown', e => {
   if (!isClient) return
   if (e.key === 'Escape' && isSidebarOpen.value) {
     toggleSidebar(false)
@@ -48,7 +51,7 @@ onMounted(async () => {
   if (!isClient) return
   window.addEventListener(
     'click',
-    (e) => {
+    e => {
       const link = (e.target as HTMLElement).closest('a')
       if (!link) return
 
@@ -106,53 +109,49 @@ onMounted(async () => {
   //   }
   // }
   // unregister sw
-  navigator?.serviceWorker?.getRegistrations().then((registrations) => {
+  navigator?.serviceWorker?.getRegistrations().then(registrations => {
     for (const registration of registrations) {
       registration.unregister()
     }
   })
 })
+
+const locale = computed(() => (lang.value === 'zh-CN' ? zhCn : en))
 </script>
 
 <template>
-  <div class="App">
-    <VPSkipLink />
-    <VPOverlay
-      class="overlay"
-      :show="isSidebarOpen"
-      @click="toggleSidebar(false)"
-    />
-    <VPNav />
-    <VPSubNav
-      v-if="hasSidebar"
-      :is-sidebar-open="isSidebarOpen"
-      @open-menu="toggleSidebar(true)"
-    />
-    <VPSidebar :open="isSidebarOpen" @close="toggleSidebar(false)">
-      <template #top>
-        <VPSponsors />
-      </template>
-      <template #bottom>
-        <slot name="sidebar-bottom" />
-      </template>
-    </VPSidebar>
-    <VPContent :is-sidebar-open="isSidebarOpen">
-      <template #content-top>
-        <slot name="content-top" />
-      </template>
-      <template #content-bottom>
-        <slot name="content-bottom" />
-      </template>
-      <template #aside-top>
-        <slot name="aside-top" />
-      </template>
-      <template #aside-mid>
-        <slot name="aside-mid" />
-      </template>
-      <template #aside-bottom>
-        <slot name="aside-bottom" />
-      </template>
-    </VPContent>
-    <Debug />
-  </div>
+  <VmConfigProvider :locale="locale">
+    <div class="App">
+      <VPSkipLink />
+      <VPOverlay class="overlay" :show="isSidebarOpen" @click="toggleSidebar(false)" />
+      <VPNav />
+      <VPSubNav v-if="hasSidebar" :is-sidebar-open="isSidebarOpen" @open-menu="toggleSidebar(true)" />
+      <VPSidebar :open="isSidebarOpen" @close="toggleSidebar(false)">
+        <template #top>
+          <VPSponsors />
+        </template>
+        <template #bottom>
+          <slot name="sidebar-bottom" />
+        </template>
+      </VPSidebar>
+      <VPContent :is-sidebar-open="isSidebarOpen">
+        <template #content-top>
+          <slot name="content-top" />
+        </template>
+        <template #content-bottom>
+          <slot name="content-bottom" />
+        </template>
+        <template #aside-top>
+          <slot name="aside-top" />
+        </template>
+        <template #aside-mid>
+          <slot name="aside-mid" />
+        </template>
+        <template #aside-bottom>
+          <slot name="aside-bottom" />
+        </template>
+      </VPContent>
+      <Debug />
+    </div>
+  </VmConfigProvider>
 </template>

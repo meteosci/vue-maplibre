@@ -3,7 +3,7 @@
  * @Date: 2024-06-08 19:56:02
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-11 00:09:37
+ * @LastEditTime: 2024-06-15 16:36:49
  * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\composables\translation.ts
  */
 import { computed } from 'vue'
@@ -25,7 +25,7 @@ export const useTranslation = () => {
     'zh-CN': '中文',
     'es-ES': 'Español',
     'fr-FR': 'Français',
-    'ja-JP': '日本語',
+    'ja-JP': '日本語'
   }
 
   const locale = computed(() => translationLocale[lang.value])
@@ -46,8 +46,6 @@ export const useTranslation = () => {
     return currentLang === 'zh-CN' ? langsCopy : ['zh-CN'].concat(langsCopy)
   })
 
-  window.langsRef = langsRef
-
   const language = useStorage(PREFERRED_LANG_KEY, 'en-US')
 
   const switchLang = (targetLang: string) => {
@@ -64,7 +62,7 @@ export const useTranslation = () => {
     if (isClient) {
       navigator?.serviceWorker.controller?.postMessage({
         type: 'LANG',
-        lang: targetLang,
+        lang: targetLang
       })
     }
   }
@@ -74,6 +72,6 @@ export const useTranslation = () => {
     languageMap,
     langs: langsRef,
     lang,
-    switchLang,
+    switchLang
   }
 }

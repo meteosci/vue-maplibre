@@ -3,14 +3,14 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-14 21:43:04
+ * @LastEditTime: 2024-06-15 00:07:02
  * @FilePath: \vue-maplibre\packages\components\control\navigation\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
 import props from './props'
 import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
-import { VmComponentInternalInstance, VmComponentPublicInstance } from '@vue-maplibre/utils/types'
+import { VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { kebabCase } from 'lodash-es'
 import { NavigationControl, type NavigationControlOptions } from 'maplibre-gl'
@@ -56,7 +56,7 @@ export default defineComponent({
     instance.mount = async () => {
       const { map } = commonState.$services
       const control = instance.maplibreObject as NavigationControl
-      map.addControl(control)
+      map.addControl(control, props.position)
       logger.debug(`${instance.proxy?.$options.name}-mounted`)
       return true
     }
@@ -76,6 +76,35 @@ export default defineComponent({
 
 export type VmControlNavigationEmits = typeof emits
 
-export type VmControlNavigationProps = Partial<ExtractPropTypes<typeof props>>
+export type VmControlNavigationProps = Partial<
+  ExtractPropTypes<
+    typeof props & {
+      /**
+       * Triggers before the maplibreObject is loaded.
+       * @param instance
+       * @returns
+       */
+      onBeforeLoad: (instance: VmComponentInternalInstance) => void
+      /**
+       * Triggers when the maplibreObject is successfully loaded.
+       * @param readyObj
+       * @returns
+       */
+      onReady: (readyObj: VmReadyObject) => void
+      /**
+       * Triggers when the maplibreObject loading failed.
+       * @param e
+       * @returns
+       */
+      onUnready: (e: any) => void
+      /**
+       * Triggers when the maplibreObject is destroyed.
+       * @param instance
+       * @returns
+       */
+      onDestroyed: (instance: VmComponentInternalInstance) => void
+    }
+  >
+>
 
 export type VmControlNavigationRef = VmComponentPublicInstance<VmControlNavigationProps>

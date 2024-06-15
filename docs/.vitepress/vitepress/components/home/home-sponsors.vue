@@ -1,3 +1,11 @@
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-08 19:56:02
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-14 23:17:00
+ * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\home\home-sponsors.vue
+-->
 <script lang="ts" setup>
 import { goldSponsors, platinumSponsors } from '../../../config/sponsors'
 
@@ -7,7 +15,7 @@ import SponsorList from './sponsor-list.vue'
 
 <template>
   <div class="sponsors-container" m="auto">
-    <SponsorList :sponsors="platinumSponsors" sponsor-type="platinumSponsor" />
+    <!-- <SponsorList :sponsors="platinumSponsors" sponsor-type="platinumSponsor" /> -->
     <SponsorList :sponsors="goldSponsors" sponsor-type="goldSponsor" />
 
     <sponsors-button round />
