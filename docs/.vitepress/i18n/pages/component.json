@@ -35,8 +35,8 @@
       "text": "Layers",
       "children": [
         {
-          "link": "/native",
-          "text": "Native"
+          "link": "/layer-native",
+          "text": "NativeLayer"
         }
       ]
     },
@@ -91,7 +91,7 @@
       "text": "图层",
       "children": [
         {
-          "link": "/native",
+          "link": "/layer-native",
           "text": "原生图层"
         }
       ]

@@ -3,14 +3,14 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-26 00:31:52
+ * @LastEditTime: 2024-06-15 17:26:38
  * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
 import props from './props'
 import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
-import { AnyObject, VmComponentInternalInstance, VmComponentPublicInstance } from '@vue-maplibre/utils/types'
+import { AnyObject, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { kebabCase } from 'lodash-es'
 import { AddLayerObject } from 'maplibre-gl'
@@ -124,6 +124,35 @@ export default defineComponent({
 
 export type VmLayerNativeEmits = typeof emits
 
-export type VmLayerNativeProps = Partial<ExtractPropTypes<typeof props>>
+export type VmLayerNativeProps = Partial<
+  ExtractPropTypes<
+    typeof props & {
+      /**
+       * Triggers before the maplibreObject is loaded.
+       * @param instance
+       * @returns
+       */
+      onBeforeLoad: (instance: VmComponentInternalInstance) => void
+      /**
+       * Triggers when the maplibreObject is successfully loaded.
+       * @param readyObj
+       * @returns
+       */
+      /**
+       onReady: (readyObj: VmReadyObject) => void
+       * Triggers when the maplibreObject loading failed.
+       * @param e
+       * @returns
+       */
+      onUnready: (e: any) => void
+      /**
+       * Triggers when the maplibreObject is destroyed.
+       * @param instance
+       * @returns
+       */
+      onDestroyed: (instance: VmComponentInternalInstance) => void
+    }
+  >
+>
 
 export type VmLayerNativeRef = VmComponentPublicInstance<VmLayerNativeProps>
