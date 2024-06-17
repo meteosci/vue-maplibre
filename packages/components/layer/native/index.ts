@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-15 17:26:38
+ * @LastEditTime: 2024-06-17 14:54:36
  * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -13,7 +13,7 @@ import { useCommon, useLocale } from '@vue-maplibre/composables'
 import { AnyObject, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { kebabCase } from 'lodash-es'
-import { AddLayerObject } from 'maplibre-gl'
+import { AddLayerObject, RasterDEMSourceSpecification } from 'maplibre-gl'
 
 const emits = {
   ...commonEmits
@@ -101,9 +101,20 @@ export default defineComponent({
         options[vueProp] = props[vueProp]
       })
 
-      map.addLayer(options as AddLayerObject)
+      if (props.type === 'raster-dem') {
+        const source = props.source as RasterDEMSourceSpecification
+        map.addSource(props.id, source)
 
-      return map.getLayer(layerOptions.id)
+        map.setTerrain({
+          source: props.id,
+          exaggeration: props.exaggeration
+        })
+
+        return map.getTerrain()
+      } else {
+        map.addLayer(options as AddLayerObject)
+        return map.getLayer(layerOptions.id)
+      }
     }
 
     instance.mount = async () => {
@@ -113,7 +124,20 @@ export default defineComponent({
 
     instance.unmount = async () => {
       const { map } = commonState.$services
-      map.removeLayer(props.id)
+
+      if (props.type === 'raster-dem') {
+        if (map.getTerrain()) {
+          map.setTerrain(null)
+        }
+      } else {
+        if (map.getLayer(props.id)) {
+          map.removeLayer(props.id)
+        }
+        if (map.getSource(props.id)) {
+          map.removeSource(props.id)
+        }
+      }
+
       logger.debug(`${instance.proxy?.$options.name}-unmounted`)
       return true
     }

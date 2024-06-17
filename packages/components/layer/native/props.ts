@@ -3,7 +3,7 @@
  * @Date: 2024-04-21 18:02:13
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-15 19:50:48
+ * @LastEditTime: 2024-06-17 14:53:25
  * @FilePath: \vue-maplibre\packages\components\layer\native\props.ts
  */
 import type {
@@ -49,7 +49,9 @@ export default {
    * background: The background color or pattern of the map.
    */
   type: {
-    type: String as PropType<'fill' | 'line' | 'symbol' | 'symbol' | 'circle' | 'heatmap' | 'fill-extrusion' | 'raster' | 'hillshade' | 'background'>,
+    type: String as PropType<
+      'fill' | 'line' | 'symbol' | 'symbol' | 'circle' | 'heatmap' | 'fill-extrusion' | 'raster' | 'hillshade' | 'background' | 'raster-dem'
+    >,
     required: true
   },
   /**
@@ -65,6 +67,13 @@ export default {
   source: {
     type: [String, Object] as PropType<string | SourceSpecification>,
     required: true
+  },
+  /**
+   * multiplicator for the elevation. Used to make terrain more "extreme". works when type is 'raster-dem'.
+   */
+  exaggeration: {
+    type: Number,
+    default: 1
   },
   /**
    * Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources.

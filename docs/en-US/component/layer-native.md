@@ -5,7 +5,7 @@ lang: en-US
 
 # VmLayerNative
 
-The `VmLayerNative` component is used to load native layers onto the map. The supported layer types include 'fill', 'line', 'symbol', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'hillshade', and 'background'. [see](https://maplibre.org/maplibre-style-spec/layers/)
+The `VmLayerNative` component is used to load native layers onto the map. The supported layer types include 'fill', 'line', 'symbol', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'hillshade', and 'background'. [see](https://maplibre.org/maplibre-style-spec/layers/). And a extension type 'raster-dem' for terrain.
 
 ## Basic usage
 
@@ -20,6 +20,14 @@ layer-native/openstreetmap
 :::demo Use VmLayerNative component to draw points from a GeoJSON collection to a map.
 
 layer-native/geojson-points
+
+:::
+
+## 3D Terrain
+
+:::demo Use VmLayerNative component to go beyond hillshade and show elevation in actual 3D.
+
+layer-native/3d-terrain
 
 :::
 

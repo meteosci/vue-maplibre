@@ -5,7 +5,7 @@ lang: zh-CN
 
 # VmLayerNative
 
-VmLayerNative组件用于加载原生图层到地图。支持的图层类型包括'fill' | 'line' | 'symbol' | 'symbol' | 'circle' | 'heatmap' | 'fill-extrusion' | 'raster' | 'hillshade' | 'background'。 [参考](https://maplibre.org/maplibre-style-spec/layers/)
+VmLayerNative组件用于加载原生图层到地图。支持的图层类型包括 'fill' | 'line' | 'symbol' | 'symbol' | 'circle' | 'heatmap' | 'fill-extrusion' | 'raster' | 'hillshade' | 'background'。 [参考](https://maplibre.org/maplibre-style-spec/layers/)。以及一个扩展类型：'raster-dem' 用于加载地形。
 
 ## 基础用法
 
@@ -22,6 +22,15 @@ layer-native/openstreetmap
 layer-native/geojson-points
 
 :::
+
+## 地形
+
+:::demo 用 VmLayerNative 组件显示地形高程的山丘阴影。
+
+layer-native/3d-terrain
+
+:::
+
 
 ## API
 
