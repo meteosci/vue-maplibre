@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 14:54:36
+ * @LastEditTime: 2024-06-17 15:07:47
  * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -162,8 +162,8 @@ export type VmLayerNativeProps = Partial<
        * @param readyObj
        * @returns
        */
+      onReady: (readyObj: VmReadyObject) => void
       /**
-       onReady: (readyObj: VmReadyObject) => void
        * Triggers when the maplibreObject loading failed.
        * @param e
        * @returns

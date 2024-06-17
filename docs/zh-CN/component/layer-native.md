@@ -41,7 +41,7 @@ layer-native/3d-terrain
 | ------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------- |
 | id | Unique layer name. | ^[string] | - |
 | beforeId | The ID of an existing layer to insert the new layer before, resulting in the new layer appearing visually beneath the existing layer. If this argument is not specified, the layer will be appended to the end of the layers array and appear visually above all other layers. | ^[string] | - |
-| type |Rendering type of this layer.. | ^[enum]`'fill' \| 'line' \| 'symbol' \| 'circle' \| 'heatmap' \| 'fill-extrusion' \| 'raster' \| 'hillshade' \| 'background'` | - |
+| type | Rendering type of this layer. | ^[enum]`'fill' \| 'line' \| 'symbol' \| 'circle' \| 'heatmap' \| 'fill-extrusion' \| 'raster' \| 'hillshade' \| 'background'` | - |
 | metadata | Arbitrary properties useful to track with the layer, but do not influence rendering. Properties should be prefixed to avoid collisions, like 'maplibre:'. | ^[object]`any` | - |
 | source | Name of a source description to be used for this layer. Required for all layer types except. | ^[string] / ^[object]`SourceSpecification` | - |
 | sourceLayer | Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources. | ^[string] | - |

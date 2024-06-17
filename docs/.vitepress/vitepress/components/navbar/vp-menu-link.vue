@@ -1,3 +1,11 @@
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-14 11:12:54
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-17 09:36:57
+ * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\navbar\vp-menu-link.vue
+-->
 <script lang="ts" setup>
 import { useRoute } from 'vitepress'
 import { useStorage } from '@vueuse/core'
@@ -69,7 +77,7 @@ const onNavClick = (item: Link) => {
     vertical-align: unset;
   }
 
-  .badge:deep(.is-dot) {
+  .badge::v-deep(.is-dot) {
     right: 0;
   }
 }

@@ -7,7 +7,7 @@
     },
     {
       "text": "Component",
-      "link": "/component/map",
+      "link": "/component/config-provider",
       "activeMatch": "/component/"
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "text": "组件",
-      "link": "/component/map",
+      "link": "/component/config-provider",
       "activeMatch": "/component/"
     },
     {

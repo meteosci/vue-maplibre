@@ -65,4 +65,4 @@ We provide a [Vite Template](https://github.com/meteosci/vue-maplibre-vite-start
 ## Let's Get Started
 
 You can bootstrap your project from now on. For each components usage, please
-refer to [the individual component documentation](/en-US/component/map.html).
+refer to [the individual component documentation](/en-US/component/config-provider.html).

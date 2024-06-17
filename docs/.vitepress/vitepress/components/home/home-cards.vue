@@ -15,7 +15,7 @@ const homeLang = computed(() => homeLocale[lang.value])
       <h3>{{ homeLang['3'] }}</h3>
       <p>{{ homeLang['4'] }}</p>
       <template #footer>
-        <a :href="`/${lang}/guide/design.html`">{{ homeLang['5'] }}</a>
+        <a :href="`/${lang}/guide/installation.html`">{{ homeLang['5'] }}</a>
       </template>
     </el-card>
     <el-card shadow="hover">
@@ -23,7 +23,7 @@ const homeLang = computed(() => homeLocale[lang.value])
       <h3>{{ homeLang['6'] }}</h3>
       <p>{{ homeLang['7'] }}</p>
       <template #footer>
-        <a :href="`/${lang}/component/overview.html`">
+        <a :href="`/${lang}/component/config-provider.html`">
           {{ homeLang['5'] }}
         </a>
       </template>

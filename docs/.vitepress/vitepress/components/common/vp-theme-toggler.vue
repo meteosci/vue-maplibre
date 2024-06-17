@@ -74,7 +74,7 @@ const beforeChange = (): Promise<boolean> => {
 </template>
 
 <style lang="scss" scoped>
-:deep(.el-switch__core) {
+::v-deep(.el-switch__core) {
   --el-switch-on-color: var(--bg-color-mute);
   --el-switch-off-color: var(--bg-color-mute);
   --el-switch-border-color: var(--border-color);
@@ -85,13 +85,13 @@ const beforeChange = (): Promise<boolean> => {
   }
 }
 
-:deep(.dark-icon) {
+::v-deep(.dark-icon) {
   border-radius: 50%;
   color: #cfd3dc;
   background-color: #141414;
 }
 
-:deep(.light-icon) {
+::v-deep(.light-icon) {
   color: #606266;
 }
 </style>

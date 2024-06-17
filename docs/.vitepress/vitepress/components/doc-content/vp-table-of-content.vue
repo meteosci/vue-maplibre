@@ -1,3 +1,11 @@
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-14 11:12:54
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-17 09:36:29
+ * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\doc-content\vp-table-of-content.vue
+-->
 <script setup lang="ts">
 import { computed } from 'vue'
 import MarkdownIt from 'markdown-it'
@@ -59,7 +67,7 @@ const sponsor = computed(() => sponsorLocale[lang.value])
   </aside>
 </template>
 <style scoped lang="scss">
-.sponsors-button:deep {
+.sponsors-button::v-deep {
   button {
     width: 100%;
   }

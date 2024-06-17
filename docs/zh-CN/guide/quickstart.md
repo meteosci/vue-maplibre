@@ -63,4 +63,4 @@ import { VmMap } from '@meteosci/vue-maplibre'
 
 ## 开始使用
 
-现在你可以启动项目了。 对于每个组件的用法，请查阅 [对应的独立文档](/en-US/component/map.html).
+现在你可以启动项目了。 对于每个组件的用法，请查阅 [对应的独立文档](/zh-CN/component/config-provider.html).

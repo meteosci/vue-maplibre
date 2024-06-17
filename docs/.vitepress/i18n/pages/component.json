@@ -37,22 +37,16 @@
         {
           "link": "/layer-native",
           "text": "NativeLayer"
+        },
+        {
+          "link": "/layer-gltf",
+          "text": "GLTFLayer"
         }
       ]
     },
     "others": {
       "text": "Others",
-      "children": [
-        {
-          "link": "/divider",
-          "text": "Divider"
-        },
-        {
-          "link": "/watermark",
-          "text": "Watermark",
-          "promotion": "2.4.0"
-        }
-      ]
+      "children": []
     }
   },
   "zh-CN": {
@@ -93,22 +87,16 @@
         {
           "link": "/layer-native",
           "text": "原生图层"
+        },
+        {
+          "link": "/layer-gltf",
+          "text": "GLTF 图层"
         }
       ]
     },
     "others": {
       "text": "其他",
-      "children": [
-        {
-          "link": "/divider",
-          "text": "Divider"
-        },
-        {
-          "link": "/watermark",
-          "text": "Watermark",
-          "promotion": "2.4.0"
-        }
-      ]
+      "children": []
     }
   }
 }
