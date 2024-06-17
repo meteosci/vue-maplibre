@@ -65,7 +65,7 @@
     "lodash-unified": "^1.0.3",
     "maplibre-gl": "^4.4.0",
     "mitt": "^3.0.1",
-    "three": "^0.163.0"
+    "three": "^0.165.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.2",

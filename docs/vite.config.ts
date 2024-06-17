@@ -16,7 +16,7 @@ import {
   projRoot,
 } from '@vue-maplibre/build'
 import { MarkdownTransform } from './.vitepress/plugins/markdown-transform'
-
+import commonjs from '@rollup/plugin-commonjs'
 import type { Alias } from 'vite'
 
 const alias: Alias[] = [
@@ -47,7 +47,7 @@ export default defineConfig(async ({ mode }) => {
   const optimizeDeps = [...new Set([...epDeps, ...docsDeps])].filter(
     dep =>
       !dep.startsWith('@types/') &&
-      !['@element-plus/metadata', 'element-plus'].includes(dep)
+      !['@vue-maplibre/metadata', '@meteosci/vue-maplibre'].includes(dep)
   )
 
   optimizeDeps.push(
@@ -77,6 +77,7 @@ export default defineConfig(async ({ mode }) => {
         },
       }),
 
+      commonjs(),
       // https://github.com/antfu/unplugin-vue-components
       Components({
         dirs: ['.vitepress/vitepress/components'],
@@ -106,5 +107,8 @@ export default defineConfig(async ({ mode }) => {
     optimizeDeps: {
       include: optimizeDeps,
     },
+    build: {
+      chunkSizeWarningLimit: 2048
+    }
   }
 })

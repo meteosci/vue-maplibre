@@ -3,7 +3,7 @@
  * @Date: 2024-06-08 19:56:02
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-14 19:50:06
+ * @LastEditTime: 2024-06-17 16:24:57
  * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\vp-navbar.vue
 -->
 <script setup lang="ts">
@@ -50,7 +50,7 @@ const currentLink = computed(() => {
         </a>
       </div>
       <div class="content">
-        <VPNavbarSearch class="search" :options="theme.agolia" multilang />
+        <!-- <VPNavbarSearch class="search" :options="theme.agolia" multilang /> -->
         <VPNavbarMenu class="menu" />
         <VPNavbarThemeToggler class="theme-toggler" />
         <VPNavbarTranslation class="translation" />

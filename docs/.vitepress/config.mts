@@ -62,8 +62,8 @@ export const config: UserConfig = {
     editLinkText: 'Edit this page on GitHub',
     lastUpdated: 'Last Updated',
 
-    logo: '/images/element-plus-logo.svg',
-    logoSmall: '/images/element-plus-logo-small.svg',
+    logo: '/images/vue-maplibre-logo.svg',
+    logoSmall: '/images/vue-maplibre-logo-mini.svg',
     sidebars,
     nav,
     agolia: {

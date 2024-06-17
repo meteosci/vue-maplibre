@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "lib": ["WebWorker"],
     "paths": {
-      "element-plus": ["../packages/element-plus"],
+      "@meteosci/vue-maplibre": ["../packages/vue-maplibre"],
       "~/*": ["./.vitepress/vitepress/*"]
     },
     "types": ["../typings/components"],

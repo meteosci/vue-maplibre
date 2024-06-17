@@ -111,7 +111,7 @@ const calcContributors = (commits: ApiResult['nodes']) => {
 const getContributorsByComponents = async (components: string[]) => {
   let options: FetchOption[] = components.flatMap(component => [
     { key: component, path: `packages/components/${component}` },
-    { key: component, path: `packages/theme-chalk/src/${component}.scss` },
+    { key: component, path: `packages/theme-default/src/${component}.scss` },
     { key: component, path: `docs/examples/${component}` },
     { key: component, path: `docs/en-US/component/${component}.md` }
   ])

@@ -3,7 +3,7 @@
  * @Date: 2023-08-27 00:21:46
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 15:49:21
+ * @LastEditTime: 2024-06-17 17:44:06
  * @FilePath: \vue-maplibre\packages\shared\layer\GLTFLayer.ts
  */
 import { LngLat, Map } from 'maplibre-gl'
