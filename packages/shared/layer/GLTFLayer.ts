@@ -3,10 +3,10 @@
  * @Date: 2023-08-27 00:21:46
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-18 00:26:43
+ * @LastEditTime: 2024-06-17 15:49:21
  * @FilePath: \vue-maplibre\packages\shared\layer\GLTFLayer.ts
  */
-import { Map } from 'maplibre-gl'
+import { LngLat, Map } from 'maplibre-gl'
 import { MercatorCoordinate } from 'maplibre-gl'
 import CustomLayer from './CustomLayer'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,7 +48,7 @@ export default class CustomGLTFLayer extends CustomLayer {
 
   constructor(options: GLTFLayerOptions) {
     super(options)
-
+    this.renderingMode = '3d'
     this.camera = new Camera()
     this.scene = new Scene()
   }
@@ -58,7 +58,14 @@ export default class CustomGLTFLayer extends CustomLayer {
 
     const { position, rotate, scale } = this.options
 
-    const [lng, lat, altitude] = position
+    const [lng, lat] = position
+    const altitude = position?.[2] || 0
+
+    // if (options.clampToGround) {
+    //   const modelLocation = new LngLat(lng, lat)
+    //   altitude = this.map.queryTerrainElevation(modelLocation) || 0
+    // }
+
     const modelAsMercatorCoordinate = MercatorCoordinate.fromLngLat([lng, lat], altitude)
 
     this.modelTransform = {

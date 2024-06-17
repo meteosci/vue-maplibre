@@ -3,7 +3,7 @@
  * @Date: 2024-02-02 16:11:56
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-14 15:39:51
+ * @LastEditTime: 2024-06-17 15:23:59
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
@@ -124,7 +124,8 @@ export interface CustomLayerOptions {
 
 export interface GLTFLayerOptions extends CustomLayerOptions {
   url?: string
-  position?: [number, number, number]
+  position?: [number, number, number] | [number, number]
   rotate?: [number, number, number]
   scale?: number
+  clampToGround?: boolean
 }

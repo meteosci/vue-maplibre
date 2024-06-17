@@ -3,14 +3,14 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-22 14:09:30
+ * @LastEditTime: 2024-06-17 16:02:26
  * @FilePath: \vue-maplibre\packages\components\layer\gltf\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
 import props from './props'
 import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
-import { GLTFLayerOptions, VmComponentInternalInstance, VmComponentPublicInstance } from '@vue-maplibre/utils/types'
+import { GLTFLayerOptions, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { Layer } from '@vue-maplibre/shared'
 import { kebabCase } from 'lodash-es'
@@ -70,7 +70,10 @@ export default defineComponent({
       const { map } = commonState.$services
       const layer = instance.maplibreObject as CustomGLTFLayer
 
-      map.removeLayer(layer.id)
+      if (map.getLayer(layer.id)) {
+        map.removeLayer(layer.id)
+      }
+
       logger.debug(`${instance.proxy?.$options.name}-unmounted`)
       return true
     }
@@ -81,6 +84,35 @@ export default defineComponent({
 
 export type VmLayerGltfEmits = typeof emits
 
-export type VmLayerGltfProps = Partial<ExtractPropTypes<typeof props>>
+export type VmLayerGltfProps = Partial<
+  ExtractPropTypes<
+    typeof props & {
+      /**
+       * Triggers before the maplibreObject is loaded.
+       * @param instance
+       * @returns
+       */
+      onBeforeLoad: (instance: VmComponentInternalInstance) => void
+      /**
+       * Triggers when the maplibreObject is successfully loaded.
+       * @param readyObj
+       * @returns
+       */
+      onReady: (readyObj: VmReadyObject) => void
+      /**
+       * Triggers when the maplibreObject loading failed.
+       * @param e
+       * @returns
+       */
+      onUnready: (e: any) => void
+      /**
+       * Triggers when the maplibreObject is destroyed.
+       * @param instance
+       * @returns
+       */
+      onDestroyed: (instance: VmComponentInternalInstance) => void
+    }
+  >
+>
 
 export type VmLayerGltfRef = VmComponentPublicInstance<VmLayerGltfProps>
