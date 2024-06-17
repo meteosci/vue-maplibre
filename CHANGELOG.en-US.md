@@ -2,11 +2,12 @@
 
 ### 0.0.8
 
-_2024-06-15_
+_2024-06-17_
 
 #### Features
 
 - Added global configuration component vm-config-provider.
+- The native layer component vm-layer-native supports loading terrain.
 - Added project documentation.
 
 #### Bug fixes
