@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-15 17:14:57
+ * @LastEditTime: 2024-06-17 16:32:43
  * @FilePath: \vue-maplibre\packages\components\control\terrain\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -12,7 +12,7 @@ import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '@vue-maplibre/composables/private/use-log'
-import { kebabCase } from 'lodash-es'
+import { kebabCase } from 'lodash-unified'
 import { TerrainControl, type TerrainSpecification } from 'maplibre-gl'
 
 const emits = {

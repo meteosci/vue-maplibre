@@ -3,13 +3,13 @@
  * @Date: 2024-04-18 11:52:22
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-19 09:27:38
+ * @LastEditTime: 2024-06-17 17:44:25
  * @FilePath: \vue-maplibre\packages\components\control\index.ts
  */
 import { App } from 'vue'
 import ControlNavigation from './navigation'
 import ControlTerrain from './terrain'
-
+import { Map } from 'maplibre-gl'
 import { SFCWithInstall } from '@vue-maplibre/utils/types'
 
 const components = [ControlNavigation, ControlTerrain]

@@ -7,7 +7,7 @@
  * @FilePath: \vue-maplibre\packages\shared\Base.ts
  */
 import { Evented } from 'maplibre-gl'
-import { merge } from 'lodash-es'
+import { merge } from 'lodash-unified'
 import { AnyFunction, Listener } from '@vue-maplibre/utils/types'
 
 /**

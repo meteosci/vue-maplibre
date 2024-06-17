@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 15:07:47
+ * @LastEditTime: 2024-06-17 16:36:54
  * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -12,7 +12,7 @@ import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
 import { AnyObject, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '@vue-maplibre/composables/private/use-log'
-import { kebabCase } from 'lodash-es'
+import { kebabCase } from 'lodash-unified'
 import { AddLayerObject, RasterDEMSourceSpecification } from 'maplibre-gl'
 
 const emits = {

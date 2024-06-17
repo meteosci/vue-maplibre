@@ -1,12 +1,12 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2022-08-03 13:30:02
- * @LastEditTime: 2024-04-16 16:28:23
+ * @LastEditTime: 2024-06-17 16:34:55
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\packages\utils\objects.ts
  */
-import { get, set } from 'lodash-es'
+import { get, set } from 'lodash-unified'
 import type { Entries } from 'type-fest'
 import { Arrayable } from './types'
 

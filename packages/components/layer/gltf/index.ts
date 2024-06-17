@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 16:02:26
+ * @LastEditTime: 2024-06-17 16:35:27
  * @FilePath: \vue-maplibre\packages\components\layer\gltf\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -13,7 +13,7 @@ import { useCommon, useLocale } from '@vue-maplibre/composables'
 import { GLTFLayerOptions, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { Layer } from '@vue-maplibre/shared'
-import { kebabCase } from 'lodash-es'
+import { kebabCase } from 'lodash-unified'
 import CustomGLTFLayer from '@vue-maplibre/shared/layer/GLTFLayer'
 
 const emits = {
