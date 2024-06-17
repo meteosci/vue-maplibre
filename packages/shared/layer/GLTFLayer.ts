@@ -3,15 +3,13 @@
  * @Date: 2023-08-27 00:21:46
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 17:44:06
+ * @LastEditTime: 2024-06-17 23:03:03
  * @FilePath: \vue-maplibre\packages\shared\layer\GLTFLayer.ts
  */
-import { LngLat, Map } from 'maplibre-gl'
+import { Map } from 'maplibre-gl'
 import { MercatorCoordinate } from 'maplibre-gl'
 import CustomLayer from './CustomLayer'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { GLTFLoader } from './loaders/GLTFLoader'
 import { Camera, Scene, DirectionalLight, WebGLRenderer, Matrix4, Vector3 } from 'three'
 import { GLTFLayerOptions } from '@vue-maplibre/utils/types'
 
@@ -126,5 +124,10 @@ export default class CustomGLTFLayer extends CustomLayer {
     renderer.render(this.scene, this.camera)
 
     this.map.triggerRepaint()
+  }
+
+  dispose() {
+    super.dispose()
+    renderer.dispose()
   }
 }
