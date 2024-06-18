@@ -1,5 +1,13 @@
 ## Changelog
 
+### 0.0.9
+
+_2024-06-18_
+
+#### Bug fixes
+
+Fix the issue of packaging errors in the CJS environment.
+
 ### 0.0.8
 
 _2024-06-17_
