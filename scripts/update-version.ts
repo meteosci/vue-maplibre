@@ -1,15 +1,15 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 16:56:11
- * @LastEditTime: 2024-04-16 18:04:45
+ * @LastEditTime: 2024-06-18 10:02:56
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\scripts\update-version.ts
  */
 import fs from 'fs'
-import { vmPackage, vmPackagePublish } from '../build/utils/paths'
-import { cyan, red, yellow, green } from '../build/utils/log'
-import { getPackageManifest } from '../build/utils/pkg'
+import { vmPackage, vmPackagePublish } from '@vue-maplibre/build'
+import { cyan, red, yellow, green } from '@vue-maplibre/build'
+import { getPackageManifest } from '@vue-maplibre/build'
 
 const tagVersion = process.env.TAG_VERSION
 const gitHead = process.env.GIT_HEAD
