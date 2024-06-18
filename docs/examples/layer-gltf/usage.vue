@@ -3,7 +3,7 @@
  * @Date: 2024-06-17 11:40:44
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 15:52:09
+ * @LastEditTime: 2024-06-18 13:59:05
  * @FilePath: \vue-maplibre\docs\examples\layer-gltf\usage.vue
 -->
 <template>
@@ -12,7 +12,7 @@
       <VmLayerGltf
         v-if="isMapReady"
         :position="[148.9819, -35.39847, 0]"
-        url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"
+        url="https://vue-maplibre.meteosci.com/model/gltf/34M_17/34M_17.gltf"
       ></VmLayerGltf>
 
       <VmLayerNative v-if="isMapReady" id="openstreetmap-tiles" type="raster" :source="source"></VmLayerNative>
@@ -21,9 +21,9 @@
 </template>
 
 <script lang="ts" setup>
-import { VmReadyObject } from '@vue-maplibre/utils'
+import { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
 import { LngLatLike, Map, SourceSpecification } from 'maplibre-gl'
-import {  ref } from 'vue'
+import { ref } from 'vue'
 
 const center = ref<LngLatLike>([148.9819, -35.3981])
 const zoom = ref(18)

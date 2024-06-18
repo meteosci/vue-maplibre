@@ -15,11 +15,11 @@ layer-native/openstreetmap
 
 :::
 
-## 绘制点
+## 绘制矢量数据
 
-:::demo 用 VmLayerNative 组件绘制一个点集合。
+:::demo 用 VmLayerNative 组件绘制一个点集合；用 VmLayerNative 组件添加 Vector 图层。
 
-layer-native/geojson-points
+layer-native/vector
 
 :::
 

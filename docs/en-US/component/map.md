@@ -13,6 +13,14 @@ map/basic
 
 :::
 
+## Mapbox streets
+
+:::demo Use `map-style` to add a Mapbox streets map.
+
+map/map-style
+
+:::
+
 ## API
 
 ### Props

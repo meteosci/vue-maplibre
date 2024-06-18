@@ -9,31 +9,25 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
-import {
-  docPackage,
-  vmPackage,
-  getPackageDependencies,
-  projRoot,
-} from '@vue-maplibre/build'
+import { docPackage, vmPackage, getPackageDependencies, projRoot } from '@vue-maplibre/build'
 import { MarkdownTransform } from './.vitepress/plugins/markdown-transform'
-import commonjs from '@rollup/plugin-commonjs'
 import type { Alias } from 'vite'
 
 const alias: Alias[] = [
   {
     find: '~/',
-    replacement: `${path.resolve(__dirname, './.vitepress/vitepress')}/`,
-  },
+    replacement: `${path.resolve(__dirname, './.vitepress/vitepress')}/`
+  }
 ]
 if (process.env.DOC_ENV !== 'production') {
   alias.push(
     {
       find: /^vue-maplibre(\/(es|lib))?$/,
-      replacement: path.resolve(projRoot, 'packages/vue-maplibre/index.ts'),
+      replacement: path.resolve(projRoot, 'packages/vue-maplibre/index.ts')
     },
     {
       find: /^vue-maplibre\/(es|lib)\/(.*)$/,
-      replacement: `${path.resolve(projRoot, 'packages')}/$2`,
+      replacement: `${path.resolve(projRoot, 'packages')}/$2`
     }
   )
 }
@@ -45,15 +39,13 @@ export default defineConfig(async ({ mode }) => {
   const { dependencies: docsDeps } = getPackageDependencies(docPackage)
 
   const optimizeDeps = [...new Set([...epDeps, ...docsDeps])].filter(
-    dep =>
-      !dep.startsWith('@types/') &&
-      !['@vue-maplibre/metadata', '@meteosci/vue-maplibre'].includes(dep)
+    dep => !dep.startsWith('@types/') && !['@vue-maplibre/metadata', '@meteosci/vue-maplibre'].includes(dep)
   )
 
   optimizeDeps.push(
     ...(await glob(['dayjs/plugin/*.js'], {
       cwd: path.resolve(projRoot, 'node_modules'),
-      onlyFiles: true,
+      onlyFiles: true
     }))
   )
 
@@ -62,22 +54,21 @@ export default defineConfig(async ({ mode }) => {
       host: true,
       https: !!env.HTTPS,
       fs: {
-        allow: [projRoot],
-      },
+        allow: [projRoot]
+      }
     },
     resolve: {
-      alias,
+      alias
     },
     plugins: [
       VueMacros({
         setupComponent: false,
         setupSFC: false,
         plugins: {
-          vueJsx: vueJsx(),
-        },
+          vueJsx: vueJsx()
+        }
       }),
 
-      commonjs(),
       // https://github.com/antfu/unplugin-vue-components
       Components({
         dirs: ['.vitepress/vitepress/components'],
@@ -88,24 +79,24 @@ export default defineConfig(async ({ mode }) => {
         resolvers: [
           // auto import icons
           // https://github.com/antfu/unplugin-icons
-          IconsResolver(),
+          IconsResolver()
         ],
 
         // allow auto import and register components used in markdown
-        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/]
       }),
 
       // https://github.com/antfu/unplugin-icons
       Icons({
-        autoInstall: true,
+        autoInstall: true
       }),
       UnoCSS(),
       MarkdownTransform(),
       Inspect(),
-      mkcert(),
+      mkcert()
     ],
     optimizeDeps: {
-      include: optimizeDeps,
+      include: optimizeDeps
     }
   }
 })

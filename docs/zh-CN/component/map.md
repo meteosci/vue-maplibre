@@ -13,6 +13,14 @@ map/basic
 
 :::
 
+## Mapbox 街道图
+
+:::demo 使用 `map-style` 添加自定义 Mapbox 街道图。
+
+map/map-style
+
+:::
+
 ## API
 
 ### Props

@@ -3,7 +3,7 @@
  * @Date: 2024-06-14 23:41:49
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-15 18:29:29
+ * @LastEditTime: 2024-06-18 14:03:53
  * @FilePath: \vue-maplibre\docs\examples\layer-native\openstreetmap.vue
 -->
 <template>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { VmReadyObject } from '@vue-maplibre/utils'
+import { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
 import { LngLatLike, SourceSpecification } from 'maplibre-gl'
 import { ref } from 'vue'
 

@@ -15,11 +15,11 @@ layer-native/openstreetmap
 
 :::
 
-## Draw GeoJSON points
+## Draw vector datas
 
-:::demo Use VmLayerNative component to draw points from a GeoJSON collection to a map.
+:::demo Use VmLayerNative component to draw points from a GeoJSON collection to a map; add a vector source to map.
 
-layer-native/geojson-points
+layer-native/vector
 
 :::
 

@@ -3,7 +3,7 @@
  * @Date: 2024-06-14 17:24:02
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-14 22:04:23
+ * @LastEditTime: 2024-06-18 14:03:03
  * @FilePath: \vue-maplibre\docs\examples\config-provider\usage.vue
 -->
 <template>
@@ -22,11 +22,11 @@
 <script lang="ts" setup>
 import { LngLatLike } from 'maplibre-gl'
 import { computed, ref } from 'vue'
-import zhCn from '@vue-maplibre/locale/lang/zh-cn'
-import en from '@vue-maplibre/locale/lang/en-us'
+// import zhCn from '@vue-maplibre/locale/lang/zh-cn'
+// import en from '@vue-maplibre/locale/lang/en-us'
 
-// import zhCn from '@vue-maplibre/dist/locale/zh-cn.mjs'
-// import en from '@vue-maplibre/dist/locale/en-us.mjs'
+import zhCn from '@meteosci/vue-maplibre/dist/locale/zh-cn.mjs'
+import en from '@meteosci/vue-maplibre/dist/locale/en-us.mjs'
 
 const language = ref('zh-cn')
 const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))

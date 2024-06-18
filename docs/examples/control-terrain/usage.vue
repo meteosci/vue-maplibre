@@ -3,7 +3,7 @@
  * @Date: 2024-06-14 23:41:49
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-15 16:28:32
+ * @LastEditTime: 2024-06-18 14:03:30
  * @FilePath: \vue-maplibre\docs\examples\control-terrain\usage.vue
 -->
 <template>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { VmReadyObject } from '@vue-maplibre/utils'
+import { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
 import { LngLatLike } from 'maplibre-gl'
 import { ref } from 'vue'
 

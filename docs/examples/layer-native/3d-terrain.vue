@@ -3,7 +3,7 @@
  * @Date: 2024-06-17 14:26:43
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 14:57:50
+ * @LastEditTime: 2024-06-18 14:03:46
  * @FilePath: \vue-maplibre\docs\examples\layer-native\3d-terrain.vue
 -->
 <template>
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { VmReadyObject } from '@vue-maplibre/utils'
+import { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
 import { RasterDEMSourceSpecification, HillshadeLayerSpecification, LngLatLike } from 'maplibre-gl'
 import { ref } from 'vue'
 
