@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 16:36:54
+ * @LastEditTime: 2024-06-18 16:17:24
  * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -112,6 +112,11 @@ export default defineComponent({
 
         return map.getTerrain()
       } else {
+        if (options.sourceLayer) {
+          options['source-layer'] = options.sourceLayer
+        }
+        delete options.sourceLayer
+
         map.addLayer(options as AddLayerObject)
         return map.getLayer(layerOptions.id)
       }
