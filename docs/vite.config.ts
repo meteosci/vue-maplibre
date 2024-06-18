@@ -106,9 +106,6 @@ export default defineConfig(async ({ mode }) => {
     ],
     optimizeDeps: {
       include: optimizeDeps,
-    },
-    build: {
-      chunkSizeWarningLimit: 2048
     }
   }
 })

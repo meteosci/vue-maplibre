@@ -1,5 +1,5 @@
 ---
-title: A Vue 3 UI Framework
+title: A Vue 3 Map Framework
 page: true
 lang: en-US
 ---

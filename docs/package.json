@@ -9,7 +9,7 @@
   "dependencies": {
     "@docsearch/js": "^3.1.0",
     "@element-plus/icons-vue": "^2.3.1",
-    "@meteosci/vue-maplibre": "workspace:*",
+    "@meteosci/vue-maplibre": "npm:@meteosci/vue-maplibre@latest",
     "@vue/shared": "^3.2.37",
     "@vueuse/core": "^9.1.0",
     "axios": "^0.27.2",
