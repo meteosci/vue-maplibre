@@ -1,3 +1,11 @@
+/*
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-02-20 10:46:14
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-18 10:51:10
+ * @FilePath: \vue-maplibre\packages\utils\private\touch.ts
+ */
 import { platform } from '../platform'
 
 const directions = ['left', 'right', 'up', 'down', 'horizontal', 'vertical']
@@ -43,8 +51,6 @@ export function getModifierDirections(mod) {
 
   return dir
 }
-
-export const getTouchTarget = platform().isIOS || navigator.vendor.toLowerCase().indexOf('apple') > -1 ? () => document : target => target
 
 export function shouldStart(evt, ctx) {
   return (

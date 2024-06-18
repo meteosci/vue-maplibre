@@ -1,13 +1,13 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-04-08 18:37:31
- * @LastEditTime: 2022-04-11 23:02:05
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2024-06-18 10:48:33
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\packages\utils\platform.ts
+ * @FilePath: \vue-maplibre\packages\utils\platform.ts
  */
 export function platform() {
-  const ua = navigator.userAgent
+  const ua = globalThis.navigator.userAgent
   const isWindowsPhone = /(?:Windows Phone)/.test(ua)
   const isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone
   const isAndroid = /(?:Android)/.test(ua)
@@ -25,6 +25,6 @@ export function platform() {
     isFireFox: isFireFox,
     isChrome: isChrome,
     isIOS,
-    hasTouch: 'ontouchstart' in window || window.navigator.maxTouchPoints > 0
+    hasTouch: 'ontouchstart' in globalThis || globalThis.navigator.maxTouchPoints > 0
   }
 }

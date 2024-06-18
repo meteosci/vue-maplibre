@@ -380,7 +380,7 @@ export default {
    */
   pixelRatio: {
     type: Number,
-    default: devicePixelRatio
+    default: globalThis.devicePixelRatio
   },
   /**
    * If false, style validation will be skipped. Useful in production environment.
