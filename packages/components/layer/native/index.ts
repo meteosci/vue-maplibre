@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-18 16:17:24
+ * @LastEditTime: 2024-06-18 16:23:15
  * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -37,21 +37,6 @@ export default defineComponent({
       logger.error(`${instance.className} ${t('vm.loadError')}`)
       return
     }
-
-    watch(
-      () => props.layout,
-      val => {
-        const { map } = commonState.$services
-        const keys = Object.keys(val)
-        for (let i = 0; i < keys.length; i++) {
-          const key = keys[i]
-          map.setLayoutProperty(props.id, key, val[key])
-        }
-      },
-      {
-        deep: true
-      }
-    )
 
     watch(
       () => props.layout,
