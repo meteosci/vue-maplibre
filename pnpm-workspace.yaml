@@ -1,7 +1,0 @@
-
-packages:
-  - 'packages/*'
-  - demo
-  - docs
-  - internal/*
-  - '!**/__tests__/**'
