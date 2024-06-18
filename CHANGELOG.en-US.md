@@ -1,12 +1,22 @@
 ## Changelog
 
+### 0.0.10
+
+_2024-06-18_
+
+#### Bug fixes
+
+- Fixed the issue that the native layer component VmLayerNative fails to specify the source-layer for vector layers of type VectorSourceSpecification.
+- Fixed the issue that the native layer component VmLayerNative repeatedly listens to the layout property.[#2](https://github.com/meteosci/vue-maplibre/issues/2)
+- Fixed the issue that the online project documentation cannot be accessed.
+
 ### 0.0.9
 
 _2024-06-18_
 
 #### Bug fixes
 
-Fix the issue of packaging errors in the CJS environment.
+Fixed the issue of packaging errors in the CJS environment.
 
 ### 0.0.8
 

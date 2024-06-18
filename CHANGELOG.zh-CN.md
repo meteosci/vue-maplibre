@@ -1,5 +1,15 @@
 ## 更新日志
 
+### 0.0.10
+
+_2024-06-18_
+
+#### Bug 修复
+
+- 修复原生图层组件 `VmLayerNative` 加载 `VectorSourceSpecification` 类型的矢量图层无法指定 `source-layer` 的问题。
+- 修复修复原生图层组件 `VmLayerNative` 重复监听 `layout` 属性的问题。[#2](https://github.com/meteosci/vue-maplibre/issues/2)
+- 项目在线文档访问报错问题。
+
 ### 0.0.9
 
 _2024-06-18_
