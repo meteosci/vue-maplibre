@@ -120,7 +120,8 @@ const getContributorsByComponents = async (components: string[]) => {
     const results = await fetchCommits(options)
 
     for (const [i, result] of Object.values(results).entries()) {
-      const component = options[i].key.replace(/\//g, '-')
+      // const component = options[i].key.replace(/\//g, '-')
+      const component = options[i].key
       if (!commits[component]) commits[component] = []
       commits[component].push(...result.nodes)
     }
