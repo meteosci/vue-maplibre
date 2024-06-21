@@ -101,12 +101,17 @@ const transformComponentMarkdown = (
   append: Append
 ) => {
   const lang = getLang(id)
+  // const docUrl = `${GITHUB_BLOB_URL}/${docsDirName}/en-US/component/${componentId}.md`
+  // const componentUrl = `${GITHUB_TREE_URL}/packages/components/${componentId}`
+  // const componentPath = path.resolve(
+  //   projRoot,
+  //   `packages/components/${componentId}`
+  // )
+  const componentIdTransform = componentId.includes('-') ?  componentId.replace(/-/g, '/')  : componentId
   const docUrl = `${GITHUB_BLOB_URL}/${docsDirName}/en-US/component/${componentId}.md`
-  const componentUrl = `${GITHUB_TREE_URL}/packages/components/${componentId}`
-  const componentPath = path.resolve(
-    projRoot,
-    `packages/components/${componentId}`
-  )
+  const componentUrl = `${GITHUB_TREE_URL}/packages/components/${componentIdTransform}`
+  const componentPath = path.resolve(projRoot, `packages/components/${componentIdTransform}`)
+
   const isComponent = fs.existsSync(componentPath)
 
   const links = [[footerLocale[lang].docs, docUrl]]
