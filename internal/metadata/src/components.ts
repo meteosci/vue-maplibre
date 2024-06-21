@@ -3,7 +3,7 @@
  * @Date: 2024-06-12 23:15:41
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-12 23:24:24
+ * @LastEditTime: 2024-06-21 23:33:02
  * @FilePath: \vue-maplibre\internal\metadata\src\components.ts
  */
 import path from 'path'
@@ -17,13 +17,14 @@ const pathOutput = path.resolve(__dirname, '..', 'dist')
 async function main() {
   await ensureDir(pathOutput)
 
-  const components = await glob('*', {
+  const components = await glob('**/', {
     cwd: path.resolve(projRoot, 'packages/components'),
     onlyDirectories: true,
+    ignore: ['**/__test__/**', '**/src/**']
   })
 
   await writeJson(path.resolve(pathOutput, 'components.json'), components)
-  consola.success(chalk.green('Component list generated'))
+  consola.success(chalk.green('Component list generated', components))
 }
 
 main()

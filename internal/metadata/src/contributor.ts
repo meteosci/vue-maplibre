@@ -120,7 +120,7 @@ const getContributorsByComponents = async (components: string[]) => {
     const results = await fetchCommits(options)
 
     for (const [i, result] of Object.values(results).entries()) {
-      const component = options[i].key
+      const component = options[i].key.replace(/\//g, '-')
       if (!commits[component]) commits[component] = []
       commits[component].push(...result.nodes)
     }
@@ -140,13 +140,14 @@ const getContributorsByComponents = async (components: string[]) => {
 async function getContributors() {
   if (!process.env.GITHUB_TOKEN) throw new Error('GITHUB_TOKEN is empty')
 
-  const components = await glob('*', {
-    cwd: path.resolve(projRoot, 'packages/components/**/*'),
-    onlyDirectories: true
+  const components = await glob('**/*', {
+    cwd: path.resolve(projRoot, 'packages/components'),
+    onlyDirectories: true,
+    ignore: ['**/__test__/**', '**/src/**']
   })
+
   let contributors: Record<string, ContributorInfo[]> = {}
 
-  consola.info('Fetching contributors...')
   for (const chunkComponents of chunk(components, 10)) {
     contributors = {
       ...contributors,
@@ -154,7 +155,6 @@ async function getContributors() {
     }
     consola.success(chalk.green(`Fetched contributors: ${chunkComponents.join(', ')}`))
   }
-  consola.success(chalk.green(`contributors: ${JSON.stringify(contributors)}`))
   return contributors
 }
 
