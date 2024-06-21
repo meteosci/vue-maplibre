@@ -1,7 +1,14 @@
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-18 09:37:40
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-21 11:14:58
+ * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\globals\contributors.vue
+-->
 <script setup lang="ts">
 import { computed } from 'vue'
-// import _contributors from '@element-plus/metadata/dist/contributors.json'
-import _contributors from './contributors.json'
+import _contributors from '@vue-maplibre/metadata/dist/contributors.json'
 import VpLink from '../common/vp-link.vue'
 
 const props = defineProps<{ id: string }>()

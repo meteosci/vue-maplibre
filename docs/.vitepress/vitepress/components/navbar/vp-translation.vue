@@ -1,3 +1,11 @@
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-18 09:37:40
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-21 13:43:14
+ * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\navbar\vp-translation.vue
+-->
 <script setup lang="ts">
 import { useRouter } from 'vitepress'
 import { useTranslation } from '../../composables/translation'
@@ -27,9 +35,9 @@ const toTranslation = () => {
             >
               {{ languageMap[l] }}
             </ElDropdownItem>
-            <ElDropdownItem class="language selected" @click="toTranslation">
+            <!-- <ElDropdownItem class="language selected" @click="toTranslation">
               {{ locale.help }}
-            </ElDropdownItem>
+            </ElDropdownItem> -->
           </ElDropdownMenu>
         </template>
       </ElDropdown>

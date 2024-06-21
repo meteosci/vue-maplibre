@@ -47,11 +47,11 @@ const onSwitchLang = (lang: string) => {
       >
         {{ languageMap[l] }}
       </p>
-      <p class="translation-item">
+      <!-- <p class="translation-item">
         <VPLink :href="`/${lang}/guide/translation`">
           {{ locale.help }}
         </VPLink>
-      </p>
+      </p> -->
     </div>
   </div>
 </template>
