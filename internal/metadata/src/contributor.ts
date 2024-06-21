@@ -141,7 +141,7 @@ async function getContributors() {
   if (!process.env.GITHUB_TOKEN) throw new Error('GITHUB_TOKEN is empty')
 
   const components = await glob('*', {
-    cwd: path.resolve(projRoot, 'packages/components'),
+    cwd: path.resolve(projRoot, 'packages/components/**/*'),
     onlyDirectories: true
   })
   let contributors: Record<string, ContributorInfo[]> = {}
@@ -154,6 +154,7 @@ async function getContributors() {
     }
     consola.success(chalk.green(`Fetched contributors: ${chunkComponents.join(', ')}`))
   }
+  consola.success(chalk.green(`contributors: ${JSON.stringify(contributors)}`))
   return contributors
 }
 
