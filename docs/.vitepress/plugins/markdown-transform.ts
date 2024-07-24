@@ -108,7 +108,7 @@ const transformComponentMarkdown = (
   //   `packages/components/${componentId}`
   // )
   const componentIdTransform = componentId.includes('-') ?  componentId.replace(/-/g, '/')  : componentId
-  const docUrl = `${GITHUB_BLOB_URL}/${docsDirName}/en-US/component/${componentId}.md`
+  const docUrl = `${GITHUB_BLOB_URL}/${docsDirName}/${lang || 'en-US'}/component/${componentId}.md`
   const componentUrl = `${GITHUB_TREE_URL}/packages/components/${componentIdTransform}`
   const componentPath = path.resolve(projRoot, `packages/components/${componentIdTransform}`)
 
