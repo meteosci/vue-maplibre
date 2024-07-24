@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-05-13 16:58:56
+ * @LastEditTime: 2024-07-03 09:30:07
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -318,7 +318,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
   }
 
   return {
-    $services,
+    $services: getServices(),
     load,
     unload,
     reload,
