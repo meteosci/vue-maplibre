@@ -32,7 +32,7 @@
     "postinstall": "pnpm stub && concurrently \"pnpm gen:version\" \"pnpm run -C internal/metadata dev\""
   },
   "license": "MIT",
-  "homepage": "https://meteosci.com/vue-maplibre",
+  "homepage": "https://vue-maplibre.meteosci.com",
   "repository": {
     "type": "git",
     "url": "git://github.com/meteosci/vue-maplibre.git"

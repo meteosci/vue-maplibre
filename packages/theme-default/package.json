@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/meteosci/vue-maplibre/issues"
   },
-  "homepage": "https://meteosci.com/vue-maplibre",
+  "homepage": "https://vue-maplibre.meteosci.com",
   "repository": {
     "type": "git",
     "url": "git://github.com/meteosci/vue-maplibre.git"

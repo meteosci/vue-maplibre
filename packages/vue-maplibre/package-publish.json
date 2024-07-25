@@ -2,7 +2,7 @@
   "name": "@meteosci/vue-maplibre",
   "version": "0.0.1",
   "description": "A Vue 3 Component Library for maplibre-gl",
-  "homepage": "https://meteosci.com/vue-maplibre",
+  "homepage": "https://vue-maplibre.meteosci.com",
   "repository": {
     "type": "git",
     "url": "git://github.com/meteosci/vue-maplibre.git"
