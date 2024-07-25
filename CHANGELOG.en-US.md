@@ -1,5 +1,13 @@
 ## Changelog
 
+### 0.0.11
+
+_2024-07-25_
+
+#### Bug fixes
+
+- Fixed the issue that destroying the `vm-map` component caused the vmMitt listener to fail.
+
 ### 0.0.10
 
 _2024-06-18_
