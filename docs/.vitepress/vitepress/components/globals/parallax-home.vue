@@ -124,12 +124,12 @@ useEventListener(window, 'scroll', handleScroll)
       <div class="parallax-container" :style="containerStyle">
         <div :style="cardStyle">
           <screen-svg :style="screenLayer" alt="banner" />
-          <people-svg
+          <!-- <people-svg
             :style="peopleLayer"
             alt="banner"
             class="cursor-pointer"
             @click="jumpTo('guide/quickstart.html')"
-          />
+          /> -->
           <left-layer-svg :style="leftLayer" alt="banner" />
           <left-bottom-layer-svg :style="leftBottomLayer" alt="banner" />
           <right-layer-svg :style="rightLayer" alt="banner" />
