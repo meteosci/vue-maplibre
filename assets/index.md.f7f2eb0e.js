@@ -1,1 +1,0 @@
-import{o as e,c as t}from"./app.49912bd8.js";const _='{"title":"A Vue 3 Map Framework","description":"","frontmatter":{"title":"A Vue 3 Map Framework","lang":"en-US","page":true},"headers":[],"relativePath":"index.md","lastUpdated":1721893646000}',a={},c=Object.assign(a,{__name:"index",setup(r){return(n,o)=>(e(),t("div"))}});export{_ as __pageData,c as default};
