@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-07-24 23:46:37
+ * @LastEditTime: 2024-08-04 16:17:29
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -260,7 +260,21 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
             reject(e)
           })
       }
-      parentInstance.vmMitt.on('ready', () => {
+
+      if (parentInstance?.vmMitt) {
+        parentInstance.vmMitt.on('ready', () => {
+          if (!isLoading && !instance.isUnmounted) {
+            load()
+              .then(e => {
+                resolve(e)
+              })
+              .catch(e => {
+                emit('unready', e)
+                reject(e)
+              })
+          }
+        })
+      } else {
         if (!isLoading && !instance.isUnmounted) {
           load()
             .then(e => {
@@ -271,7 +285,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
               reject(e)
             })
         }
-      })
+      }
     } catch (e) {
       emit('unready', e)
       reject(e)

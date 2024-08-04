@@ -1,5 +1,13 @@
 ## Changelog
 
+### 0.0.12
+
+_2024-08-04_
+
+#### Bug fixes
+
+- Initialize component logic in use-common, remove the forced dependency on vm-map, and fix the issue where some third-party extensions that do not depend on vm-map encounter initialization errors.
+
 ### 0.0.11
 
 _2024-07-25_
