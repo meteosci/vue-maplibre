@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-08-04 16:17:29
+ * @LastEditTime: 2024-08-13 17:58:54
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -65,8 +65,8 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
     const { map } = $vm
     instance.map = map
 
-    // If you call the unload method to unload the component, the Cesium object of the parent component may be unloaded. You need to load the parent component first.
-    // 如果调用过 unload 方法卸载组件，父组件的 Cesium 对象可能会被卸载 需要先加载父组件。
+    // If you call the unload method to unload the component, the instance of the parent component may be unloaded. You need to load the parent component first.
+    // 如果调用过 unload 方法卸载组件，父组件的对象可能会被卸载 需要先加载父组件。
     if (!parentInstance.maplibreObject && !parentInstance.nowaiting && !isMapRoot) {
       return await (parentInstance.proxy as VmComponentPublicInstance)?.load()
     }
@@ -77,7 +77,9 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
       instance.maplibreObject = maplibreObject
       return mount().then((): VmReadyObject => {
         instance.mounted = true
-        !isMapRoot && parentInstance.children.push(instance)
+        if (!isMapRoot && parentInstance?.children) {
+          parentInstance.children.push(instance)
+        }
         Object.assign(instance.proxy, {
           maplibreObject: instance.maplibreObject
         })
@@ -318,7 +320,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
     getMaplibreObject: () => instance.maplibreObject
   })
 
-  const $services = !isMapRoot ? inject<VmMapProvider>(vmKey) : undefined
+  const $services = !isMapRoot && parentInstance?.children ? inject<VmMapProvider>(vmKey) : undefined
 
   const getServices = () => {
     return mergeDescriptors(
