@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-08-13 17:58:54
+ * @LastEditTime: 2024-08-17 22:37:42
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -55,7 +55,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
   const load = async () => {
     // Returns if it is already loaded. 如果已经加载则返回。
     if (instance.mounted) {
-      return false
+      return Promise.resolve(false)
     }
 
     logger.debug(`${instance.className}---loading`)
@@ -67,7 +67,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
 
     // If you call the unload method to unload the component, the instance of the parent component may be unloaded. You need to load the parent component first.
     // 如果调用过 unload 方法卸载组件，父组件的对象可能会被卸载 需要先加载父组件。
-    if (!parentInstance.maplibreObject && !parentInstance.nowaiting && !isMapRoot) {
+    if (!parentInstance.maplibreObject && !parentInstance.nowaiting && !isMapRoot && parentInstance.className) {
       return await (parentInstance.proxy as VmComponentPublicInstance)?.load()
     }
 
