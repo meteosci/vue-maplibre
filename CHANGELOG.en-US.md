@@ -4,7 +4,7 @@
 
 _2024-08-17_
 
-#### Bug 修复
+#### Bug fixes
 
 - Fixed the issue in use-common that loading fails if the parent component is not a component from the vue-maplibre library.
 
