@@ -29,7 +29,7 @@
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "lodash-unified": "^1.0.3",
-    "maplibre-gl": "^4.4.1",
+    "maplibre-gl": "^4.5.2",
     "mitt": "^3.0.1",
     "three": "^0.165.0"
   },
