@@ -29,9 +29,9 @@ export default defineComponent({
     const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = []
-
     instance.className = 'GLTFLayer' // 最终其实是 CustomStyleLayer
     instance.alreadyListening = []
+    instance.mapRequired = true
 
     const commonState = useCommon(props, ctx, instance)
 
@@ -41,7 +41,9 @@ export default defineComponent({
     }
 
     watch([() => props.position, () => props.rotate, () => props.scale], val => {
-      const { map } = commonState.$services
+      const $services = commonState.getServices()
+      const { map } = $services
+
       const layer = instance.maplibreObject as CustomGLTFLayer
 
       if (map && layer) {
@@ -59,7 +61,9 @@ export default defineComponent({
     }
 
     instance.mount = async () => {
-      const { map } = commonState.$services
+      const $services = commonState.getServices()
+      const { map } = $services
+
       const layer = instance.maplibreObject as CustomGLTFLayer
       map.addLayer(layer)
       logger.debug(`${instance.proxy?.$options.name}-mounted`)
@@ -67,7 +71,8 @@ export default defineComponent({
     }
 
     instance.unmount = async () => {
-      const { map } = commonState.$services
+      const $services = commonState.getServices()
+      const { map } = $services
       const layer = instance.maplibreObject as CustomGLTFLayer
 
       if (map.getLayer(layer.id)) {

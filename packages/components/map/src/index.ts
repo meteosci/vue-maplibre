@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-14 22:01:37
+ * @LastEditTime: 2024-08-18 16:24:00
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import {
@@ -29,7 +29,7 @@ import { TouchHold } from '@vue-maplibre/directives'
 import mapProps from './props'
 import { vmKey } from '@vue-maplibre/utils/private/config'
 import mapEmits from './events'
-import { useCommon, useLocale } from '@vue-maplibre/composables'
+import { useCommon, useLocale, useVueMaplibre } from '@vue-maplibre/composables'
 import { getInstanceListener } from '@vue-maplibre/utils/private/vm'
 import { mergeDescriptors } from '@vue-maplibre/utils'
 
@@ -69,6 +69,8 @@ export default defineComponent({
       'mapStyle',
       'pixelRatio'
     ]
+
+    const $vm = useVueMaplibre()
 
     // 在这儿 watch 了的都是可以响应式改变的 其他 props 改变会自动判断能不能直接改。
     // 能直接改就直接改。改了也没生效的话需要外部调用 reload 方法。
@@ -222,6 +224,11 @@ export default defineComponent({
       instance.map.on('zoom', mapChanged)
       instance.map.on('pitch', mapChanged)
       instance.map.on('move', mapChanged)
+
+      instance.map.on('load', () => {
+        $vm.vmMitt.emit('__vue_maplibre_vm_map_ready__', instance.map)
+      })
+
       return true
     }
 

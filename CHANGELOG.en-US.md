@@ -1,5 +1,13 @@
 ## Changelog
 
+### 0.0.15
+
+_2024-08-18_
+
+#### Features
+
+- Modify the use-common logic so that the component can be loaded even when it's not a child component of vm-map. However, it still needs to wait for vm-map to be fully initialized before adding data.
+
 ### 0.0.14
 
 _2024-08-17_

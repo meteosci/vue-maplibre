@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-18 16:23:15
+ * @LastEditTime: 2024-08-18 17:47:44
  * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -30,6 +30,7 @@ export default defineComponent({
     instance.maplibreEvents = []
     instance.className = 'VmLayerNative'
     instance.alreadyListening = ['layout', 'paint']
+    instance.mapRequired = true
 
     const commonState = useCommon(props, ctx, instance)
 
@@ -41,7 +42,9 @@ export default defineComponent({
     watch(
       () => props.layout,
       val => {
-        const { map } = commonState.$services
+        const $services = commonState.getServices()
+        const { map } = $services
+
         const keys = Object.keys(val)
         for (let i = 0; i < keys.length; i++) {
           const key = keys[i]
@@ -56,7 +59,9 @@ export default defineComponent({
     watch(
       () => props.paint,
       val => {
-        const { map } = commonState.$services
+        const $services = commonState.getServices()
+        const { map } = $services
+
         const keys = Object.keys(val)
         for (let i = 0; i < keys.length; i++) {
           const key = keys[i]
@@ -70,7 +75,8 @@ export default defineComponent({
 
     instance.createMaplibreObject = async () => {
       logger.debug(`${instance.proxy?.$options.name}-creating`)
-      const { map } = commonState.$services
+      const $services = commonState.getServices()
+      const { map } = $services
 
       const layerOptions = {
         type: props.type,
@@ -113,7 +119,8 @@ export default defineComponent({
     }
 
     instance.unmount = async () => {
-      const { map } = commonState.$services
+      const $services = commonState.getServices()
+      const { map } = $services
 
       if (props.type === 'raster-dem') {
         if (map.getTerrain()) {

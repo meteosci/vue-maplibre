@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 16:32:43
+ * @LastEditTime: 2024-08-18 17:46:34
  * @FilePath: \vue-maplibre\packages\components\control\terrain\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -30,6 +30,7 @@ export default defineComponent({
     instance.maplibreEvents = []
     instance.className = 'TerrainControl'
     instance.alreadyListening = []
+    instance.mapRequired = true
 
     const commonState = useCommon(props, ctx, instance)
 
@@ -44,7 +45,9 @@ export default defineComponent({
     }
 
     instance.mount = async () => {
-      const { map } = commonState.$services
+      const $services = commonState.getServices()
+      const { map } = $services
+
       const control = instance.maplibreObject as TerrainControl
       map.addControl(control, props.position)
       logger.debug(`${instance.proxy?.$options.name}-mounted`)
@@ -52,9 +55,10 @@ export default defineComponent({
     }
 
     instance.unmount = async () => {
-      const { map } = commonState.$services
-      const control = instance.maplibreObject as TerrainControl
+    const $services = commonState.getServices()
+      const { map } = $services
 
+      const control = instance.maplibreObject as TerrainControl
       map.removeControl(control)
       logger.debug(`${instance.proxy?.$options.name}-unmounted`)
       return true

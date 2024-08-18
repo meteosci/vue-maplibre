@@ -3,7 +3,7 @@
  * @Date: 2024-02-02 16:11:56
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 15:23:59
+ * @LastEditTime: 2024-08-18 17:38:22
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
@@ -62,6 +62,7 @@ export interface VmComponentInternalInstance extends ComponentInternalInstance {
   children?: Array<VmComponentInternalInstance>
   alreadyListening: string[]
   removeCallbacks: Array<AnyFunction<any>>
+  mapRequired?: boolean
 }
 
 export type VmComponentPublicInstance<T = any> = ComponentPublicInstance<
@@ -103,7 +104,7 @@ export interface ConfigProviderContext {
 
 export interface VmMapProvider extends ConfigProviderContext {
   map: Map
-  creatingPromise?: Promise<Map>
+  creatingPromise?: Promise<VmReadyObject>
 }
 
 export interface VmReadyObject {
