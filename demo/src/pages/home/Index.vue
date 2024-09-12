@@ -3,7 +3,7 @@
  * @Date: 2023-08-09 10:18:36
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-15 14:58:56
+ * @LastEditTime: 2024-09-12 20:50:36
  * @FilePath: \vue-maplibre\demo\src\pages\home\Index.vue
 -->
 <template>
@@ -13,9 +13,12 @@
 </template>
 
 <script setup lang="ts">
+import { useVueMaplibre } from '@vue-maplibre/composables'
 import { ref } from 'vue'
 
 const message = ref('代表地球欢迎你')
+const $vm = useVueMaplibre()
+console.log($vm.vmMitt.all)
 </script>
 
 <style lang="scss">

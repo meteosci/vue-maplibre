@@ -1,5 +1,13 @@
 ## Changelog
 
+### 0.0.16
+
+_2024-09-12_
+
+#### Bug fixes
+
+- Fixed the issue in `use-common` where events listened to by `vmMitt` were not destroyed when the component was unmounted, causing the `loader` method to execute repeatedly.
+
 ### 0.0.15
 
 _2024-08-18_
