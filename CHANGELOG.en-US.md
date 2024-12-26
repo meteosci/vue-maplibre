@@ -1,5 +1,18 @@
 ## Changelog
 
+### 0.0.17
+
+_2024-12-26_
+
+#### Bug fixes
+
+- Fixed the issue that the CustomGLTFLayer layer cannot be added properly on multiple maps.
+- Fixed the issue that use-common retrieves the incorrect map on multiple maps.
+
+#### Refactor
+
+- Temporarily avoid using the Symbol object as the key for provide to prevent dependency issues with the vue-maplibre library. Different version numbers may cause failures when trying to retrieve the injected object via the inject method.
+
 ### 0.0.16
 
 _2024-09-12_
