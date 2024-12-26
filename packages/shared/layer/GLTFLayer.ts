@@ -3,7 +3,7 @@
  * @Date: 2023-08-27 00:21:46
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 23:03:03
+ * @LastEditTime: 2024-12-26 16:56:57
  * @FilePath: \vue-maplibre\packages\shared\layer\GLTFLayer.ts
  */
 import { Map } from 'maplibre-gl'
@@ -12,8 +12,6 @@ import CustomLayer from './CustomLayer'
 import { GLTFLoader } from './loaders/GLTFLoader'
 import { Camera, Scene, DirectionalLight, WebGLRenderer, Matrix4, Vector3 } from 'three'
 import { GLTFLayerOptions } from '@vue-maplibre/utils/types'
-
-let renderer: WebGLRenderer = null
 
 export default class CustomGLTFLayer extends CustomLayer {
   camera: Camera
@@ -43,12 +41,14 @@ export default class CustomGLTFLayer extends CustomLayer {
     rotate: [Math.PI / 2, 0, 0],
     scale: 1
   }
+  renderer: WebGLRenderer
 
   constructor(options: GLTFLayerOptions) {
     super(options)
     this.renderingMode = '3d'
     this.camera = new Camera()
     this.scene = new Scene()
+    this.renderer = null
   }
 
   onChangeOptions(options: GLTFLayerOptions): void {
@@ -99,13 +99,13 @@ export default class CustomGLTFLayer extends CustomLayer {
     })
 
     // use the MapLibre GL JS map canvas for three.js
-    renderer = new WebGLRenderer({
+    this.renderer = new WebGLRenderer({
       canvas: map.getCanvas(),
       context: gl,
       antialias: true
     })
 
-    renderer.autoClear = false
+    this.renderer.autoClear = false
   }
 
   render(gl, matrix) {
@@ -120,14 +120,14 @@ export default class CustomGLTFLayer extends CustomLayer {
       .multiply(rotationY)
       .multiply(rotationZ)
     this.camera.projectionMatrix = m.multiply(l)
-    renderer.resetState()
-    renderer.render(this.scene, this.camera)
+    this.renderer.resetState()
+    this.renderer.render(this.scene, this.camera)
 
     this.map.triggerRepaint()
   }
 
   dispose() {
     super.dispose()
-    renderer.dispose()
+    this.renderer.dispose()
   }
 }
