@@ -3,7 +3,7 @@
  * @Date: 2024-02-02 16:11:56
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-08-18 17:38:22
+ * @LastEditTime: 2024-12-26 14:06:09
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
@@ -63,6 +63,7 @@ export interface VmComponentInternalInstance extends ComponentInternalInstance {
   alreadyListening: string[]
   removeCallbacks: Array<AnyFunction<any>>
   mapRequired?: boolean
+  mapReady?: boolean
 }
 
 export type VmComponentPublicInstance<T = any> = ComponentPublicInstance<
@@ -121,6 +122,10 @@ export interface CustomLayerOptions {
    * 图层的id
    */
   id?: string
+  /**
+   * 指定图层的元数据信息。
+   */
+  metadata?: unknown
 }
 
 export interface GLTFLayerOptions extends CustomLayerOptions {
