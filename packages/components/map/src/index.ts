@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-08-18 16:24:00
+ * @LastEditTime: 2024-12-26 17:45:45
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import {
@@ -22,7 +22,7 @@ import {
 import { Map, MapOptions } from 'maplibre-gl'
 import useLog from '@vue-maplibre/composables/private/use-log'
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmReadyObject } from '@vue-maplibre/utils/types'
-import { kebabCase, map } from 'lodash-unified'
+import { kebabCase } from 'lodash-unified'
 import { hSlot } from '@vue-maplibre/utils/private/render'
 import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { TouchHold } from '@vue-maplibre/directives'

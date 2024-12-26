@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-09-12 20:48:39
+ * @LastEditTime: 2024-12-26 17:56:05
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -38,7 +38,8 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
   instance.removeCallbacks = []
   const unwatchFns: Array<WatchStopHandle> = []
 
-  instance.vmMitt = isMapRoot ? $vm.vmMitt : mitt()
+  // instance.vmMitt = isMapRoot ? $vm.vmMitt : mitt()
+  instance.vmMitt = mitt()
   const parentInstance = isMapRoot ? instance : getVmParentInstance(instance)
   const { bindEvents, registerEvents } = useEvent(instance, props)
 
@@ -86,7 +87,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
         // Trigger the component's 'ready' event. 触发该组件的 'ready' 事件。
         const readyObj: VmReadyObject = isMapRoot ? { map: maplibreObject as Map, vm: instance } : { map: $vm.map, maplibreObject, vm: instance }
         emit('ready', readyObj)
-        instance.vmMitt.emit('ready', readyObj)
+        instance.vmMitt.emit('__vue_maplibre_parent_component_ready__', readyObj)
         logger.debug(`${instance.className}---loaded`)
         return readyObj
       })
@@ -279,11 +280,25 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
         }
       }
 
+      const parentReadyLoader = () => {
+        loader()
+      }
+
+      const mapReadyLoader = () => {
+        if (instance.mapReady) {
+          return
+        }
+
+        instance.mapReady = true
+
+        loader()
+      }
+
       if (parentInstance?.vmMitt) {
-        parentInstance.vmMitt.on('ready', loader)
+        parentInstance.vmMitt.on('__vue_maplibre_parent_component_ready__', parentReadyLoader)
       } else {
         if (instance.mapRequired) {
-          $vm.vmMitt.on('__vue_maplibre_vm_map_ready__', loader)
+          $vm.vmMitt.on('__vue_maplibre_vm_map_ready__', mapReadyLoader)
         } else {
           loader()
         }
@@ -304,8 +319,9 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
         resolve(true)
         instance.isUnmounted = true
         instance.unloadingPromise = undefined
+        instance.vmMitt.off('__vue_maplibre_parent_component_ready__')
         $vm.vmMitt.off('__vue_maplibre_vm_map_ready__')
-        $vm.vmMitt.off('ready')
+
         !isMapRoot && instance.vmMitt.all.clear()
       })
     })
@@ -326,7 +342,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
 
   const getServices: () => VmMapProvider = () => {
     if (!$vm.map) {
-      const mapContainerId = props.mapContainerId || 'mapContainer'
+      const mapContainerId = props.mapContainerId || attrs.mapContainerId || attrs['map-container-id'] || 'mapContainer'
       if (instance.appContext.config.globalProperties.$VueMaplibre) {
         $vm.map = instance.appContext.config.globalProperties.$VueMaplibre[mapContainerId]?.map
       }
@@ -335,8 +351,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
     return mergeDescriptors(
       {},
       {
-        ...$services,
-        ...$vm,
+        ...($services ?? $vm),
         creatingPromise
       }
     )
