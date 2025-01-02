@@ -1,5 +1,14 @@
 ## Changelog
 
+
+### 0.0.18
+
+_2025-01-02_
+
+#### Modify
+
+- upgrade maplibre-gl to 5.0.0.
+
 ### 0.0.17
 
 _2024-12-26_

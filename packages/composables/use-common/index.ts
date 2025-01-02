@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-12-26 17:56:05
+ * @LastEditTime: 2024-12-26 23:14:48
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -351,7 +351,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
     return mergeDescriptors(
       {},
       {
-        ...($services ?? $vm),
+        ...($services?.map ? $services : $vm),
         creatingPromise
       }
     )

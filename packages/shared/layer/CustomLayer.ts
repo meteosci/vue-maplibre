@@ -3,10 +3,10 @@
  * @Date: 2024-04-18 00:29:16
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-05-29 14:46:01
+ * @LastEditTime: 2025-01-02 15:59:10
  * @FilePath: \vue-maplibre\packages\shared\layer\CustomLayer.ts
  */
-import { Map, CustomLayerInterface } from 'maplibre-gl'
+import { Map, CustomLayerInterface, CustomRenderMethodInput } from 'maplibre-gl'
 import { mat4 } from 'gl-matrix'
 import { CustomLayerOptions, GLTFLayerOptions } from '@vue-maplibre/utils/types'
 import { Base } from '../core'
@@ -56,7 +56,7 @@ export default class CustomLayer extends Base implements CustomLayerInterface {
    * @param gl WebGL 渲染上下文。
    * @param matrix 渲染矩阵。
    */
-  prerender(gl: WebGLRenderingContext | WebGL2RenderingContext, matrix: mat4) {
+  prerender(gl: WebGLRenderingContext | WebGL2RenderingContext, options: CustomRenderMethodInput) {
     // 实现 prerender 方法
   }
 
@@ -65,7 +65,7 @@ export default class CustomLayer extends Base implements CustomLayerInterface {
    * @param gl WebGL 渲染上下文。
    * @param matrix 渲染矩阵。
    */
-  render(gl: WebGLRenderingContext | WebGL2RenderingContext, matrix: mat4) {
+  render(gl: WebGLRenderingContext | WebGL2RenderingContext, options: CustomRenderMethodInput) {
     // 实现 render 方法
   }
 

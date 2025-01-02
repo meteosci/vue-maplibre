@@ -3,7 +3,7 @@
  * @Date: 2023-08-09 10:18:36
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-12-26 17:57:56
+ * @LastEditTime: 2024-12-26 22:36:31
  * @FilePath: \vue-maplibre\demo\src\pages\map\Index.vue
 -->
 <template>
@@ -20,6 +20,7 @@
       <VmControlNavigation></VmControlNavigation>
       <VmControlTerrain source="terrainSource" position="top-right"></VmControlTerrain>
       <template v-if="mapsReady['mapContainer']">
+        <WidgetDemo></WidgetDemo>
         <VmLayerNative id="conferences" type="symbol" :source="source" :layout="layout"></VmLayerNative>
         <VmLayerGltf :position="position" url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"></VmLayerGltf>
       </template>
@@ -49,6 +50,7 @@ import { ref } from 'vue'
 import { VmMap, VmLayerGltf, VmLayerGltfProps, VmLayerNative, VmControlNavigation, VmControlTerrain } from '@vue-maplibre/components'
 import { GeoJSONSourceSpecification, LngLatLike, SymbolLayerSpecification } from 'maplibre-gl'
 import WidgetDemo from './WidgetDemo.vue'
+import { useVueMaplibre } from '@meteosci/vue-maplibre'
 
 const center = ref<LngLatLike>([108, 32])
 const position = ref<VmLayerGltfProps['position']>([108, 32, 0])
@@ -56,7 +58,7 @@ const zoom = ref(18)
 const mapRef = ref(null)
 const mapReady = ref(false)
 const mapsReady = ref({})
-
+const $mapService = useVueMaplibre()
 const layout: SymbolLayerSpecification['layout'] = {
   'icon-image': 'custom-marker',
   // get the year from the source's "year" property
