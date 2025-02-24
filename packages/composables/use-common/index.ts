@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-12-26 23:14:48
+ * @LastEditTime: 2025-02-24 15:44:27
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -14,11 +14,12 @@ import { useLocale } from '../use-locale'
 import useEvent from '@vue-maplibre/composables/private/use-event'
 import { getVmParentInstance } from '@vue-maplibre/utils/private/vm'
 import { isEqual, isFunction } from 'lodash-unified'
-import { WatchStopHandle, inject, onUnmounted } from 'vue'
+import { WatchStopHandle, inject, onUnmounted, onMounted } from 'vue'
 import { mergeDescriptors } from '@vue-maplibre/utils/merge-descriptors'
 import { Map } from 'maplibre-gl'
 import { vmKey } from '@vue-maplibre/utils/private/config'
 import mitt, { Emitter } from 'mitt'
+import { useGlobalConfig } from '@vue-maplibre/composables/use-global-config'
 
 export default function (props, { emit, attrs }, instance: VmComponentInternalInstance) {
   const logger = useLog(instance)
@@ -42,12 +43,13 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
   instance.vmMitt = mitt()
   const parentInstance = isMapRoot ? instance : getVmParentInstance(instance)
   const { bindEvents, registerEvents } = useEvent(instance, props)
+  const globalConfig = useGlobalConfig()
 
   const beforeLoad = async () => {
     emit('beforeLoad', instance)
 
     if (parentInstance.nowaiting) {
-      return true
+      return Promise.resolve(true)
     } else {
       await (parentInstance.proxy as VmComponentPublicInstance).creatingPromise
     }
@@ -245,22 +247,35 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
       // TODO: 可能用不上通用逻辑了
       // const options = transformProps(props)
       // return new Cesium[instance.cesiumClass](options)
+      return Promise.resolve(true)
     }
   }
 
+  let creatingPromiseResolve, creatingPromiseReject
   const creatingPromise = new Promise<VmReadyObject | boolean>((resolve, reject) => {
+    creatingPromiseResolve = resolve
+    creatingPromiseReject = reject
+  })
+
+  onMounted(async () => {
+    logger.debug(`${instance.className}---onMounted`)
+
+    if (instance.className === 'Map') {
+      await globalConfig.value?.__mapUnloadingPromise
+    }
+
     try {
       let isLoading = false
       if ($vm.map || isMapRoot) {
         isLoading = true
         load()
           .then(e => {
-            resolve(e)
+            creatingPromiseResolve(e)
             isLoading = false
           })
           .catch(e => {
             emit('unready', e)
-            reject(e)
+            creatingPromiseReject(e)
           })
       }
 
@@ -271,11 +286,11 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
         if (!isLoading && !instance.isUnmounted) {
           load()
             .then(e => {
-              resolve(e)
+              creatingPromiseResolve(e)
             })
             .catch(e => {
               emit('unready', e)
-              reject(e)
+              creatingPromiseReject(e)
             })
         }
       }
@@ -305,14 +320,20 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
       }
     } catch (e) {
       emit('unready', e)
-      reject(e)
+      creatingPromiseReject(e)
     }
   })
 
-  logger.debug(`${instance.className}---onCreated`)
-
   onUnmounted(() => {
     logger.debug(`${instance.className}---onUnmounted`)
+
+    let unloadingResolve
+    if (instance.className === 'Map') {
+      globalConfig.value.__mapUnloadingPromise = new Promise((resolve, reject) => {
+        unloadingResolve = resolve
+      })
+    }
+
     instance.unloadingPromise = new Promise((resolve, reject) => {
       unload().then(() => {
         logger.debug(`${instance.className}---unloaded`)
@@ -323,6 +344,11 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
         $vm.vmMitt.off('__vue_maplibre_vm_map_ready__')
 
         !isMapRoot && instance.vmMitt.all.clear()
+
+        if (instance.className === 'Map') {
+          unloadingResolve(true)
+          globalConfig.value.__mapUnloadingPromise = undefined
+        }
       })
     })
     instance.alreadyListening = []
@@ -356,6 +382,8 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
       }
     )
   }
+
+  logger.debug(`${instance.className}---onCreated`)
 
   return {
     $services: getServices(),
