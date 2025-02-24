@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2025-02-24 15:34:30
+ * @LastEditTime: 2025-02-24 21:52:42
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import {
@@ -219,7 +219,9 @@ export default defineComponent({
 
       instance.map = map
 
+      // console.log('更新存储的地图实例')
       instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
+
       return map
     }
 
@@ -248,7 +250,16 @@ export default defineComponent({
         })
         map.remove()
 
-        delete instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]
+        // console.log('删除存储的旧地图实例')
+        if (instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]) {
+          const $vm = instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]
+          const map = $vm?.map
+
+          if (map) {
+            // 如果地图不为空，说明地图实例还在，需要销毁。否则说明地图正在初始化，不能删除了。
+            delete instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]
+          }
+        }
       }
 
       logger.debug('vm-map-unloaded')
@@ -294,8 +305,10 @@ export default defineComponent({
     }
 
     provide<VmMapProvider>(vmKey, getServices())
+
+    // console.log('存储新的地图实例')
     instance.appContext.config.globalProperties.$VueMaplibre = instance.appContext.config.globalProperties.$VueMaplibre || {}
-    // instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
+    instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
 
     return () => {
       const children: Array<VNode> = []

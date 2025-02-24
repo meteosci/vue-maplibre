@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2025-02-24 15:44:27
+ * @LastEditTime: 2025-02-24 22:03:47
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -261,7 +261,9 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
     logger.debug(`${instance.className}---onMounted`)
 
     if (instance.className === 'Map') {
+      // console.log('等待旧地图卸载')
       await globalConfig.value?.__mapUnloadingPromise
+      // console.log('新地图开始加载')
     }
 
     try {
@@ -329,6 +331,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
 
     let unloadingResolve
     if (instance.className === 'Map') {
+      // console.log('旧地图开始卸载')
       globalConfig.value.__mapUnloadingPromise = new Promise((resolve, reject) => {
         unloadingResolve = resolve
       })
@@ -348,6 +351,7 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
         if (instance.className === 'Map') {
           unloadingResolve(true)
           globalConfig.value.__mapUnloadingPromise = undefined
+          // console.log('旧地图卸载完成')
         }
       })
     })

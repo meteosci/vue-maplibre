@@ -1,5 +1,13 @@
 ## Changelog
 
+### 0.0.20
+
+_2025-02-24_
+
+#### Bug fixes
+
+- Fixed the issue that the map initialization promise object could not be obtained in the onMounted lifecycle.
+
 ### 0.0.19
 
 _2025-02-24_
