@@ -1,11 +1,21 @@
 ## Changelog
 
+### 0.0.19
+
+_2025-02-24_
+
+#### Changes
+
+- Upgraded maplibre-gl version to 5.1.0.
+- Improved multi-map maintenance logic:
+  - Remove destroyed map objects from global variables.
+  - Destroy the old map first, then initialize the new map, to avoid the new page fetching the old map instance when switching routes.
 
 ### 0.0.18
 
 _2025-01-02_
 
-#### Modify
+#### Changes
 
 - upgrade maplibre-gl to 5.0.0.
 
