@@ -3,7 +3,7 @@
  * @Date: 2023-11-20 15:36:10
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-12-26 17:45:45
+ * @LastEditTime: 2025-02-24 15:34:30
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
 import {
@@ -55,6 +55,8 @@ export default defineComponent({
     const { t, locale } = useLocale()
     instance.maplibreEvents = [...Object.keys(mapEmits)]
     instance.className = 'Map'
+    instance.nowaiting = true
+
     instance.alreadyListening = [
       'maxBounds',
       'minZoom',
@@ -217,6 +219,7 @@ export default defineComponent({
 
       instance.map = map
 
+      instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
       return map
     }
 
@@ -244,9 +247,10 @@ export default defineComponent({
           map.removeControl(control)
         })
         map.remove()
+
+        delete instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]
       }
 
-      // globalConfig.value.__mapUnloadingPromise = undefined
       logger.debug('vm-map-unloaded')
       return true
     }
@@ -291,7 +295,7 @@ export default defineComponent({
 
     provide<VmMapProvider>(vmKey, getServices())
     instance.appContext.config.globalProperties.$VueMaplibre = instance.appContext.config.globalProperties.$VueMaplibre || {}
-    instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
+    // instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
 
     return () => {
       const children: Array<VNode> = []
