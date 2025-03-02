@@ -8,7 +8,8 @@ import {
   LngLatBoundsLike,
   LngLatLike,
   RequestTransformFunction,
-  StyleSpecification
+  StyleSpecification,
+  WebGLContextAttributesWithType
 } from 'maplibre-gl'
 import { PropType } from 'vue'
 
@@ -74,29 +75,38 @@ export default {
     default: 'bottom-left'
   },
   /**
-   * If `true`, map creation will fail if the performance of MapLibre GL JS would be dramatically worse than expected.
-   * (i.e. a software renderer would be used).
-   * @defaultValue false
+   * Set of WebGLContextAttributes that are applied to the WebGL context of the map.
+   * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext for more details.
+   * `contextType` can be set to `webgl2` or `webgl` to force a WebGL version. Not setting it, Maplibre will do it's best to get a suitable context.
+   * @defaultValue antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: false, failIfMajorPerformanceCaveat: false, desynchronized: false, contextType: 'webgl2withfallback'
    */
-  failIfMajorPerformanceCaveat: {
-    type: Boolean,
-    default: false
+  canvasContextAttributes: {
+    type: String as PropType<WebGLContextAttributesWithType>
   },
-  /**
-   * If `true`, the map's canvas can be exported to a PNG using `map.getCanvas().toDataURL()`. This is `false` by default as a performance optimization.
-   * @defaultValue false
-   */
-  preserveDrawingBuffer: {
-    type: Boolean,
-    default: false
-  },
+  // /**
+  //  * If `true`, map creation will fail if the performance of MapLibre GL JS would be dramatically worse than expected.
+  //  * (i.e. a software renderer would be used).
+  //  * @defaultValue false
+  //  */
+  // failIfMajorPerformanceCaveat: {
+  //   type: Boolean,
+  //   default: false
+  // },
+  // /**
+  //  * If `true`, the map's canvas can be exported to a PNG using `map.getCanvas().toDataURL()`. This is `false` by default as a performance optimization.
+  //  * @defaultValue false
+  //  */
+  // preserveDrawingBuffer: {
+  //   type: Boolean,
+  //   default: false
+  // },
   /**
    * If `true`, the gl context will be created with MSAA antialiasing, which can be useful for antialiasing custom layers. This is `false` by default as a performance optimization.
    */
-  antialias: {
-    type: Boolean,
-    default: false
-  },
+  // antialias: {
+  //   type: Boolean,
+  //   default: false
+  // },
   /**
    * If `false`, the map won't attempt to re-request tiles once they expire per their HTTP `cacheControl`/`expires` headers.
    * @defaultValue true
@@ -255,6 +265,14 @@ export default {
     default: 0
   },
   /**
+   * The initial roll angle of the map, measured in degrees counter-clockwise about the camera boresight. If `roll` is not specified in the constructor options, MapLibre GL JS will look for it in the map's style object. If it is not specified in the style, either, it will default to `0`.
+   * @defaultValue 0
+   */
+  roll: {
+    type: Number,
+    default: 0
+  },
+  /**
    * If `true`, multiple copies of the world will be rendered side by side beyond -180 and 180 degrees longitude. If set to `false`:
    *
    * - When the map is zoomed out far enough that a single representation of the world does not fill the map's entire
@@ -397,6 +415,25 @@ export default {
   maxCanvasSize: {
     type: Array as unknown as PropType<[number, number]>,
     default: [4096, 4096]
+  },
+  /**
+   * Determines whether to cancel, or retain, tiles from the current viewport which are still loading but which belong to a farther (smaller) zoom level than the current one.
+   * * If `true`, when zooming in, tiles which didn't manage to load for previous zoom levels will become canceled. This might save some computing resources for slower devices, but the map details might appear more abruptly at the end of the zoom.
+   * * If `false`, when zooming in, the previous zoom level(s) tiles will progressively appear, giving a smoother map details experience. However, more tiles will be rendered in a short period of time.
+   * @defaultValue true
+   */
+  cancelPendingTileRequestsWhileZooming: {
+    type: Boolean,
+    default: true
+  },
+  /**
+   * If true, the elevation of the center point will automatically be set to the terrain elevation
+   * (or zero if terrain is not enabled). If false, the elevation of the center point will default
+   * to sea level and will not automatically update. Defaults to true. Needs to be set to false to
+   * keep the camera above ground when pitch \> 90 degrees.
+   */
+  centerClampedToGround: {
+    type: Boolean
   },
   /**
    * The HTML element's string `id`, which MapLibre GL JS will render the map.

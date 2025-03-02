@@ -1,5 +1,13 @@
 ## Changelog
 
+### 0.0.21
+
+_2025-03-02_
+
+#### Changes
+
+- Update the initialization parameters of the VmMap component to MapLibre GL version 5.1.0.
+
 ### 0.0.20
 
 _2025-02-24_
