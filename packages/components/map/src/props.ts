@@ -81,7 +81,7 @@ export default {
    * @defaultValue antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: false, failIfMajorPerformanceCaveat: false, desynchronized: false, contextType: 'webgl2withfallback'
    */
   canvasContextAttributes: {
-    type: String as PropType<WebGLContextAttributesWithType>
+    type: Object as PropType<WebGLContextAttributesWithType>
   },
   // /**
   //  * If `true`, map creation will fail if the performance of MapLibre GL JS would be dramatically worse than expected.
