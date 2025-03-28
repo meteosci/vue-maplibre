@@ -3,15 +3,16 @@
  * @Date: 2024-02-02 17:46:41
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-16 16:59:47
+ * @LastEditTime: 2025-03-26 01:33:42
  * @FilePath: \vue-maplibre\packages\composables\private\use-global-config.ts
  */
 
 import { configProviderContextKey } from '@vue-maplibre/utils/private/config'
-import { keysOf } from '@vue-maplibre/utils'
-import type { Ref, App } from 'vue'
+import { ConfigProviderContext } from '@vue-maplibre/utils/types'
 import { inject, ref, computed, unref, provide, getCurrentInstance } from 'vue'
-import { ConfigProviderContext, MaybeRef } from '@vue-maplibre/utils/types'
+import type { Ref, App } from 'vue'
+import { MaybeRef } from '@vue-maplibre/utils/types'
+import { keysOf } from '@vue-maplibre/utils/objects'
 
 const globalConfig = ref<ConfigProviderContext>()
 

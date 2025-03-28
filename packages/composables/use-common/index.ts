@@ -19,7 +19,7 @@ import { mergeDescriptors } from '@vue-maplibre/utils/merge-descriptors'
 import { Map } from 'maplibre-gl'
 import { vmKey } from '@vue-maplibre/utils/private/config'
 import mitt, { Emitter } from 'mitt'
-import { useGlobalConfig } from '@vue-maplibre/composables/use-global-config'
+import { useGlobalConfig } from '@vue-maplibre/composables/private/use-global-config'
 
 export default function (props, { emit, attrs }, instance: VmComponentInternalInstance) {
   const logger = useLog(instance)
