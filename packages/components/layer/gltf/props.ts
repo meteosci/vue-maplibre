@@ -29,11 +29,11 @@ export default {
     type: Number,
     default: 1
   },
-  // /**
-  //  *  true if we want the gltf clamped to the ground.
-  //  */
-  // clampToGround: {
-  //   type: Boolean,
-  //   default: false
-  // }
+  /**
+   *  true if we want the gltf clamped to the ground.
+   */
+  clampToGround: {
+    type: Boolean,
+    default: false
+  }
 }

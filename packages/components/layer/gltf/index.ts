@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 16:35:27
+ * @LastEditTime: 2025-03-28 23:29:25
  * @FilePath: \vue-maplibre\packages\components\layer\gltf\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -17,7 +17,8 @@ import { kebabCase } from 'lodash-unified'
 import CustomGLTFLayer from '@vue-maplibre/shared/layer/GLTFLayer'
 
 const emits = {
-  ...commonEmits
+  ...commonEmits,
+  loaded: e => true
 }
 
 export default defineComponent({
@@ -28,7 +29,7 @@ export default defineComponent({
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const logger = useLog(instance)
     const { t } = useLocale()
-    instance.maplibreEvents = []
+    instance.maplibreEvents = ['loaded']
     instance.className = 'GLTFLayer' // 最终其实是 CustomStyleLayer
     instance.alreadyListening = []
     instance.mapRequired = true
@@ -116,6 +117,7 @@ export type VmLayerGltfProps = Partial<
        * @returns
        */
       onDestroyed: (instance: VmComponentInternalInstance) => void
+      onLoaded: (e: any) => void
     }
   >
 >

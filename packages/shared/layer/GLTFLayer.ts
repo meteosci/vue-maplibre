@@ -3,15 +3,17 @@
  * @Date: 2023-08-27 00:21:46
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-12-26 16:56:57
+ * @LastEditTime: 2025-03-28 23:27:22
  * @FilePath: \vue-maplibre\packages\shared\layer\GLTFLayer.ts
  */
-import { Map } from 'maplibre-gl'
+import { CustomRenderMethodInput, LngLat, Map } from 'maplibre-gl'
 import { MercatorCoordinate } from 'maplibre-gl'
 import CustomLayer from './CustomLayer'
 import { GLTFLoader } from './loaders/GLTFLoader'
 import { Camera, Scene, DirectionalLight, WebGLRenderer, Matrix4, Vector3 } from 'three'
 import { GLTFLayerOptions } from '@vue-maplibre/utils/types'
+import { mat4 } from 'gl-matrix'
+// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 export default class CustomGLTFLayer extends CustomLayer {
   camera: Camera
@@ -57,12 +59,12 @@ export default class CustomGLTFLayer extends CustomLayer {
     const { position, rotate, scale } = this.options
 
     const [lng, lat] = position
-    const altitude = position?.[2] || 0
+    let altitude = position?.[2] || 0
 
-    // if (options.clampToGround) {
-    //   const modelLocation = new LngLat(lng, lat)
-    //   altitude = this.map.queryTerrainElevation(modelLocation) || 0
-    // }
+    if (options.clampToGround) {
+      const modelLocation = new LngLat(lng, lat)
+      altitude = this.map.queryTerrainElevation(modelLocation) || altitude
+    }
 
     const modelAsMercatorCoordinate = MercatorCoordinate.fromLngLat([lng, lat], altitude)
 
@@ -94,8 +96,13 @@ export default class CustomGLTFLayer extends CustomLayer {
     const { url } = this.options
     // use the three.js GLTF loader to add the 3D model to the three.js scene
     const loader = new GLTFLoader()
+    const that = this
     loader.load(url, gltf => {
-      this.scene.add(gltf.scene)
+      that.scene.add(gltf.scene)
+      this.fire('loaded', {
+        gltf,
+        scene: that.scene
+      })
     })
 
     // use the MapLibre GL JS map canvas for three.js
@@ -108,7 +115,9 @@ export default class CustomGLTFLayer extends CustomLayer {
     this.renderer.autoClear = false
   }
 
-  render(gl, matrix) {
+  render(gl, options: CustomRenderMethodInput) {
+    // 兼容 5.0.0 版本前的写法
+    const matrix = (Array.isArray(options) ? options : options.defaultProjectionData.mainMatrix) as mat4
     const rotationX = new Matrix4().makeRotationAxis(new Vector3(1, 0, 0), this.modelTransform.rotateX)
     const rotationY = new Matrix4().makeRotationAxis(new Vector3(0, 1, 0), this.modelTransform.rotateY)
     const rotationZ = new Matrix4().makeRotationAxis(new Vector3(0, 0, 1), this.modelTransform.rotateZ)
@@ -130,4 +139,21 @@ export default class CustomGLTFLayer extends CustomLayer {
     super.dispose()
     this.renderer.dispose()
   }
+}
+
+/*
+ * Helper function used to get threejs-scene-coordinates from mercator coordinates.
+ * This is just a quick and dirty solution - it won't work if points are far away from each other
+ * because a meter near the north-pole covers more mercator-units
+ * than a meter near the equator.
+ */
+function calculateDistanceMercatorToMeters(from, to) {
+  const mercatorPerMeter = from.meterInMercatorCoordinateUnits()
+  // mercator x: 0=west, 1=east
+  const dEast = to.x - from.x
+  const dEastMeter = dEast / mercatorPerMeter
+  // mercator y: 0=north, 1=south
+  const dNorth = from.y - to.y
+  const dNorthMeter = dNorth / mercatorPerMeter
+  return { dEastMeter, dNorthMeter }
 }
