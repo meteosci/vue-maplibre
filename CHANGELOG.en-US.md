@@ -1,5 +1,19 @@
 ## Changelog
 
+### 0.0.22
+
+_2025-03-29_
+
+#### Bug Fixes
+
+- Fixed an issue where `VmLayerGltf` failed to render glTF models properly.
+
+- Fixed incorrect type definition for the `canvasContextAttributes` parameter in `VmMap`.
+
+#### Changes
+
+- Dependency updates.
+
 ### 0.0.21
 
 _2025-03-02_

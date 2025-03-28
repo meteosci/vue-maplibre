@@ -10,6 +10,7 @@
     "moduleResolution":"Bundler",
     "esModuleInterop": true,
     "jsx": "preserve",
+    "preserveSymlinks": true,
     "sourceMap": true,
     "lib": ["ES2018", "DOM", "DOM.Iterable"],
     "allowSyntheticDefaultImports": true,

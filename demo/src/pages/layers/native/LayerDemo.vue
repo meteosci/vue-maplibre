@@ -3,29 +3,36 @@
  * @Date: 2024-04-25 22:14:39
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-26 00:32:17
+ * @LastEditTime: 2025-03-29 02:32:41
  * @FilePath: \vue-maplibre\demo\src\pages\layers\native\LayerDemo.vue
 -->
 <template>
   <div class="test">
-    <VmLayerNative id="asdasd" :type="layerType" :source="source" :paint="paint"></VmLayerNative>
+    <VmLayerNative id="openstreetmap-tiles" type="raster" :source="source"></VmLayerNative>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useVueMaplibre } from '@meteosci/vue-maplibre'
 import { VmLayerNative, VmLayerNativeProps } from '@vue-maplibre/components'
+import { SourceSpecification } from 'maplibre-gl'
 import { ref } from 'vue'
 
 const $vm = useVueMaplibre()
 console.log($vm)
 
-const layerType: VmLayerNativeProps['type'] = 'line'
-const source = ref<VmLayerNativeProps['source']>({
-  type: 'geojson',
-  data: 'https://zouyaoji.top/vue-cesium-demo/datas/china.json'
-})
+// const source = ref<VmLayerNativeProps['source']>({
+//   type: 'geojson',
+//   data: 'https://zouyaoji.top/vue-cesium-demo/datas/china.json'
+// })
 
+const source: SourceSpecification = {
+  type: 'raster',
+  tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+  tileSize: 256,
+  minzoom: 0,
+  maxzoom: 19
+}
 const paint: VmLayerNativeProps['paint'] = ref({
   'line-color': 'rgb(255, 255, 0)'
 })

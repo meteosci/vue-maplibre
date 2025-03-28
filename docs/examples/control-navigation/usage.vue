@@ -3,15 +3,15 @@
  * @Date: 2024-06-14 23:41:49
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-14 23:57:46
- * @FilePath: \vue-maplibre\docs\examples\navigation\usage.vue
+ * @LastEditTime: 2025-03-28 21:54:54
+ * @FilePath: \vue-maplibre\docs\examples\control-navigation\usage.vue
 -->
 <template>
   <div class="map-demo-container">
     <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom">
       <VmControlNavigation position="top-left">asd</VmControlNavigation>
-      <VmControlNavigation position="top-right"></VmControlNavigation>
-      <VmControlNavigation position="bottom-left"></VmControlNavigation>
+      <!-- <VmControlNavigation position="top-right"></VmControlNavigation>
+      <VmControlNavigation position="bottom-left"></VmControlNavigation> -->
     </VmMap>
   </div>
 </template>
