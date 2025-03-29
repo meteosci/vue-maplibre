@@ -1,12 +1,14 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-10-11 09:17:22
- * @LastEditTime: 2021-10-11 13:07:50
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2025-03-29 17:22:53
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-cesium@next\.prettierrc.js
+ * @FilePath: \vue-maplibre\prettier.config.js
  */
-module.exports = {
+
+
+export default {
   printWidth: 150,
   tabWidth: 2,
   endOfLine: 'auto',
@@ -16,13 +18,5 @@ module.exports = {
   arrowParens: 'avoid',
   jsxSingleQuote: true,
   trailingComma: 'none',
-  bracketSpacing: true,
-  overrides: [
-    {
-      files: '.prettierrc',
-      options: {
-        parser: 'json'
-      }
-    }
-  ]
+  bracketSpacing: true
 }

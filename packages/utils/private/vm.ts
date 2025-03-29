@@ -3,7 +3,7 @@
  * @Date: 2024-02-04 11:06:05
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-17 22:15:52
+ * @LastEditTime: 2025-03-29 17:24:58
  * @FilePath: \vue-maplibre\packages\utils\private\vm.ts
  */
 import { capitalize } from 'vue'
@@ -28,7 +28,6 @@ export function getInstanceListener(vcInstance: VmComponentInternalInstance, lis
   return listener as AnyFunction<any>
 }
 
-
 export function getVmParentInstance(instance: VmComponentInternalInstance): VmComponentInternalInstance {
   const parentInstance = instance.parent as VmComponentInternalInstance
   if (parentInstance == null) {
@@ -36,4 +35,3 @@ export function getVmParentInstance(instance: VmComponentInternalInstance): VmCo
   }
   return !parentInstance.className && parentInstance.proxy?.$options.name !== 'VmMap' ? getVmParentInstance(parentInstance) : parentInstance
 }
-

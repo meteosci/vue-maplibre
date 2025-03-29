@@ -1,7 +1,7 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-10-11 09:17:23
- * @LastEditTime: 2024-06-08 16:27:53
+ * @LastEditTime: 2025-03-29 17:23:33
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\packages\theme-default\gulpfile.ts
@@ -60,10 +60,10 @@ function compressWithCssnano() {
           // avoid color transform
           colormin: false,
           // avoid font transform
-          minifyFontValues: false,
-        },
-      ],
-    }),
+          minifyFontValues: false
+        }
+      ]
+    })
   ])
   return new Transform({
     objectMode: true,
@@ -81,17 +81,12 @@ function compressWithCssnano() {
       processor.process(cssString, { from: file.path }).then(result => {
         const name = path.basename(file.path)
         file.contents = Buffer.from(result.css)
-        consola.success(
-          `${chalk.cyan(name)}: ${chalk.yellow(
-            cssString.length / 1000
-          )} KB -> ${chalk.green(result.css.length / 1000)} KB`
-        )
+        consola.success(`${chalk.cyan(name)}: ${chalk.yellow(cssString.length / 1000)} KB -> ${chalk.green(result.css.length / 1000)} KB`)
         callback(null, file)
       })
-    },
+    }
   })
 }
-
 
 /**
  * copy from packages/theme-chalk/lib to dist/theme-chalk

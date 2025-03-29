@@ -91,7 +91,6 @@ function mergeGeometries(geometries, useGroups = false) {
 
   const morphTargetsRelative = geometries[0].morphTargetsRelative
 
-
   const mergedGeometry = new BufferGeometry()
   let offset = 0
 
@@ -229,7 +228,7 @@ function mergeGeometries(geometries, useGroups = false) {
 
     if (numMorphTargets === 0) break
 
-    mergedGeometry.morphAttributes = mergedGeometry.morphAttributes || {} as any
+    mergedGeometry.morphAttributes = mergedGeometry.morphAttributes || ({} as any)
     mergedGeometry.morphAttributes[name] = []
 
     for (let i = 0; i < numMorphTargets; ++i) {

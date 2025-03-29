@@ -1,6 +1,5 @@
 import { isString } from 'lodash-unified'
 
-
 export default function (instance?) {
   const makeLog = (prefix = '') => {
     return function (...args) {

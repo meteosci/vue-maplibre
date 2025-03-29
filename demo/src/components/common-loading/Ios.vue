@@ -1,10 +1,10 @@
 <!--
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-11-10 10:54:20
- * @LastEditTime: 2022-01-21 16:33:13
- * @LastEditors: zouyaoji
+ * @LastEditTime: 2025-03-29 17:50:01
+ * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \census-application-haiyan\src\components\loading\ios.vue
+ * @FilePath: \vue-maplibre\demo\src\components\common-loading\Ios.vue
 -->
 
 <template>

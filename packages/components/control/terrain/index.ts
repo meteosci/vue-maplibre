@@ -3,7 +3,7 @@
  * @Date: 2024-04-17 16:54:27
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-08-18 17:46:34
+ * @LastEditTime: 2025-03-29 17:28:58
  * @FilePath: \vue-maplibre\packages\components\control\terrain\index.ts
  */
 import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
@@ -55,7 +55,7 @@ export default defineComponent({
     }
 
     instance.unmount = async () => {
-    const $services = commonState.getServices()
+      const $services = commonState.getServices()
       const { map } = $services
 
       const control = instance.maplibreObject as TerrainControl

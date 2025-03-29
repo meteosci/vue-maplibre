@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import {
   AnimationClip,
   Bone,
@@ -2042,8 +2040,7 @@ class GLTFParser {
     this.plugins = {}
     this.options = options
 
-    // loader object cache
-    // @ts-ignore
+    // @ts-expect-error 忽略问题
     this.cache = new GLTFRegistry()
 
     // associations between Three.js objects and glTF elements

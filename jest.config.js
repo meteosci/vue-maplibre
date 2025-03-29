@@ -1,12 +1,12 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-08-23 17:19:18
- * @LastEditTime: 2024-02-05 17:52:42
+ * @LastEditTime: 2025-03-29 18:10:36
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
  * @FilePath: \vue-maplibre\jest.config.js
  */
-module.exports = {
+export default {
   globals: {
     // work around: https://github.com/kulshekhar/ts-jest/issues/748#issuecomment-423528659
     'ts-jest': {

@@ -1,9 +1,9 @@
 <!--
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2022-02-17 17:10:57
- * @LastEditTime: 2024-03-04 17:54:40
+ * @LastEditTime: 2025-03-29 17:58:20
  * @LastEditors: zouyaoji 370681295@qq.com
- * @FilePath: \template-project\src\components\common-echarts\Index.vue
+ * @FilePath: \vue-maplibre\demo\src\components\common-echarts\Index.vue
  * @Description:
 -->
 <template>
@@ -42,7 +42,7 @@ watch(
     deep: true
   }
 )
-const chartRef = shallowRef<HTMLElement>()
+const chartRef = shallowRef<HTMLElement>(null)
 let echartsInstance: echarts.ECharts = undefined
 let resizeObserver = undefined
 

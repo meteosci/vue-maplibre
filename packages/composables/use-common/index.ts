@@ -3,7 +3,7 @@
  * @Date: 2024-04-16 22:46:21
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2025-02-24 22:03:47
+ * @LastEditTime: 2025-03-29 17:29:31
  * @FilePath: \vue-maplibre\packages\composables\use-common\index.ts
  */
 import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmMittEvents, VmReadyObject } from '@vue-maplibre/utils/types'
@@ -100,7 +100,6 @@ export default function (props, { emit, attrs }, instance: VmComponentInternalIn
     await instance.unloadingPromise
   }
 
-  // eslint-disable-next-line arrow-parens
   const unload = async () => {
     await beforeUnload()
 

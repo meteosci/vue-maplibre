@@ -2,6 +2,7 @@
   "name": "@vue-maplibre/build",
   "version": "0.0.1",
   "private": true,
+  "type":"commonjs",
   "description": "Build Toolchain for Vue Maplibre",
   "license": "MIT",
   "main": "./dist/index.cjs",

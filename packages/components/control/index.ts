@@ -3,7 +3,7 @@
  * @Date: 2024-04-18 11:52:22
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 17:44:25
+ * @LastEditTime: 2025-03-29 17:28:47
  * @FilePath: \vue-maplibre\packages\components\control\index.ts
  */
 import { App } from 'vue'
@@ -35,4 +35,3 @@ export const VmControlTerrain = ControlTerrain as SFCWithInstall<typeof ControlT
 
 export * from './navigation'
 export * from './terrain'
-

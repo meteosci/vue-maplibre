@@ -3,16 +3,17 @@
  * @Date: 2024-02-04 18:02:41
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-16 12:01:37
+ * @LastEditTime: 2025-03-29 18:10:48
  * @FilePath: \vue-maplibre\packages\components\map\src\events.ts
  */
 import { MapEventType, MapLayerEventType } from 'maplibre-gl'
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const listener = (ev: (MapEventType[keyof MapEventType] | MapLayerEventType[keyof MapLayerEventType]) & Object) => true
+const listener = (ev: (MapEventType[keyof MapEventType] | MapLayerEventType[keyof MapLayerEventType]) & object) => true
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const emits: Record<keyof MapEventType | keyof MapLayerEventType | string, (ev: (MapEventType[keyof MapEventType] | MapLayerEventType[keyof MapLayerEventType]) & Object) => void> = {
+const emits: Record<
+  keyof MapEventType | keyof MapLayerEventType | string,
+  (ev: (MapEventType[keyof MapEventType] | MapLayerEventType[keyof MapLayerEventType]) & object) => void
+> = {
   boxzoomcancel: listener,
   boxzoomstart: listener,
   boxzoomend: listener,

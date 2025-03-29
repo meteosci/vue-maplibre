@@ -10,15 +10,7 @@
   "bugs": {
     "url": "https://github.com/meteosci/vue-maplibre/issues"
   },
-  "keywords": [
-    "vue-maplibre",
-    "map",
-    "maplibre-gl",
-    "webgl",
-    "gis",
-    "vue",
-    "webgis"
-  ],
+  "keywords": ["vue-maplibre", "map", "maplibre-gl", "webgl", "gis", "vue", "webgis"],
   "license": "MIT",
   "exports": {
     ".": {
@@ -42,10 +34,7 @@
       "import": "./es/*.mjs"
     },
     "./es/*": {
-      "types": [
-        "./es/*.d.ts",
-        "./es/*/index.d.ts"
-      ],
+      "types": ["./es/*.d.ts", "./es/*/index.d.ts"],
       "import": "./es/*.mjs"
     },
     "./lib/*.js": {
@@ -53,10 +42,7 @@
       "require": "./lib/*.js"
     },
     "./lib/*": {
-      "types": [
-        "./lib/*.d.ts",
-        "./lib/*/index.d.ts"
-      ],
+      "types": ["./lib/*.d.ts", "./lib/*/index.d.ts"],
       "require": "./lib/*.js"
     },
     "./*": "./*"
@@ -66,13 +52,7 @@
   "style": "dist/index.css",
   "unpkg": "dist/index.full.js",
   "jsdelivr": "dist/index.full.js",
-  "sideEffects": [
-    "dist/*",
-    "theme-default/*.css",
-    "theme-default/src/*.scss",
-    "es/components/*/style/*",
-    "lib/components/*/style/*"
-  ],
+  "sideEffects": ["dist/*", "theme-default/*.css", "theme-default/src/*.scss", "es/components/*/style/*", "lib/components/*/style/*"],
   "peerDependencies": {
     "vue": "^3.4.0"
   },
@@ -85,9 +65,5 @@
     "mitt": "^3.0.1",
     "three": "^0.175.0"
   },
-  "browserslist": [
-    "> 1%",
-    "not ie 11",
-    "not op_mini all"
-  ]
+  "browserslist": ["> 1%", "not ie 11", "not op_mini all"]
 }

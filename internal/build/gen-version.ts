@@ -1,17 +1,17 @@
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-03 14:23:35
- * @LastEditTime: 2024-06-08 18:00:17
+ * @LastEditTime: 2025-03-29 16:42:34
  * @LastEditors: zouyaoji 370681295@qq.com
  * @Description:
- * @FilePath: \vue-maplibre\scripts\gen-version.ts
+ * @FilePath: \vue-maplibre\internal\build\gen-version.ts
  */
 
 import { writeFile } from 'fs/promises'
 import path from 'path'
 import consola from 'consola'
 import { vmRoot } from '@vue-maplibre/build'
-import pkg from '../packages/vue-maplibre/package.json' // need to be checked
+import pkg from '../../packages/vue-maplibre/package.json' // need to be checked
 
 function getVersion() {
   const tagVer = process.env.TAG_VERSION

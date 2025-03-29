@@ -1,8 +1,4 @@
 import CustomLayer from './CustomLayer'
 import GLTFLayer from './GLTFLayer'
 
-
-export {
-  CustomLayer,
-  GLTFLayer
-}
+export { CustomLayer, GLTFLayer }

@@ -3,12 +3,12 @@
  * @Date: 2024-01-09 13:20:37
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-01-09 13:41:28
- * @FilePath: \demo\src\components\drag-wrapper\index.ts
+ * @LastEditTime: 2025-03-29 17:57:52
+ * @FilePath: \vue-maplibre\demo\src\components\drag-wrapper\index.ts
  */
 import { defineComponent, onMounted, onBeforeUnmount, h, ref, getCurrentInstance } from 'vue'
 import interact from 'interactjs'
-import { hSlot } from 'quasar/src/utils/private/render'
+import { hSlot } from '@vue-maplibre/utils/private/render'
 import type { ActionName, ActionProps } from '@interactjs/core/types'
 
 export default defineComponent({
