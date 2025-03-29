@@ -8,7 +8,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "start": "node --require tsx/cjs ../../node_modules/gulp-cli/bin/gulp.js -f gulpfile.ts",
+    "start": "node --require tsx/cjs node_modules/gulp-cli/bin/gulp -f gulpfile.ts",
     "dev": "pnpm run stub",
     "stub": "unbuild --stub"
   },
@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "@pnpm/types": "^1000.3.0",
+    "gulp": "^5.0.0",
+    "gulp-cli": "^3.0.0",
     "unbuild": "^3.5.0",
     "vue": "^3.5.13",
     "tsx": "^4.19.3"

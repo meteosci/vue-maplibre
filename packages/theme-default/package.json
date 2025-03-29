@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "node --require tsx/cjs ../../node_modules/gulp-cli/bin/gulp.js"
+    "build": "node --require tsx/cjs node_modules/gulp-cli/bin/gulp.js"
   },
   "bugs": {
     "url": "https://github.com/meteosci/vue-maplibre/issues"
@@ -26,7 +26,9 @@
     "@types/gulp-rename": "^2.0.6",
     "@types/gulp-sass": "^5.0.4",
     "cssnano": "^7.0.6",
+    "gulp": "^5.0.0",
     "gulp-autoprefixer": "^9.0.0",
+    "gulp-cli": "^3.0.0",
     "gulp-postcss": "^10.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^6.0.1",
