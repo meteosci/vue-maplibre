@@ -3,7 +3,7 @@
  * @Date: 2024-02-05 16:28:48
  * @Description: Do not edit
  * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-04-21 12:51:45
+ * @LastEditTime: 2025-04-09 20:03:31
  * @FilePath: \vue-maplibre\packages\vue-maplibre\all.ts
  */
 import installer from './defaults'
@@ -12,6 +12,7 @@ export * from '@vue-maplibre/composables'
 export * from '@vue-maplibre/directives'
 export * from '@vue-maplibre/shared'
 export * from '@vue-maplibre/utils'
+export * from '@vue-maplibre/locale'
 
 // type define
 export * from '@vue-maplibre/utils/private/emits'
