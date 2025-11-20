@@ -6,26 +6,27 @@
  * @LastEditTime: 2024-04-16 10:46:45
  * @FilePath: \vue-maplibre\packages\composables\use-events\index.ts
  */
-import { VmComponentInternalInstance } from '@vue-maplibre/utils/types'
+import type { VmComponentInternalInstance } from '@vue-maplibre/utils/types'
 import { getInstanceListener } from '@vue-maplibre/utils/private/vm'
 
 export default function (instance: VmComponentInternalInstance, props) {
-  const bindEvents = (maplibreObject, events: Array<string>, register: boolean = true, eventLayerId?) => {
+  const bindEvents = (maplibreObject, events: Array<string>, register: boolean = true, eventLayerId?): void => {
     const ev = events || instance.maplibreEvents || []
 
-    ev &&
-      ev.forEach(eventName => {
-        const listener = getInstanceListener(instance, eventName)
+    ev
+    && ev.forEach((eventName) => {
+      const listener = getInstanceListener(instance, eventName)
 
-        if (listener) {
-          const methodName = register ? 'on' : 'off'
-          if (eventLayerId) {
-            maplibreObject[methodName](eventName, eventLayerId, listener)
-          } else {
-            maplibreObject[methodName](eventName, listener)
-          }
+      if (listener) {
+        const methodName = register ? 'on' : 'off'
+        if (eventLayerId) {
+          maplibreObject[methodName](eventName, eventLayerId, listener)
         }
-      })
+        else {
+          maplibreObject[methodName](eventName, listener)
+        }
+      }
+    })
   }
 
   const registerEvents = (register: boolean, eventLayerId?) => {

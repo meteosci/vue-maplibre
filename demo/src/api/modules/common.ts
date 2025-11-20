@@ -6,12 +6,12 @@
  * @Description:
  * @FilePath: \vue-maplibre\demo\src\api\modules\common.ts
  */
-import qs from 'qs'
+import type { AxiosResponseData, CustomConfig } from '@src/types'
+import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import type Adapter from 'axios-mock-adapter'
+import type { RequestTools } from '..'
+
 const baseURL = import.meta.env.VITE_VUE_APP_API
-import { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
-import Adapter from 'axios-mock-adapter'
-import { RequestTools } from '..'
-import { AxiosResponseData, CustomConfig } from '@src/types'
 
 export default ({
   service,
@@ -31,7 +31,6 @@ export default ({
   /**
    * 获取静态资源（JSON）等
    * @param {*} fetchStr
-   * @returns
    */
   getStaticData(fetchStr, baseURL?) {
     baseURL = baseURL || import.meta.env.BASE_URL
@@ -50,7 +49,7 @@ export default ({
     return res.then((data: any) => {
       return {
         code: 0,
-        data: data,
+        data,
         msg: 'success'
       } as AxiosResponseData
     })

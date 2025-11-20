@@ -7,6 +7,7 @@
  * @FilePath: \cloudtao_2023_dps_h5_src\src\utils\platform.ts
  */
 
+// eslint-disable-next-line no-restricted-syntax
 export const enum EPlatformType {
   /**
    * 专有钉钉小程序
@@ -48,30 +49,37 @@ export const enum EPlatformType {
  */
 export function getPlatformInfo() {
   const userAgent = navigator.userAgent
-  if (userAgent.indexOf('AlipayClient') > -1 || userAgent.indexOf('mPaaSClient') > -1) {
+  if (userAgent.includes('AlipayClient') || userAgent.includes('mPaaSClient')) {
     // 支付宝小程序的 JS-SDK 防止 404 需要动态加载，如果不需要兼容支付宝小程序，则无需引用此 JS 文件。
-    if (userAgent.indexOf('mPaaSClient') > -1) {
-      //专有钉钉
+    if (userAgent.includes('mPaaSClient')) {
+      // 专有钉钉
       return EPlatformType.zydd_xcx
-    } else {
+    }
+    else {
       return EPlatformType.zfb_xcx
     }
-  } else if (/QQ/i.test(userAgent) && /miniProgram/i.test(userAgent)) {
+  }
+  else if (/QQ/i.test(userAgent) && /miniProgram/i.test(userAgent)) {
     // QQ 小程序
     return EPlatformType.qq_xcx
-  } else if (/micromessenger/i.test(userAgent)) {
+  }
+  else if (/micromessenger/i.test(userAgent)) {
     // 微信小程序/微信浏览器 JS-SDK 如果不需要兼容微信小程序，则无需引用此 JS 文件。
     return EPlatformType.wx_xcx
-  } else if (/toutiaomicroapp/i.test(userAgent)) {
+  }
+  else if (/toutiaomicroapp/i.test(userAgent)) {
     // 头条小程序 JS-SDK 如果不需要兼容头条小程序，则无需引用此 JS 文件。--不支持web-view postmessage通信
     return EPlatformType.tt_xcx
-  } else if (/swan/i.test(userAgent)) {
+  }
+  else if (/swan/i.test(userAgent)) {
     // 百度小程序 JS-SDK 如果不需要兼容百度小程序，则无需引用此 JS 文件。
     return EPlatformType.bd_xcx
-  } else if (/quickapp/i.test(userAgent)) {
+  }
+  else if (/quickapp/i.test(userAgent)) {
     // quickapp
     return EPlatformType.qk_xcx
-  } else {
+  }
+  else {
     // 其他浏览器
     return EPlatformType.unkown
   }

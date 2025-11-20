@@ -1,3 +1,4 @@
+import { describe, expect } from 'vitest'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-04-13 22:43:29
@@ -7,20 +8,19 @@
  * @FilePath: \vue-maplibre\packages\locale\__test__\locale.spec.ts
  */
 import { t, use } from '../index'
-import zhCn from '../lang/zh-cn'
 import en from '../lang/en-us'
-import { describe, expect, test } from 'vitest'
+import zhCn from '../lang/zh-cn'
 
-describe('Locale', () => {
-  test('t', () => {
+describe('locale', () => {
+  it('t', () => {
     expect(t('vc.navigation.compass.title')).toBe('按住鼠标拖拽旋转相机。')
   })
 
-  test('return key name if not defined', () => {
+  it('return key name if not defined', () => {
     expect(t('vc.navigation.compass.someThing')).toBeUndefined()
   })
 
-  test('use', () => {
+  it('use', () => {
     use(en)
     expect(t('vc.navigation.compass.title')).toBe('Click and drag to rotate the camera.')
     use(zhCn)

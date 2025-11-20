@@ -1,9 +1,12 @@
+/* eslint-disable eslint-comments/no-unlimited-disable */
+
 /* eslint-disable */
 /**
  * Created by Wandergis on 2015/7/8. coordtransform.js@2.1.2
  * 提供了百度坐标（BD-09）、国测局坐标（火星坐标，GCJ-02）、和 WGS-84 坐标系之间的转换
  * https://github.com/wandergis/coordtransform
  */
+
 // 定义一些常量
 const x_PI = (3.14159265358979324 * 3000.0) / 180.0
 const PI = 3.1415926535897932384626

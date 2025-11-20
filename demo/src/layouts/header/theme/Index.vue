@@ -6,6 +6,13 @@
  * @Description:
  * @FilePath: \vue-maplibre\demo\src\layouts\header\theme\Index.vue
 -->
+<script lang="ts" setup>
+import { ref } from 'vue'
+import ThemeList from './ThemeList.vue'
+
+const dialogVisible = ref(false)
+</script>
+
 <template>
   <q-btn
     v-if="$route.name !== 'login'"
@@ -36,14 +43,8 @@
       </q-card-section>
 
       <q-card-section class="theme-card">
-        <theme-list />
+        <ThemeList />
       </q-card-section>
     </q-card>
   </q-dialog>
 </template>
-
-<script lang="ts" setup>
-import { ref } from 'vue'
-import ThemeList from './ThemeList.vue'
-const dialogVisible = ref(false)
-</script>

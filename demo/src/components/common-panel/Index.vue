@@ -6,28 +6,9 @@
  * @Description:
  * @FilePath: \demo\src\components\common-panel\Index.vue
 -->
-<template>
-  <q-card class="common-panel">
-    <q-bar class="header" :class="titleClass" :style="{ height: barHeight }">
-      <div class="bar"></div>
-      <div v-if="title !== ''" class="text-title">{{ title }}</div>
-      <slot name="header-left"></slot>
-      <q-space />
-      <slot name="header-right"></slot>
-      <q-btn v-if="showCloseBtn" v-close-popup dense flat icon="close" @click="onClose">
-        <q-tooltip>{{ closeTip }}</q-tooltip>
-      </q-btn>
-    </q-bar>
-    <q-separator v-if="separatorOpts.show" v-bind="separatorOpts" class="separator-line" />
-    <div class="content">
-      <slot></slot>
-    </div>
-  </q-card>
-</template>
-
 <script lang="ts" setup>
+import type { ThemeOptions } from '@src/types'
 import { store } from '@src/store'
-import { ThemeOptions } from '@src/types'
 import { computed } from 'vue'
 
 defineOptions({
@@ -68,7 +49,7 @@ const props = defineProps({
 // state
 const emit = defineEmits(['close'])
 
-const onClose = evt => {
+function onClose(evt) {
   emit('close', evt)
 }
 
@@ -77,6 +58,27 @@ const theme = computed<ThemeOptions>(() => {
   return themeStore.themeConfig[themeStore.activeName]
 })
 </script>
+
+<template>
+  <q-card class="common-panel">
+    <q-bar class="header" :class="titleClass" :style="{ height: barHeight }">
+      <div class="bar" />
+      <div v-if="title !== ''" class="text-title">
+        {{ title }}
+      </div>
+      <slot name="header-left" />
+      <q-space />
+      <slot name="header-right" />
+      <q-btn v-if="showCloseBtn" v-close-popup dense flat icon="close" @click="onClose">
+        <q-tooltip>{{ closeTip }}</q-tooltip>
+      </q-btn>
+    </q-bar>
+    <q-separator v-if="separatorOpts.show" v-bind="separatorOpts" class="separator-line" />
+    <div class="content">
+      <slot />
+    </div>
+  </q-card>
+</template>
 
 <style lang="scss" scoped>
 .common-panel.q-card {

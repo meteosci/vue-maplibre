@@ -6,9 +6,9 @@
  * @LastEditTime: 2025-01-02 15:59:10
  * @FilePath: \vue-maplibre\packages\shared\layer\CustomLayer.ts
  */
-import { Map, CustomLayerInterface, CustomRenderMethodInput } from 'maplibre-gl'
-import { mat4 } from 'gl-matrix'
-import { CustomLayerOptions, GLTFLayerOptions } from '@vue-maplibre/utils/types'
+
+import type { CustomLayerOptions, GLTFLayerOptions } from '@vue-maplibre/utils/types'
+import type { CustomLayerInterface, CustomRenderMethodInput, Map } from 'maplibre-gl'
 import { Base } from '../core'
 
 /**
@@ -30,7 +30,7 @@ export default class CustomLayer extends Base implements CustomLayerInterface {
    */
   constructor(options: CustomLayerOptions) {
     super(options)
-    this.id = options?.id || 'custom_' + CustomLayer.CID++
+    this.id = options?.id || `custom_${CustomLayer.CID++}`
     this.type = 'custom'
     this.renderingMode = '2d'
     this.map = null

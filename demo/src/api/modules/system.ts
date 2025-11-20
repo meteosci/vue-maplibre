@@ -6,13 +6,14 @@
  * @Description:
  * @FilePath: \maplibre-ext\demo\src\api\modules\system.ts
  */
-import { find, assign } from 'lodash'
-import * as webStorage from '@src/utils/web-storage'
+
+import type { AxiosResponseData, CustomConfig } from '@src/types'
+import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import type Adapter from 'axios-mock-adapter'
+import type { RequestTools } from '..'
 import router from '@src/router'
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import Adapter from 'axios-mock-adapter'
-import { RequestTools } from '..'
-import { AxiosResponseData, CustomConfig } from '@src/types'
+import * as webStorage from '@src/utils/web-storage'
+import { assign, find } from 'lodash'
 import menus from './mock-menus'
 
 const users = [
@@ -37,7 +38,7 @@ export default ({
 }) => ({
   /**
    * @description 登录
-   * @param {Object} data 登录携带的信息
+   * @param {object} data 登录携带的信息
    */
   login(data = {}) {
     // if (import.meta.env.VITE_MOCK_ENABLED !== 'true') {
@@ -48,7 +49,7 @@ export default ({
     //   })
     // }
     // 模拟数据
-    mock.onAny('/auth/login').reply(config => {
+    mock.onAny('/auth/login').reply((config) => {
       const data = tools.parse(config.data)
       const user = find(users, {
         username: data.username,
@@ -75,14 +76,15 @@ export default ({
     //   })
     // }
     // 模拟数据
-    mock.onAny('/user/info').reply(config => {
+    mock.onAny('/user/info').reply((config) => {
       const uuid = webStorage.getLocalStorage('uuid')
       const user = find(users, {
         id: uuid
       })
       if (user) {
         return tools.responseSuccess(assign({}, user))
-      } else {
+      }
+      else {
         webStorage.removeLocalStorage('token')
         webStorage.removeLocalStorage('uuid')
         router.push('/login')
@@ -97,7 +99,7 @@ export default ({
   },
   /**
    * @description 获取有权限的菜单
-   * @param {Object} data
+   * @param {object} data
    */
   getAccessibleMenus(data = {}) {
     // if (import.meta.env.VITE_MOCK_ENABLED !== 'true') {
@@ -108,7 +110,7 @@ export default ({
     //   })
     // }
     // 模拟数据
-    mock.onAny('/api/menu/accessible').reply(config => {
+    mock.onAny('/api/menu/accessible').reply((config) => {
       return tools.responseSuccess(menus)
     })
     // 接口请求

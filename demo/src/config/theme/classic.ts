@@ -6,14 +6,6 @@
  * @Description:
  * @FilePath: \lc_-sys_-platform\src\config\theme\classic.ts
  */
-/*
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2022-05-28 17:42:33
- * @LastEditTime: 2022-05-29 14:22:32
- * @LastEditors: zouyaoji
- * @Description:
- * @FilePath: \vue-cesium-demo\src\config\theme\classic.ts
- */
 export const themeClassic = {
   /**
    * 主题名称

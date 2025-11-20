@@ -6,7 +6,7 @@
  * @LastEditTime: 2024-01-09 16:05:35
  * @FilePath: \demo\src\api\modules\mock-menus\home.ts
  */
-import { Menu } from '@src/types'
+import type { Menu } from '@src/types'
 import { v4 as uuidv4 } from 'uuid'
 
 export default {

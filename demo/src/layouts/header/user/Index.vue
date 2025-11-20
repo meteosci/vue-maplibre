@@ -6,6 +6,27 @@
  * @Description:
  * @FilePath: \demo\src\layouts\header\user\Index.vue
 -->
+<script lang="ts" setup>
+import { store } from '@src/store'
+
+const { toggleGlobalLayout } = store.system.useLayoutStore()
+const user = store.system.useUserStore()
+
+function onItemClick() {
+  store.system
+    .useAccountStore()
+    .logout({
+      confirm: true
+    })
+    .then((isLogout) => {
+      if (isLogout) {
+        // 注销后默认显示的图层
+        toggleGlobalLayout({ featureInfo: false, layerManager: false })
+      }
+    })
+}
+</script>
+
 <template>
   <q-chip
     v-if="$route.name !== 'login'"
@@ -32,28 +53,6 @@
     </q-menu>
   </q-chip>
 </template>
-
-<script lang="ts" setup>
-import { store } from '@src/store'
-import { ref } from 'vue'
-
-const { toggleGlobalLayout } = store.system.useLayoutStore()
-const user = store.system.useUserStore()
-
-const onItemClick = () => {
-  store.system
-    .useAccountStore()
-    .logout({
-      confirm: true
-    })
-    .then(isLogout => {
-      if (isLogout) {
-        // 注销后默认显示的图层
-        toggleGlobalLayout({ featureInfo: false, layerManager: false })
-      }
-    })
-}
-</script>
 
 <style lang="scss" scoped>
 .user-chip {

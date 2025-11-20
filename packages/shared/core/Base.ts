@@ -6,9 +6,9 @@
  * @LastEditTime: 2024-04-17 17:06:48
  * @FilePath: \vue-maplibre\packages\shared\Base.ts
  */
-import { Evented } from 'maplibre-gl'
+import type { AnyFunction, Listener } from '@vue-maplibre/utils/types'
 import { merge } from 'lodash-unified'
-import { AnyFunction, Listener } from '@vue-maplibre/utils/types'
+import { Evented } from 'maplibre-gl'
 
 /**
  * Base 类是一个继承自 Evented 类的基类，用于处理事件监听和选项管理。

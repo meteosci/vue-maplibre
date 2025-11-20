@@ -6,7 +6,7 @@
  * @LastEditTime: 2024-06-14 21:56:43
  * @FilePath: \vue-maplibre\packages\locale\lang\zh-cn.ts
  */
-import { Language } from '..'
+import type { Language } from '..'
 
 export default {
   name: 'zh-cn',
@@ -37,6 +37,13 @@ export default {
       'CooperativeGesturesHandler.WindowsHelpText': '使用 Ctrl + 滚轮缩放地图',
       'CooperativeGesturesHandler.MacHelpText': '使用 ⌘ + 滚轮缩放地图',
       'CooperativeGesturesHandler.MobileHelpText': '使用两个手指移动地图'
+    },
+    notify: {
+      log: '【成功】',
+      warn: '【警告】',
+      error: '【错误】',
+      debug: '【调试】',
+      info: '【提示】'
     }
   }
 } as Language

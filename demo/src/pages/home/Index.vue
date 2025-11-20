@@ -6,12 +6,6 @@
  * @LastEditTime: 2024-09-12 20:50:36
  * @FilePath: \vue-maplibre\demo\src\pages\home\Index.vue
 -->
-<template>
-  <div class="page-demo-home" style="width: 100%; height: 100%">
-    <div class="text-h2 text-bold">{{ message }}</div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useVueMaplibre } from '@vue-maplibre/composables'
 import { ref } from 'vue'
@@ -20,6 +14,14 @@ const message = ref('代表地球欢迎你')
 const $vm = useVueMaplibre()
 console.log($vm.vmMitt.all)
 </script>
+
+<template>
+  <div class="page-demo-home" style="width: 100%; height: 100%">
+    <div class="text-h2 text-bold">
+      {{ message }}
+    </div>
+  </div>
+</template>
 
 <style lang="scss">
 .page-demo-home {

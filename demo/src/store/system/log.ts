@@ -1,3 +1,5 @@
+import { webStorage } from '@src/utils'
+import { get } from 'lodash'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2022-05-13 16:42:41
@@ -7,8 +9,6 @@
  * @FilePath: \maplibre-ext\packages\demo\src\store\system\log.ts
  */
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { get } from 'lodash'
-import { webStorage } from '@src/utils'
 import { date } from 'quasar'
 
 // main is the name of the store. It is unique across your application
@@ -45,10 +45,10 @@ export const useLogStore = defineStore('log', {
   actions: {
     /**
      * @description 添加一个日志
-     * @param {Object} context
-     * @param {String} param message {String} 信息
-     * @param {String} param type {String} 类型
-     * @param {Object} payload meta {Object} 附带的信息
+     * @param {object} context
+     * @param {string} param message {string} 信息
+     * @param {string} param type {String} 类型
+     * @param {object} payload meta {Object} 附带的信息
      */
     push({ message, type = 'info', meta }) {
       this.log.push({

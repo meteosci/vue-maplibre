@@ -1,3 +1,4 @@
+export * from './dark'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2022-05-28 22:33:01
@@ -7,4 +8,3 @@
  * @FilePath: \template-project\src\config\theme\index.ts
  */
 export * from './light'
-export * from './dark'

@@ -6,7 +6,7 @@
  * @LastEditTime: 2025-03-29 18:10:48
  * @FilePath: \vue-maplibre\packages\components\map\src\events.ts
  */
-import { MapEventType, MapLayerEventType } from 'maplibre-gl'
+import type { MapEventType, MapLayerEventType } from 'maplibre-gl'
 
 const listener = (ev: (MapEventType[keyof MapEventType] | MapLayerEventType[keyof MapLayerEventType]) & object) => true
 

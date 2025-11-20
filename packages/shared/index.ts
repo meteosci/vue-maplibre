@@ -6,5 +6,5 @@
  * @LastEditTime: 2024-05-29 14:45:44
  * @FilePath: \vue-maplibre\packages\shared\index.ts
  */
-export * as Layer from './layer'
 export * as Core from './core'
+export * as Layer from './layer'

@@ -6,7 +6,8 @@
  * @LastEditTime: 2024-02-05 16:33:29
  * @FilePath: \vue-maplibre\packages\vue-maplibre\defaults.ts
  */
-import makeInstaller from './make-installer'
+
 import Components from './component'
+import makeInstaller from './make-installer'
 
 export default makeInstaller([...Components])

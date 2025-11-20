@@ -1,3 +1,5 @@
+import { pinia, store } from '@store/index'
+import { isString } from 'lodash'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-08-27 15:30:13
@@ -7,13 +9,12 @@
  * @FilePath: \cloudtao_2023_dps_h5_src\src\utils\logger.ts
  */
 import { Notify } from 'quasar'
-import { store, pinia } from '@store/index'
-import { isString } from 'lodash'
+
 const webStoragePrefix = import.meta.env.VITE_VUE_APP_PREFIX
 
 /**
  * @description 返回这个样式的颜色值
- * @param {String} type 样式名称 [ primary | success | warning | danger | text ]
+ * @param {string} type 样式名称 [ primary | success | warning | danger | text ]
  */
 function typeColor(type = 'default') {
   let color = ''
@@ -41,9 +42,9 @@ function typeColor(type = 'default') {
 
 /**
  * @description 打印一个 [ title | text ] 样式的信息
- * @param {String} title title text
- * @param {String} info info text
- * @param {String} type style
+ * @param {string} title title text
+ * @param {string} info info text
+ * @param {string} type style
  */
 export function capsule(title, info, type = 'primary') {
   console.log(
@@ -96,12 +97,13 @@ export function danger(text) {
   colorful([{ text, type: 'danger' }])
 }
 
-const makeLog = (prefix = '') => {
+function makeLog(prefix = '') {
   return function (...args) {
     if (prefix) {
       if (isString(args[0])) {
-        args[0] = prefix.trim() + ' ' + args[0]
-      } else {
+        args[0] = `${prefix.trim()} ${args[0]}`
+      }
+      else {
         args = [prefix.trim(), ...args]
       }
     }
@@ -114,12 +116,13 @@ const makeLog = (prefix = '') => {
   }
 }
 
-const makeWarn = (prefix = '') => {
+function makeWarn(prefix = '') {
   return function (...args) {
     if (prefix) {
       if (isString(args[0])) {
-        args[0] = prefix.trim() + ' ' + args[0]
-      } else {
+        args[0] = `${prefix.trim()} ${args[0]}`
+      }
+      else {
         args = [prefix.trim(), ...args]
       }
     }
@@ -146,12 +149,13 @@ const makeWarn = (prefix = '') => {
   }
 }
 
-const makeError = (prefix = '') => {
+function makeError(prefix = '') {
   return function (...args) {
     if (prefix) {
       if (isString(args[0])) {
-        args[0] = prefix.trim() + ' ' + args[0]
-      } else {
+        args[0] = `${prefix.trim()} ${args[0]}`
+      }
+      else {
         args = [prefix.trim(), ...args]
       }
     }
@@ -177,12 +181,13 @@ const makeError = (prefix = '') => {
   }
 }
 
-const makeDebug = (prefix = '') => {
+function makeDebug(prefix = '') {
   return function (...args) {
     if (prefix) {
       if (isString(args[0])) {
-        args[0] = prefix.trim() + ' ' + args[0]
-      } else {
+        args[0] = `${prefix.trim()} ${args[0]}`
+      }
+      else {
         args = [prefix.trim(), ...args]
       }
     }
@@ -203,4 +208,4 @@ const warn = makeWarn(`【警告】`)
 const error = makeError(`【错误】`)
 const debug = makeDebug(`【调试】`)
 
-export { log, warn, error, debug }
+export { debug, error, log, warn }

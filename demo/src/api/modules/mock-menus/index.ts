@@ -1,3 +1,4 @@
+import type { Menu } from '@src/types'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2023-12-06 17:59:48
@@ -7,11 +8,10 @@
  * @FilePath: \vue-maplibre\demo\src\api\modules\mock-menus\index.ts
  */
 import { v4 as uuidv4 } from 'uuid'
-import { Menu } from '@src/types'
 
+import homeMenu from './home'
 import layersMenu from './layers'
 import mapMenu from './map'
-import homeMenu from './home'
 
 const menus: Array<Menu> = [
   {

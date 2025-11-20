@@ -7,11 +7,12 @@
  * @FilePath: \demo\src\api\index.ts
  */
 
-import { service, request, serviceForMock, requestForMock, mock } from './service'
+import commonApi from './modules/common'
+import systemApi from './modules/system'
+
+import { mock, request, requestForMock, service, serviceForMock } from './service'
 import * as tools from './tools'
 
-import systemApi from './modules/system'
-import commonApi from './modules/common'
 const params = { service, request, serviceForMock, requestForMock, mock, tools }
 
 /**

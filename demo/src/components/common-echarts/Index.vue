@@ -6,14 +6,9 @@
  * @FilePath: \vue-maplibre\demo\src\components\common-echarts\Index.vue
  * @Description:
 -->
-<template>
-  <div ref="chartRef" class="common-echarts-container"></div>
-</template>
-
 <script lang="ts" setup>
 import * as echarts from 'echarts'
-import { shallowRef, onMounted, nextTick, onUnmounted, watch, toRaw } from 'vue'
-const emits = defineEmits(['ready'])
+import { nextTick, onMounted, onUnmounted, shallowRef, watch } from 'vue'
 
 defineOptions({
   name: 'CommonEcharts'
@@ -29,6 +24,11 @@ const props = defineProps({
   }
 })
 
+const emits = defineEmits(['ready'])
+const chartRef = shallowRef<HTMLElement>(null)
+let echartsInstance: echarts.ECharts
+let resizeObserver
+
 defineExpose({
   getChart: () => echartsInstance
 })
@@ -42,9 +42,6 @@ watch(
     deep: true
   }
 )
-const chartRef = shallowRef<HTMLElement>(null)
-let echartsInstance: echarts.ECharts = undefined
-let resizeObserver = undefined
 
 // lifecycle
 onMounted(() => {
@@ -59,8 +56,8 @@ onUnmounted(() => {
   echartsInstance && echartsInstance.dispose()
 })
 
-//methods
-const initEchart = () => {
+// methods
+function initEchart() {
   nextTick(() => {
     if (!echartsInstance) {
       echartsInstance = echarts.init(chartRef.value)
@@ -69,7 +66,7 @@ const initEchart = () => {
   })
 }
 
-const updateEcharts = () => {
+function updateEcharts() {
   if (echartsInstance) {
     echartsInstance.resize()
     echartsInstance.clear()
@@ -77,7 +74,7 @@ const updateEcharts = () => {
   }
 }
 
-const resize = () => {
+function resize() {
   setTimeout(() => {
     if (resizeObserver) {
       echartsInstance && echartsInstance.resize()
@@ -85,6 +82,10 @@ const resize = () => {
   })
 }
 </script>
+
+<template>
+  <div ref="chartRef" class="common-echarts-container" />
+</template>
 
 <style lang="scss" scoped>
 .common-echarts-container {

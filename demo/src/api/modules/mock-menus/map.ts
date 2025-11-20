@@ -6,7 +6,7 @@
  * @LastEditTime: 2024-04-15 15:00:01
  * @FilePath: \vue-maplibre\demo\src\api\modules\mock-menus\map.ts
  */
-import { Menu } from '@src/types'
+import type { Menu } from '@src/types'
 import { v4 as uuidv4 } from 'uuid'
 
 export default {

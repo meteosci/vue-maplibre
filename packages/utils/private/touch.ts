@@ -6,7 +6,6 @@
  * @LastEditTime: 2024-06-18 10:51:10
  * @FilePath: \vue-maplibre\packages\utils\private\touch.ts
  */
-import { platform } from '../platform'
 
 const directions = ['left', 'right', 'up', 'down', 'horizontal', 'vertical']
 
@@ -23,7 +22,7 @@ const modifiersAll = {
 export function getModifierDirections(mod) {
   const dir: any = {}
 
-  directions.forEach(direction => {
+  directions.forEach((direction) => {
     if (mod[direction]) {
       dir[direction] = true
     }
@@ -54,11 +53,11 @@ export function getModifierDirections(mod) {
 
 export function shouldStart(evt, ctx) {
   return (
-    ctx.event === void 0 &&
-    evt.target !== void 0 &&
-    evt.target.draggable !== true &&
-    typeof ctx.handler === 'function' &&
-    evt.target.nodeName.toUpperCase() !== 'INPUT' &&
-    (evt.qClonedBy === void 0 || evt.qClonedBy.indexOf(ctx.uid) === -1)
+    ctx.event === void 0
+    && evt.target !== void 0
+    && evt.target.draggable !== true
+    && typeof ctx.handler === 'function'
+    && evt.target.nodeName.toUpperCase() !== 'INPUT'
+    && (evt.qClonedBy === void 0 || !evt.qClonedBy.includes(ctx.uid))
   )
 }

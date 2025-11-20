@@ -2,7 +2,7 @@
   "name": "@vue-maplibre/build",
   "version": "0.0.1",
   "private": true,
-  "type":"commonjs",
+  "type": "commonjs",
   "description": "Build Toolchain for Vue Maplibre",
   "license": "MIT",
   "main": "./dist/index.cjs",
@@ -14,14 +14,16 @@
     "stub": "unbuild --stub"
   },
   "peerDependencies": {
-    "vue": "^3.4.0"
+    "vue": "^3.5.0"
   },
   "devDependencies": {
-    "@pnpm/types": "^1000.3.0",
-    "gulp": "^5.0.0",
-    "gulp-cli": "^3.0.0",
-    "unbuild": "^3.5.0",
-    "vue": "^3.5.13",
-    "tsx": "^4.19.3"
+    "@pnpm/types": "^1001.0.0",
+    "@vitejs/plugin-vue": "5.2.4",
+    "@vitejs/plugin-vue-jsx": "4.2.0",
+    "gulp": "^5.0.1",
+    "gulp-cli": "^3.1.0",
+    "unbuild": "^3.6.1",
+    "vue": "^3.5.24",
+    "tsx": "^4.20.6"
   }
 }

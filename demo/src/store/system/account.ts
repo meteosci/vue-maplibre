@@ -1,3 +1,7 @@
+import * as api from '@src/api'
+import router from '@src/router'
+import * as webStorage from '@src/utils/web-storage'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-09-01 17:56:49
@@ -6,17 +10,13 @@
  * @Description:
  * @FilePath: \maplibre-template-project\src\store\system\account.ts
  */
-import { Notify, Dialog, LocalStorage } from 'quasar'
-import * as webStorage from '@src/utils/web-storage'
-import router from '@src/router'
-import * as api from '@src/api'
-import { defineStore, acceptHMRUpdate } from 'pinia'
-import { useUserStore } from './user'
-import { usePermissionStore } from './permission'
-import { useMenuStore } from './menu'
+import { Dialog, Notify } from 'quasar'
 import { useGrayStore } from './gray'
+import { useMenuStore } from './menu'
+import { usePermissionStore } from './permission'
 import { useThemeStore } from './theme'
 import { useTransitionStore } from './transition'
+import { useUserStore } from './user'
 // main is the name of the store. It is unique across your application
 // and will appear in devtools
 export const useAccountStore = defineStore('account', {
@@ -29,8 +29,8 @@ export const useAccountStore = defineStore('account', {
     /**
      * 登录
      * @param data
-     * @param {Object} payload userName {String} 用户账号
-     * @param {Object} payload password {String} 密码
+     * @param {object} payload userName {String} 用户账号
+     * @param {object} payload password {String} 密码
      */
     async login(data) {
       // uuid 是用户身份唯一标识 用户注册的时候确定 并且不可改变 不可重复
@@ -48,8 +48,8 @@ export const useAccountStore = defineStore('account', {
     },
     /**
      * @description 注销用户并返回登录页面
-     * @param {Object} context
-     * @param {Object} payload confirm {Boolean} 是否需要确认
+     * @param {object} context
+     * @param {object} payload confirm {Boolean} 是否需要确认
      */
     logout({ confirm = false } = {}) {
       return new Promise((resolve, reject) => {
@@ -96,14 +96,15 @@ export const useAccountStore = defineStore('account', {
               })
               resolve(false)
             })
-        } else {
+        }
+        else {
           logout()
         }
       })
     },
     /**
      * @description 用户登录后从持久化数据加载一系列的设置
-     * @param {Object} context
+     * @param {object} context
      */
     async load() {
       // 加载用户名

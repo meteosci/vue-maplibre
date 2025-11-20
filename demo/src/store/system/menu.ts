@@ -1,7 +1,8 @@
+import type { Menu } from '@src/types'
 import setting from '@src/config/setting.js'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useDBStore } from './db'
-import { Menu } from '@src/types'
+
 export const useMenuStore = defineStore('menu', {
   state: () => {
     return {
@@ -24,7 +25,7 @@ export const useMenuStore = defineStore('menu', {
   actions: {
     /**
      * 设置侧边栏展开或者收缩
-     * @param {Boolean} collapse is collapse
+     * @param {boolean} collapse is collapse
      */
     async asideCollapseSet(collapse) {
       // store 赋值
@@ -55,7 +56,7 @@ export const useMenuStore = defineStore('menu', {
     },
     /**
      * 设置侧边栏折叠动画
-     * @param {Boolean} transition is transition
+     * @param {boolean} transition is transition
      */
     async asideTransitionSet(transition) {
       // store 赋值
@@ -109,7 +110,7 @@ export const useMenuStore = defineStore('menu', {
     },
     /**
      * @description 设置侧边栏菜单
-     * @param {Object} state state
+     * @param {object} state state
      * @param {Array} menu menu setting
      */
     asideSet(menu) {

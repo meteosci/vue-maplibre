@@ -6,10 +6,150 @@
  * @Description:
  * @FilePath: \template-project\src\layouts\MainLayout.vue
 -->
+<script setup lang="ts">
+import type { CTEventProvider, CTMittEvents, ThemeOptions } from '@src/types'
+import type { Emitter } from 'mitt'
+import { ctKey } from '@src/config/key'
+import MainHeader from '@src/layouts/header/Index.vue'
+import { pinia, store } from '@src/store'
+import { get } from 'lodash'
+import mitt from 'mitt'
+import { storeToRefs } from 'pinia'
+import { AppFullscreen } from 'quasar'
+import { computed, onMounted, provide, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+defineOptions({
+  name: 'MainLayout'
+})
+
+const $route = useRoute()
+// state
+const globalLayout = storeToRefs(store.system.useLayoutStore()).global
+const { active: grayActive } = storeToRefs(store.system.useGrayStore())
+const menuStore = store.system.useMenuStore()
+const themeStore = store.system.useThemeStore()
+
+const drawer = ref(false)
+
+const ctMitt: Emitter<CTMittEvents> = mitt()
+
+// 用户登录后从本地数据库加载一系列的设置
+store.system.useAccountStore().load()
+
+// computed
+const headerMenus = computed(() => {
+  const header = menuStore.header
+  return header.length ? header[0].children : []
+})
+
+const asideMenus = computed(() => {
+  return menuStore.aside
+})
+
+const currentRouteName = computed(() => {
+  return $route.name
+})
+
+const theme = computed<ThemeOptions>(() => {
+  return themeStore.themeConfig[themeStore.activeName]
+})
+
+// watch
+let initialTriggered = false
+// watch
+watch(
+  () => $route.matched,
+  (val) => {
+    if (initialTriggered) {
+      //  路由改变时 如果全局的一些布局需要重置，如果全局弹窗关闭，逻辑写到这儿
+      const layoutStore = store.system.useLayoutStore()
+      // layoutStore.radarInfoPanel.show = false
+    }
+    if (val.length > 1) {
+      const side = headerMenus.value.filter(menu => menu.path === val[1].path)
+      if (side.length) {
+        const children = side[0]?.children?.filter(v => (import.meta.env.MODE === 'development' ? v.type === 10 : v.type === 10))
+        if (children?.length) {
+          menuStore.asideSet(children)
+        }
+        else {
+          menuStore.asideSet([])
+        }
+      }
+      else {
+        menuStore.asideSet([])
+      }
+    }
+    initialTriggered = true
+  },
+  {
+    immediate: true
+  }
+)
+
+// lifecyle
+onMounted(() => {
+  window.onunhandledrejection = (error) => {
+    store.system.useLogStore(pinia).push({
+      message: get(error, 'reason.message', 'Unknown error'),
+      type: 'danger',
+      meta: {
+        error: get(error, 'reason'),
+        trace: get(error, 'reason.stack')
+      }
+    })
+  }
+  window.onerror = (event, source, lineno, colno, error) => {
+    store.system.useLogStore(pinia).push({
+      message: get(error, 'message', 'Unknown error'),
+      type: 'danger',
+      meta: {
+        error,
+        trace: get(error, 'stack'),
+        source: `${source}@${lineno}:${colno}`,
+        event
+      }
+    })
+  }
+
+  window.addEventListener('beforeunload', (e) => {
+    //
+  })
+
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'F11') {
+      e.preventDefault()
+      AppFullscreen.toggle()
+    }
+  })
+})
+
+function getServices() {
+  return {
+    mitt: ctMitt
+  }
+}
+
+function myTweak(offset) {
+  // "offset" is a Number (pixels) that refers to the total
+  // height of header + footer that occupies on screen,
+  // based on the QLayout "view" prop configuration
+
+  // this is actually what the default style-fn does in Quasar
+  return { height: `calc(100vh - ${50}px)`, backgroundColor: '#f6f6f6' }
+}
+
+/**
+ * 为所有子组件提供全局事件钩子。
+ */
+provide<CTEventProvider>(ctKey, getServices())
+</script>
+
 <template>
   <q-layout view="hHh lpR fFf" class="main-layout" :class="{ 'gray-mode': grayActive }">
     <q-header elevated class="main-header-container">
-      <main-header />
+      <MainHeader />
     </q-header>
     <q-drawer v-if="asideMenus?.length" v-model="drawer" show-if-above :breakpoint="500" bordered :mini="globalLayout.leftDrawerMini" :width="200">
       <q-scroll-area class="fit">
@@ -31,7 +171,7 @@
                 </q-item-section>
               </template>
               <q-list>
-                <template v-for="(subItem, subIndex) in menuItem.children" :key="index + '_' + subIndex">
+                <template v-for="(subItem, subIndex) in menuItem.children" :key="`${index}_${subIndex}`">
                   <q-item
                     v-ripple
                     clickable
@@ -39,7 +179,7 @@
                     :active="subItem.name === currentRouteName"
                     @click="$router.push(subItem.path)"
                   >
-                    <q-item-section side> </q-item-section>
+                    <q-item-section side />
                     <q-item-section avatar>
                       <q-icon :name="subItem.icon" />
                     </q-item-section>
@@ -89,143 +229,6 @@
   </q-layout>
 </template>
 
-<script setup lang="ts">
-import { computed, onMounted, provide, ref, watch } from 'vue'
-import { get } from 'lodash'
-import MainHeader from '@src/layouts/header/Index.vue'
-import { pinia } from '@src/store'
-import { store } from '@src/store'
-import { storeToRefs } from 'pinia'
-import { useRouter, useRoute } from 'vue-router'
-import mitt, { Emitter } from 'mitt'
-import { AppFullscreen } from 'quasar'
-import { CTEventProvider, CTMittEvents, ThemeOptions } from '@src/types'
-import { ctKey } from '@src/config/key'
-
-defineOptions({
-  name: 'MainLayout'
-})
-
-const $route = useRoute()
-// state
-const globalLayout = storeToRefs(store.system.useLayoutStore()).global
-const { active: grayActive } = storeToRefs(store.system.useGrayStore())
-const menuStore = store.system.useMenuStore()
-const themeStore = store.system.useThemeStore()
-
-const drawer = ref(false)
-
-const ctMitt: Emitter<CTMittEvents> = mitt()
-
-// 用户登录后从本地数据库加载一系列的设置
-store.system.useAccountStore().load()
-
-// computed
-const headerMenus = computed(() => {
-  const header = menuStore.header
-  return header.length ? header[0].children : []
-})
-
-const asideMenus = computed(() => {
-  return menuStore.aside
-})
-
-const currentRouteName = computed(() => {
-  return $route.name
-})
-
-const theme = computed<ThemeOptions>(() => {
-  return themeStore.themeConfig[themeStore.activeName]
-})
-
-// watch
-let initialTriggered = false
-// watch
-watch(
-  () => $route.matched,
-  val => {
-    if (initialTriggered) {
-      //  路由改变时 如果全局的一些布局需要重置，如果全局弹窗关闭，逻辑写到这儿
-      const layoutStore = store.system.useLayoutStore()
-      // layoutStore.radarInfoPanel.show = false
-    }
-    if (val.length > 1) {
-      const side = headerMenus.value.filter(menu => menu.path === val[1].path)
-      if (side.length) {
-        const children = side[0]?.children?.filter(v => (import.meta.env.MODE === 'development' ? v.type === 10 : v.type === 10))
-        if (children?.length) {
-          menuStore.asideSet(children)
-        } else {
-          menuStore.asideSet([])
-        }
-      } else {
-        menuStore.asideSet([])
-      }
-    }
-    initialTriggered = true
-  },
-  {
-    immediate: true
-  }
-)
-
-// lifecyle
-onMounted(() => {
-  window.onunhandledrejection = error => {
-    store.system.useLogStore(pinia).push({
-      message: get(error, 'reason.message', 'Unknown error'),
-      type: 'danger',
-      meta: {
-        error: get(error, 'reason'),
-        trace: get(error, 'reason.stack')
-      }
-    })
-  }
-  window.onerror = (event, source, lineno, colno, error) => {
-    store.system.useLogStore(pinia).push({
-      message: get(error, 'message', 'Unknown error'),
-      type: 'danger',
-      meta: {
-        error,
-        trace: get(error, 'stack'),
-        source: `${source}@${lineno}:${colno}`,
-        event: event
-      }
-    })
-  }
-
-  window.addEventListener('beforeunload', function (e) {
-    //
-  })
-
-  window.addEventListener('keydown', function (e) {
-    if (e.code === 'F11') {
-      e.preventDefault()
-      AppFullscreen.toggle()
-    }
-  })
-})
-
-const getServices = () => {
-  return {
-    mitt: ctMitt
-  }
-}
-
-const myTweak = offset => {
-  // "offset" is a Number (pixels) that refers to the total
-  // height of header + footer that occupies on screen,
-  // based on the QLayout "view" prop configuration
-
-  // this is actually what the default style-fn does in Quasar
-  return { height: `calc(100vh - ${50}px)`, backgroundColor: '#f6f6f6' }
-}
-
-/**
- * 为所有子组件提供全局事件钩子。
- */
-provide<CTEventProvider>(ctKey, getServices())
-</script>
 <style lang="scss" scoped>
 .main-layout {
   width: 100%;

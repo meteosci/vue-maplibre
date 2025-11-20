@@ -6,7 +6,7 @@
  * @LastEditTime: 2024-06-14 15:17:25
  * @FilePath: \vue-maplibre\packages\utils\private\emits.ts
  */
-import { VmComponentInternalInstance, VmReadyObject } from '../types'
+import type { VmComponentInternalInstance, VmReadyObject } from '../types'
 
 export const commonEmits = {
   /**

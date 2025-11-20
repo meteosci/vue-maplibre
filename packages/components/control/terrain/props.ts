@@ -7,8 +7,8 @@
  * @FilePath: \vue-maplibre\packages\components\control\terrain\props.ts
  */
 
-import { ControlPosition } from 'maplibre-gl'
-import { PropType } from 'vue'
+import type { ControlPosition } from 'maplibre-gl'
+import type { PropType } from 'vue'
 
 export default {
   source: {

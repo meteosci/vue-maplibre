@@ -1,3 +1,4 @@
+import type { Language } from '@vue-maplibre/locale'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-10-27 15:54:11
@@ -6,10 +7,10 @@
  * @Description:
  * @FilePath: \vue-maplibre\packages\components\config-provider\src\index.ts
  */
-import { defineComponent, PropType, renderSlot, VNode } from 'vue'
+import type { PropType, VNode } from 'vue'
 import { provideGlobalConfig } from '@vue-maplibre/composables/private/use-global-config'
-import { Language } from '@vue-maplibre/locale'
 import Chinese from '@vue-maplibre/locale/lang/zh-cn'
+import { defineComponent, renderSlot } from 'vue'
 
 export default defineComponent({
   name: 'VmConfigProvider',
@@ -30,7 +31,7 @@ export default defineComponent({
   }
 })
 
-export type VmConfigProviderProps = {
+export interface VmConfigProviderProps {
   /**
    * Locale Object.
    */

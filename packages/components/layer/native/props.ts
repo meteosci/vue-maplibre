@@ -7,17 +7,17 @@
  * @FilePath: \vue-maplibre\packages\components\layer\native\props.ts
  */
 import type {
-  FilterSpecification,
-  RasterLayerSpecification,
-  FillLayerSpecification,
-  LineLayerSpecification,
-  SymbolLayerSpecification,
-  CircleLayerSpecification,
-  HeatmapLayerSpecification,
-  FillExtrusionLayerSpecification,
-  HillshadeLayerSpecification,
   BackgroundLayerSpecification,
-  SourceSpecification
+  CircleLayerSpecification,
+  FillExtrusionLayerSpecification,
+  FillLayerSpecification,
+  FilterSpecification,
+  HeatmapLayerSpecification,
+  HillshadeLayerSpecification,
+  LineLayerSpecification,
+  RasterLayerSpecification,
+  SourceSpecification,
+  SymbolLayerSpecification
 } from 'maplibre-gl'
 import type { PropType } from 'vue'
 

@@ -6,14 +6,16 @@
  * @LastEditTime: 2025-03-29 17:28:58
  * @FilePath: \vue-maplibre\packages\components\control\terrain\index.ts
  */
-import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
-import props from './props'
-import { commonEmits } from '@vue-maplibre/utils/private/emits'
+import type { VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
+import type { TerrainSpecification } from 'maplibre-gl'
+import type { ExtractPropTypes } from 'vue'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
-import { VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
-import useLog from '@vue-maplibre/composables/private/use-log'
+import { logger } from '@vue-maplibre/utils'
+import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { kebabCase } from 'lodash-unified'
-import { TerrainControl, type TerrainSpecification } from 'maplibre-gl'
+import { TerrainControl } from 'maplibre-gl'
+import { createCommentVNode, defineComponent, getCurrentInstance } from 'vue'
+import props from './props'
 
 const emits = {
   ...commonEmits
@@ -25,7 +27,6 @@ export default defineComponent({
   emits,
   setup(props, ctx) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
-    const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = []
     instance.className = 'TerrainControl'

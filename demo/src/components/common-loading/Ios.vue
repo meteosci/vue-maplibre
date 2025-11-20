@@ -7,24 +7,6 @@
  * @FilePath: \vue-maplibre\demo\src\components\common-loading\Ios.vue
 -->
 
-<template>
-  <div class="loading-ios flex column justify-center items-center z-top">
-    <q-spinner-ios v-if="!hasError" :size="size" />
-    <q-btn v-else icon="error" :size="size" color="red" round flat dense>
-      <q-tooltip>加载失败，原因：{{ errorMsg }}</q-tooltip>
-    </q-btn>
-
-    <div v-if="!dense">
-      <div v-if="!hasError" class="q-pt-md">
-        <span> {{ tipText }} </span>
-      </div>
-      <q-chip v-else clickable color="red" text-color="white" icon="error" @click="onRetry">
-        {{ errorTip }}
-      </q-chip>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 const props = defineProps({
   size: {
@@ -54,7 +36,25 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['retry'])
-const onRetry = () => {
+function onRetry() {
   emit('retry')
 }
 </script>
+
+<template>
+  <div class="loading-ios flex column justify-center items-center z-top">
+    <q-spinner-ios v-if="!hasError" :size="size" />
+    <q-btn v-else icon="error" :size="size" color="red" round flat dense>
+      <q-tooltip>加载失败，原因：{{ errorMsg }}</q-tooltip>
+    </q-btn>
+
+    <div v-if="!dense">
+      <div v-if="!hasError" class="q-pt-md">
+        <span> {{ tipText }} </span>
+      </div>
+      <q-chip v-else clickable color="red" text-color="white" icon="error" @click="onRetry">
+        {{ errorTip }}
+      </q-chip>
+    </div>
+  </div>
+</template>

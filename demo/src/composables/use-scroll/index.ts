@@ -35,7 +35,7 @@ export default function () {
   const verticalPositionRef = ref(null)
 
   // methods
-  const onScrollHandler = info => {
+  const onScrollHandler = (info) => {
     verticalPositionRef.value = info.verticalPosition
   }
   const setScrollPosition = (axis, offset, duration) => {

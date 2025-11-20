@@ -6,33 +6,13 @@
  * @Description:
  * @FilePath: \demo\src\layouts\header\log\LogTable.vue
 -->
-<template>
-  <q-table class="log-table-list" :rows="logs" :columns="columns" :pagination="initialPagination">
-    <template #body="props">
-      <q-tr :props="props">
-        <q-td key="time" class="text-center">
-          {{ props.row.time }}
-        </q-td>
-        <q-td key="message" class="text-center">
-          {{ props.row.message }}
-        </q-td>
-        <q-td key="url" class="text-center">
-          {{ props.row.meta.url }}
-        </q-td>
-        <q-td key="more" class="text-center">
-          <q-btn icon="more" rounded @click="handleShowMore(props.row)" />
-        </q-td>
-      </q-tr>
-    </template>
-  </q-table>
-</template>
-
 <script lang="ts" setup>
-import { ref, computed, reactive } from 'vue'
+import type { ThemeOptions } from '@src/types'
 import { store } from '@src/store'
-import { Notify } from 'quasar'
 import * as logger from '@src/utils/logger'
-import { ThemeOptions } from '@src/types'
+import { Notify } from 'quasar'
+import { computed, reactive, ref } from 'vue'
+
 const webStoragePrefix = import.meta.env.VITE_VUE_APP_PREFIX
 
 const initialPagination = reactive({
@@ -82,7 +62,7 @@ const theme = computed<ThemeOptions>(() => {
   return themeStore.themeConfig[themeStore.activeName]
 })
 
-const handleShowMore = log => {
+function handleShowMore(log) {
   // 打印一条日志的所有信息到控制台
   Notify.create({
     type: 'info',
@@ -97,6 +77,27 @@ const handleShowMore = log => {
   console.groupEnd()
 }
 </script>
+
+<template>
+  <q-table class="log-table-list" :rows="logs" :columns="columns" :pagination="initialPagination">
+    <template #body="props">
+      <q-tr :props="props">
+        <q-td key="time" class="text-center">
+          {{ props.row.time }}
+        </q-td>
+        <q-td key="message" class="text-center">
+          {{ props.row.message }}
+        </q-td>
+        <q-td key="url" class="text-center">
+          {{ props.row.meta.url }}
+        </q-td>
+        <q-td key="more" class="text-center">
+          <q-btn icon="more" rounded @click="handleShowMore(props.row)" />
+        </q-td>
+      </q-tr>
+    </template>
+  </q-table>
+</template>
 
 <style lang="scss" scoped>
 .log-table-list {

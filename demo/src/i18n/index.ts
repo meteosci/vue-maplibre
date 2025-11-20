@@ -1,7 +1,7 @@
-import zhCN from './zh-CN'
-import enUS from './en-US'
 import { getLocalStorage } from '@utils/web-storage'
 import { createI18n } from 'vue-i18n'
+import enUS from './en-US'
+import zhCN from './zh-CN'
 
 export const messages = {
   'zh-CN': zhCN,

@@ -9,5 +9,5 @@
 
 export * from './config-provider'
 export * from './control'
-export * from './map'
 export * from './layer'
+export * from './map'

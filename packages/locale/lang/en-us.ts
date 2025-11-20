@@ -6,7 +6,7 @@
  * @LastEditTime: 2024-06-14 19:55:51
  * @FilePath: \vue-maplibre\packages\locale\lang\en-us.ts
  */
-import { Language } from '..'
+import type { Language } from '..'
 
 export default {
   name: 'en-us',
@@ -37,6 +37,13 @@ export default {
       'CooperativeGesturesHandler.WindowsHelpText': 'Use Ctrl + scroll to zoom the map',
       'CooperativeGesturesHandler.MacHelpText': 'Use ⌘ + scroll to zoom the map',
       'CooperativeGesturesHandler.MobileHelpText': 'Use two fingers to move the map'
+    },
+    notify: {
+      log: '[Success]',
+      warn: '[Warning]',
+      error: '[Error]',
+      debug: '[Debug]',
+      info: '[Info]'
     }
   }
 } as Language

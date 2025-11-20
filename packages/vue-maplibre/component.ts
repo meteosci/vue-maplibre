@@ -7,14 +7,14 @@
  * @FilePath: \vue-maplibre\packages\vue-maplibre\component.ts
  */
 
+import type { Plugin } from 'vue'
 // config
 import VmConfigProvider from '@vue-maplibre/components/config-provider'
-// Map
-import { VmMap } from '@vue-maplibre/components/map'
-// Layer
-import { VmLayerGltf, VmLayerNative } from '@vue-maplibre/components/layer'
 // Control
 import { VmControlNavigation, VmControlTerrain } from '@vue-maplibre/components/control'
-import type { Plugin } from 'vue'
+// Layer
+import { VmLayerGltf, VmLayerNative } from '@vue-maplibre/components/layer'
+// Map
+import { VmMap } from '@vue-maplibre/components/map'
 
 export default [VmConfigProvider, VmMap, VmLayerGltf, VmLayerNative, VmControlNavigation, VmControlTerrain] as Plugin[]

@@ -6,6 +6,8 @@
  * @LastEditTime: 2024-05-16 18:06:39
  * @FilePath: \vue-maplibre\packages\utils\index.ts
  */
+
+export * as logger from './logger'
 export * from './merge-descriptors'
 export * from './objects'
 export * from './platform'

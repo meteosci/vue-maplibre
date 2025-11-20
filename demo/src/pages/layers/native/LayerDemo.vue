@@ -6,16 +6,11 @@
  * @LastEditTime: 2025-03-29 02:32:41
  * @FilePath: \vue-maplibre\demo\src\pages\layers\native\LayerDemo.vue
 -->
-<template>
-  <div class="test">
-    <VmLayerNative id="openstreetmap-tiles" type="raster" :source="source"></VmLayerNative>
-  </div>
-</template>
-
 <script setup lang="ts">
+import type { VmLayerNativeProps } from '@vue-maplibre/components'
+import type { SourceSpecification } from 'maplibre-gl'
 import { useVueMaplibre } from '@meteosci/vue-maplibre'
-import { VmLayerNative, VmLayerNativeProps } from '@vue-maplibre/components'
-import { SourceSpecification } from 'maplibre-gl'
+import { VmLayerNative } from '@vue-maplibre/components'
 import { ref } from 'vue'
 
 const $vm = useVueMaplibre()
@@ -37,3 +32,9 @@ const paint: VmLayerNativeProps['paint'] = ref({
   'line-color': 'rgb(255, 255, 0)'
 })
 </script>
+
+<template>
+  <div class="test">
+    <VmLayerNative id="openstreetmap-tiles" type="raster" :source="source" />
+  </div>
+</template>

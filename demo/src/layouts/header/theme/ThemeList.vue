@@ -6,25 +6,10 @@
  * @Description:
  * @FilePath: \template-project\src\layouts\header\theme\ThemeList.vue
 -->
-<template>
-  <q-table class="theme-table-list" :rows="rows" hide-header hide-pagination :columns="columns">
-    <template #body="props">
-      <q-tr :props="props" :class="{ 'bg-active': activeName === props.row.name }">
-        <q-td key="title">{{ props.row.title }}</q-td>
-        <q-td key="preview">{{ props.row.preview }}</q-td>
-        <q-td key="handler">
-          <q-btn v-if="activeName === props.row.name" class="active" icon="done" rounded outline>已激活</q-btn>
-          <q-btn v-else rounded outline @click="handleSelectTheme(props.row.name)">使用</q-btn>
-        </q-td>
-      </q-tr>
-    </template>
-  </q-table>
-</template>
-
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import type { ThemeOptions } from '@src/types'
 import { store } from '@src/store'
-import { ThemeOptions } from '@src/types'
+import { computed, ref } from 'vue'
 
 const columns = ref<any>([
   {
@@ -55,10 +40,33 @@ const theme = computed<ThemeOptions>(() => {
   const themeStore = store.system.useThemeStore()
   return themeStore.themeConfig[themeStore.activeName]
 })
-const handleSelectTheme = name => {
+function handleSelectTheme(name) {
   store.system.useThemeStore().set(name)
 }
 </script>
+
+<template>
+  <q-table class="theme-table-list" :rows="rows" hide-header hide-pagination :columns="columns">
+    <template #body="props">
+      <q-tr :props="props" :class="{ 'bg-active': activeName === props.row.name }">
+        <q-td key="title">
+          {{ props.row.title }}
+        </q-td>
+        <q-td key="preview">
+          {{ props.row.preview }}
+        </q-td>
+        <q-td key="handler">
+          <q-btn v-if="activeName === props.row.name" class="active" icon="done" rounded outline>
+            已激活
+          </q-btn>
+          <q-btn v-else rounded outline @click="handleSelectTheme(props.row.name)">
+            使用
+          </q-btn>
+        </q-td>
+      </q-tr>
+    </template>
+  </q-table>
+</template>
 
 <style lang="scss">
 .theme-table-list {

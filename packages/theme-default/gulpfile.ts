@@ -7,19 +7,19 @@
  * @FilePath: \vue-maplibre\packages\theme-default\gulpfile.ts
  */
 
-import path from 'path'
-import { Transform } from 'stream'
-import chalk from 'chalk'
-import { src, dest, series, parallel } from 'gulp'
-import gulpSass from 'gulp-sass'
-import dartSass from 'sass'
-import autoprefixer from 'gulp-autoprefixer'
-import rename from 'gulp-rename'
-import consola from 'consola'
-import postcss from 'postcss'
-import cssnano from 'cssnano'
-import gulpPostcss from 'gulp-postcss'
+import path from 'node:path'
+import { Transform } from 'node:stream'
 import { vmOutput } from '@vue-maplibre/build/utils/paths'
+import chalk from 'chalk'
+import consola from 'consola'
+import cssnano from 'cssnano'
+import { dest, parallel, series, src } from 'gulp'
+import autoprefixer from 'gulp-autoprefixer'
+import gulpPostcss from 'gulp-postcss'
+import rename from 'gulp-rename'
+import gulpSass from 'gulp-sass'
+import postcss from 'postcss'
+import dartSass from 'sass'
 
 const distFolder = path.resolve(__dirname, 'dist')
 const distBundle = path.resolve(vmOutput, 'theme-default')
@@ -31,14 +31,14 @@ const distBundle = path.resolve(vmOutput, 'theme-default')
  */
 function buildThemeChalk() {
   const sass = gulpSass(dartSass)
-  const noElPrefixFile = /(index|base|display)/
+  const noElPrefixFile = /index|base|display/
   return src(path.resolve(__dirname, 'src/*.scss'))
     .pipe(sass.sync())
     .pipe(gulpPostcss())
     .pipe(autoprefixer({ cascade: false }))
     .pipe(compressWithCssnano())
     .pipe(
-      rename(path => {
+      rename((path) => {
         if (!noElPrefixFile.test(path.basename)) {
           path.basename = `vm-${path.basename}`
         }
@@ -78,8 +78,9 @@ function compressWithCssnano() {
         return
       }
       const cssString = file.contents!.toString()
-      processor.process(cssString, { from: file.path }).then(result => {
+      processor.process(cssString, { from: file.path }).then((result) => {
         const name = path.basename(file.path)
+        // eslint-disable-next-line node/prefer-global/buffer
         file.contents = Buffer.from(result.css)
         consola.success(`${chalk.cyan(name)}: ${chalk.yellow(cssString.length / 1000)} KB -> ${chalk.green(result.css.length / 1000)} KB`)
         callback(null, file)

@@ -6,13 +6,14 @@
  * @LastEditTime: 2025-03-28 23:27:22
  * @FilePath: \vue-maplibre\packages\shared\layer\GLTFLayer.ts
  */
-import { CustomRenderMethodInput, LngLat, Map } from 'maplibre-gl'
-import { MercatorCoordinate } from 'maplibre-gl'
+
+import type { GLTFLayerOptions } from '@vue-maplibre/utils/types'
+import type { mat4 } from 'gl-matrix'
+import type { CustomRenderMethodInput, Map } from 'maplibre-gl'
+import { LngLat, MercatorCoordinate } from 'maplibre-gl'
+import { Camera, DirectionalLight, Matrix4, Scene, Vector3, WebGLRenderer } from 'three'
 import CustomLayer from './CustomLayer'
 import { GLTFLoader } from './loaders/GLTFLoader'
-import { Camera, Scene, DirectionalLight, WebGLRenderer, Matrix4, Vector3 } from 'three'
-import { GLTFLayerOptions } from '@vue-maplibre/utils/types'
-import { mat4 } from 'gl-matrix'
 // import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 export default class CustomGLTFLayer extends CustomLayer {
@@ -43,6 +44,7 @@ export default class CustomGLTFLayer extends CustomLayer {
     rotate: [Math.PI / 2, 0, 0],
     scale: 1
   }
+
   renderer: WebGLRenderer
 
   constructor(options: GLTFLayerOptions) {
@@ -85,19 +87,20 @@ export default class CustomGLTFLayer extends CustomLayer {
     this.onChangeOptions(this.options)
 
     // create two three.js lights to illuminate the model
-    const directionalLight = new DirectionalLight(0xffffff)
+    const directionalLight = new DirectionalLight(0xFFFFFF)
     directionalLight.position.set(0, -70, 100).normalize()
     this.scene.add(directionalLight)
 
-    const directionalLight2 = new DirectionalLight(0xffffff)
+    const directionalLight2 = new DirectionalLight(0xFFFFFF)
     directionalLight2.position.set(0, 70, 100).normalize()
     this.scene.add(directionalLight2)
 
     const { url } = this.options
     // use the three.js GLTF loader to add the 3D model to the three.js scene
     const loader = new GLTFLoader()
+    // eslint-disable-next-line ts/no-this-alias
     const that = this
-    loader.load(url, gltf => {
+    loader.load(url, (gltf) => {
       that.scene.add(gltf.scene)
       this.fire('loaded', {
         gltf,

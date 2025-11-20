@@ -7,9 +7,9 @@
  * @FilePath: \demo\src\store\system\user.ts
  */
 
+import type { UserInfo } from '@src/types'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useDBStore } from './db'
-import { UserInfo } from '@src/types'
 
 // main is the name of the store. It is unique across your application
 // and will appear in devtools
@@ -24,7 +24,7 @@ export const useUserStore = defineStore('user', {
   actions: {
     /**
      * @description 设置用户数据
-     * @param {Object} context
+     * @param {object} context
      * @param {*} info info
      */
     async set(info) {
@@ -41,7 +41,7 @@ export const useUserStore = defineStore('user', {
     },
     /**
      * @description 从数据库取用户数据
-     * @param {Object} context
+     * @param {object} context
      */
     async load() {
       // store 赋值

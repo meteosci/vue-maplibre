@@ -6,8 +6,8 @@ import {
   InterleavedBuffer,
   InterleavedBufferAttribute,
   TriangleFanDrawMode,
-  TriangleStripDrawMode,
   TrianglesDrawMode,
+  TriangleStripDrawMode,
   Vector3
 } from 'three'
 
@@ -77,7 +77,7 @@ function computeMikkTSpaceTangents(geometry, MikkTSpace, negateSign = true) {
 
 /**
  * @param  {Array<BufferGeometry>} geometries
- * @param  {Boolean} useGroups
+ * @param  {boolean} useGroups
  * @return {BufferGeometry}
  */
 function mergeGeometries(geometries, useGroups = false) {
@@ -102,9 +102,9 @@ function mergeGeometries(geometries, useGroups = false) {
 
     if (isIndexed !== (geometry.index !== null)) {
       console.error(
-        'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' +
-          i +
-          '. All geometries must have compatible attributes; make sure index attribute exists among all geometries, or in none of them.'
+        `THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ${
+          i
+        }. All geometries must have compatible attributes; make sure index attribute exists among all geometries, or in none of them.`
       )
       return null
     }
@@ -114,16 +114,17 @@ function mergeGeometries(geometries, useGroups = false) {
     for (const name in geometry.attributes) {
       if (!attributesUsed.has(name)) {
         console.error(
-          'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' +
-            i +
-            '. All geometries must have compatible attributes; make sure "' +
-            name +
-            '" attribute exists among all geometries, or in none of them.'
+          `THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ${
+            i
+          }. All geometries must have compatible attributes; make sure "${
+            name
+          }" attribute exists among all geometries, or in none of them.`
         )
         return null
       }
 
-      if (attributes[name] === undefined) attributes[name] = []
+      if (attributes[name] === undefined)
+        attributes[name] = []
 
       attributes[name].push(geometry.attributes[name])
 
@@ -134,9 +135,9 @@ function mergeGeometries(geometries, useGroups = false) {
 
     if (attributesCount !== attributesUsed.size) {
       console.error(
-        'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' +
-          i +
-          '. Make sure all geometries have the same number of attributes.'
+        `THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ${
+          i
+        }. Make sure all geometries have the same number of attributes.`
       )
       return null
     }
@@ -145,9 +146,9 @@ function mergeGeometries(geometries, useGroups = false) {
 
     if (morphTargetsRelative !== geometry.morphTargetsRelative) {
       console.error(
-        'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' +
-          i +
-          '. .morphTargetsRelative must be consistent throughout all geometries.'
+        `THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ${
+          i
+        }. .morphTargetsRelative must be consistent throughout all geometries.`
       )
       return null
     }
@@ -155,14 +156,15 @@ function mergeGeometries(geometries, useGroups = false) {
     for (const name in geometry.morphAttributes) {
       if (!morphAttributesUsed.has(name)) {
         console.error(
-          'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' +
-            i +
-            '.  .morphAttributes must be consistent throughout all geometries.'
+          `THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ${
+            i
+          }.  .morphAttributes must be consistent throughout all geometries.`
         )
         return null
       }
 
-      if (morphAttributes[name] === undefined) morphAttributes[name] = []
+      if (morphAttributes[name] === undefined)
+        morphAttributes[name] = []
 
       morphAttributes[name].push(geometry.morphAttributes[name])
     }
@@ -172,13 +174,15 @@ function mergeGeometries(geometries, useGroups = false) {
 
       if (isIndexed) {
         count = geometry.index.count
-      } else if (geometry.attributes.position !== undefined) {
+      }
+      else if (geometry.attributes.position !== undefined) {
         count = geometry.attributes.position.count
-      } else {
+      }
+      else {
         console.error(
-          'THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ' +
-            i +
-            '. The geometry must have either an index or a position attribute'
+          `THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index ${
+            i
+          }. The geometry must have either an index or a position attribute`
         )
         return null
       }
@@ -214,7 +218,7 @@ function mergeGeometries(geometries, useGroups = false) {
     const mergedAttribute = mergeAttributes(attributes[name])
 
     if (!mergedAttribute) {
-      console.error('THREE.BufferGeometryUtils: .mergeGeometries() failed while trying to merge the ' + name + ' attribute.')
+      console.error(`THREE.BufferGeometryUtils: .mergeGeometries() failed while trying to merge the ${name} attribute.`)
       return null
     }
 
@@ -226,7 +230,8 @@ function mergeGeometries(geometries, useGroups = false) {
   for (const name in morphAttributes) {
     const numMorphTargets = morphAttributes[name][0].length
 
-    if (numMorphTargets === 0) break
+    if (numMorphTargets === 0)
+      break
 
     mergedGeometry.morphAttributes = mergedGeometry.morphAttributes || ({} as any)
     mergedGeometry.morphAttributes[name] = []
@@ -241,7 +246,7 @@ function mergeGeometries(geometries, useGroups = false) {
       const mergedMorphAttribute = mergeAttributes(morphAttributesToMerge)
 
       if (!mergedMorphAttribute) {
-        console.error('THREE.BufferGeometryUtils: .mergeGeometries() failed while trying to merge the ' + name + ' morphAttribute.')
+        console.error(`THREE.BufferGeometryUtils: .mergeGeometries() failed while trying to merge the ${name} morphAttribute.`)
         return null
       }
 
@@ -266,7 +271,8 @@ function mergeAttributes(attributes) {
   for (let i = 0; i < attributes.length; ++i) {
     const attribute = attributes[i]
 
-    if (TypedArray === undefined) TypedArray = attribute.array.constructor
+    if (TypedArray === undefined)
+      TypedArray = attribute.array.constructor
     if (TypedArray !== attribute.array.constructor) {
       console.error(
         'THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.array must be of consistent array types across matching attributes.'
@@ -274,19 +280,22 @@ function mergeAttributes(attributes) {
       return null
     }
 
-    if (itemSize === undefined) itemSize = attribute.itemSize
+    if (itemSize === undefined)
+      itemSize = attribute.itemSize
     if (itemSize !== attribute.itemSize) {
       console.error('THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.itemSize must be consistent across matching attributes.')
       return null
     }
 
-    if (normalized === undefined) normalized = attribute.normalized
+    if (normalized === undefined)
+      normalized = attribute.normalized
     if (normalized !== attribute.normalized) {
       console.error('THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.normalized must be consistent across matching attributes.')
       return null
     }
 
-    if (gpuType === -1) gpuType = attribute.gpuType
+    if (gpuType === -1)
+      gpuType = attribute.gpuType
     if (gpuType !== attribute.gpuType) {
       console.error('THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.gpuType must be consistent across matching attributes.')
       return null
@@ -309,7 +318,8 @@ function mergeAttributes(attributes) {
           result.setComponent(j + tupleOffset, c, value)
         }
       }
-    } else {
+    }
+    else {
       array.set(attribute.array, offset)
     }
 
@@ -354,7 +364,8 @@ function interleaveAttributes(attributes) {
   for (let i = 0, l = attributes.length; i < l; ++i) {
     const attribute = attributes[i]
 
-    if (TypedArray === undefined) TypedArray = attribute.array.constructor
+    if (TypedArray === undefined)
+      TypedArray = attribute.array.constructor
     if (TypedArray !== attribute.array.constructor) {
       console.error('AttributeBuffers of different types cannot be interleaved')
       return null
@@ -394,16 +405,17 @@ function interleaveAttributes(attributes) {
 
 // returns a new, non-interleaved version of the provided attribute
 export function deinterleaveAttribute(attribute) {
-  const cons = attribute.data.array.constructor
+  const Cons = attribute.data.array.constructor
   const count = attribute.count
   const itemSize = attribute.itemSize
   const normalized = attribute.normalized
 
-  const array = new cons(count * itemSize)
+  const array = new Cons(count * itemSize)
   let newAttribute
   if (attribute.isInstancedInterleavedBufferAttribute) {
     newAttribute = new InstancedBufferAttribute(array, itemSize, normalized, attribute.meshPerAttribute)
-  } else {
+  }
+  else {
     newAttribute = new BufferAttribute(array, itemSize, normalized)
   }
 
@@ -510,7 +522,8 @@ function mergeVertices(geometry, tolerance = 1e-4) {
 
     const morphAttributes = geometry.morphAttributes[name]
     if (morphAttributes) {
-      if (!tmpMorphAttributes[name]) tmpMorphAttributes[name] = []
+      if (!tmpMorphAttributes[name])
+        tmpMorphAttributes[name] = []
       morphAttributes.forEach((morphAttr, i) => {
         const array = new morphAttr.array.constructor(morphAttr.count * morphAttr.itemSize)
         tmpMorphAttributes[name][i] = new morphAttr.constructor(array, morphAttr.itemSize, morphAttr.normalized)
@@ -521,7 +534,7 @@ function mergeVertices(geometry, tolerance = 1e-4) {
   // convert the error tolerance to an amount of decimal places to truncate to
   const halfTolerance = tolerance * 0.5
   const exponent = Math.log10(1 / tolerance)
-  const hashMultiplier = Math.pow(10, exponent)
+  const hashMultiplier = 10 ** exponent
   const hashAdditive = halfTolerance * hashMultiplier
   for (let i = 0; i < vertexCount; i++) {
     const index = indices ? indices.getX(i) : i
@@ -543,7 +556,8 @@ function mergeVertices(geometry, tolerance = 1e-4) {
     // used by another index
     if (hash in hashToIndex) {
       newIndices.push(hashToIndex[hash])
-    } else {
+    }
+    else {
       // copy data to the new index in the temporary attributes
       for (let j = 0, l = attributeNames.length; j < l; j++) {
         const name = attributeNames[j]
@@ -582,7 +596,8 @@ function mergeVertices(geometry, tolerance = 1e-4) {
       new tmpAttribute.constructor(tmpAttribute.array.slice(0, nextIndex * tmpAttribute.itemSize), tmpAttribute.itemSize, tmpAttribute.normalized)
     )
 
-    if (!(name in tmpMorphAttributes)) continue
+    if (!(name in tmpMorphAttributes))
+      continue
 
     for (let j = 0; j < tmpMorphAttributes[name].length; j++) {
       const tmpMorphAttribute = tmpMorphAttributes[name][j]
@@ -630,7 +645,8 @@ function toTrianglesDrawMode(geometry, drawMode) {
 
         geometry.setIndex(indices)
         index = geometry.getIndex()
-      } else {
+      }
+      else {
         console.error('THREE.BufferGeometryUtils.toTrianglesDrawMode(): Undefined position attribute. Processing not possible.')
         return geometry
       }
@@ -649,7 +665,8 @@ function toTrianglesDrawMode(geometry, drawMode) {
         newIndices.push(index.getX(i))
         newIndices.push(index.getX(i + 1))
       }
-    } else {
+    }
+    else {
       // gl.TRIANGLE_STRIP
 
       for (let i = 0; i < numberOfTriangles; i++) {
@@ -657,7 +674,8 @@ function toTrianglesDrawMode(geometry, drawMode) {
           newIndices.push(index.getX(i))
           newIndices.push(index.getX(i + 1))
           newIndices.push(index.getX(i + 2))
-        } else {
+        }
+        else {
           newIndices.push(index.getX(i + 2))
           newIndices.push(index.getX(i + 1))
           newIndices.push(index.getX(i))
@@ -676,7 +694,8 @@ function toTrianglesDrawMode(geometry, drawMode) {
     newGeometry.clearGroups()
 
     return newGeometry
-  } else {
+  }
+  else {
     console.error('THREE.BufferGeometryUtils.toTrianglesDrawMode(): Unknown draw mode:', drawMode)
     return geometry
   }
@@ -686,7 +705,7 @@ function toTrianglesDrawMode(geometry, drawMode) {
  * Calculates the morphed attributes of a morphed/skinned BufferGeometry.
  * Helpful for Raytracing or Decals.
  * @param {Mesh | Line | Points} object An instance of Mesh, Line or Points.
- * @return {Object} An Object with original position/normal attributes and morphed ones.
+ * @return {object} An Object with original position/normal attributes and morphed ones.
  */
 function computeMorphedAttributes(object) {
   const _vA = new Vector3()
@@ -717,7 +736,8 @@ function computeMorphedAttributes(object) {
         const influence = morphInfluences[i]
         const morph = morphAttribute[i]
 
-        if (influence === 0) continue
+        if (influence === 0)
+          continue
 
         _tempA.fromBufferAttribute(morph, a)
         _tempB.fromBufferAttribute(morph, b)
@@ -727,7 +747,8 @@ function computeMorphedAttributes(object) {
           _morphA.addScaledVector(_tempA, influence)
           _morphB.addScaledVector(_tempB, influence)
           _morphC.addScaledVector(_tempC, influence)
-        } else {
+        }
+        else {
           _morphA.addScaledVector(_tempA.sub(_vA), influence)
           _morphB.addScaledVector(_tempB.sub(_vB), influence)
           _morphC.addScaledVector(_tempC.sub(_vC), influence)
@@ -796,7 +817,8 @@ function computeMorphedAttributes(object) {
           _calculateMorphedAttributeData(object, normalAttribute, morphNormal, morphTargetsRelative, a, b, c, modifiedNormal)
         }
       }
-    } else {
+    }
+    else {
       start = Math.max(0, drawRange.start)
       end = Math.min(index.count, drawRange.start + drawRange.count)
 
@@ -810,7 +832,8 @@ function computeMorphedAttributes(object) {
         _calculateMorphedAttributeData(object, normalAttribute, morphNormal, morphTargetsRelative, a, b, c, modifiedNormal)
       }
     }
-  } else {
+  }
+  else {
     // non-indexed buffer geometry
 
     if (Array.isArray(material)) {
@@ -830,7 +853,8 @@ function computeMorphedAttributes(object) {
           _calculateMorphedAttributeData(object, normalAttribute, morphNormal, morphTargetsRelative, a, b, c, modifiedNormal)
         }
       }
-    } else {
+    }
+    else {
       start = Math.max(0, drawRange.start)
       end = Math.min(positionAttribute.count, drawRange.start + drawRange.count)
 
@@ -850,10 +874,10 @@ function computeMorphedAttributes(object) {
   const morphedNormalAttribute = new Float32BufferAttribute(modifiedNormal, 3)
 
   return {
-    positionAttribute: positionAttribute,
-    normalAttribute: normalAttribute,
-    morphedPositionAttribute: morphedPositionAttribute,
-    morphedNormalAttribute: morphedNormalAttribute
+    positionAttribute,
+    normalAttribute,
+    morphedPositionAttribute,
+    morphedNormalAttribute
   }
 }
 
@@ -868,7 +892,8 @@ function mergeGroups(geometry) {
   // sort groups by material index
 
   groups = groups.sort((a, b) => {
-    if (a.materialIndex !== b.materialIndex) return a.materialIndex - b.materialIndex
+    if (a.materialIndex !== b.materialIndex)
+      return a.materialIndex - b.materialIndex
 
     return a.start - b.start
   })
@@ -928,7 +953,8 @@ function mergeGroups(geometry) {
 
     if (currentGroup.materialIndex === group.materialIndex) {
       currentGroup.count += group.count
-    } else {
+    }
+    else {
       currentGroup = group
       geometry.groups.push(currentGroup)
     }
@@ -1035,13 +1061,13 @@ function toCreasedNormals(geometry, creaseAngle = Math.PI / 3 /* 60 degrees */) 
 
 export {
   computeMikkTSpaceTangents,
-  mergeGeometries,
-  mergeAttributes,
-  interleaveAttributes,
-  estimateBytesUsed,
-  mergeVertices,
-  toTrianglesDrawMode,
   computeMorphedAttributes,
+  estimateBytesUsed,
+  interleaveAttributes,
+  mergeAttributes,
+  mergeGeometries,
   mergeGroups,
-  toCreasedNormals
+  mergeVertices,
+  toCreasedNormals,
+  toTrianglesDrawMode
 }

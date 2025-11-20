@@ -6,10 +6,10 @@
  * @LastEditTime: 2024-04-16 17:18:49
  * @FilePath: \vue-maplibre\packages\components\map\index.ts
  */
-import { App } from 'vue'
-import { MapOptions } from 'maplibre-gl'
+
+import type { ConfigProviderContext, SFCWithInstall } from '@vue-maplibre/utils/types'
+import type { App } from 'vue'
 import Map from './src'
-import { ConfigProviderContext, SFCWithInstall } from '@vue-maplibre/utils/types'
 
 Map.install = (app: App, opts: ConfigProviderContext): void => {
   app.component(Map.name, Map)

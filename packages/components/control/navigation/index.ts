@@ -6,14 +6,16 @@
  * @LastEditTime: 2024-08-18 17:46:06
  * @FilePath: \vue-maplibre\packages\components\control\navigation\index.ts
  */
-import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
-import props from './props'
-import { commonEmits } from '@vue-maplibre/utils/private/emits'
+import type { VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
+import type { NavigationControlOptions } from 'maplibre-gl'
+import type { ExtractPropTypes } from 'vue'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
-import { VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
-import useLog from '@vue-maplibre/composables/private/use-log'
+import { logger } from '@vue-maplibre/utils'
+import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { kebabCase } from 'lodash-unified'
-import { NavigationControl, type NavigationControlOptions } from 'maplibre-gl'
+import { NavigationControl } from 'maplibre-gl'
+import { createCommentVNode, defineComponent, getCurrentInstance, watch } from 'vue'
+import props from './props'
 
 const emits = {
   ...commonEmits
@@ -25,22 +27,11 @@ export default defineComponent({
   emits,
   setup(props, ctx) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
-    const logger = useLog(instance)
     const { t, locale } = useLocale()
     instance.maplibreEvents = []
     instance.className = 'NavigationControl'
     instance.alreadyListening = []
     instance.mapRequired = true
-
-    watch(
-      () => locale.value,
-      val => {
-        const control = instance.maplibreObject as NavigationControl
-        if (control) {
-          commonState.reload()
-        }
-      }
-    )
 
     const commonState = useCommon(props, ctx, instance)
 
@@ -73,6 +64,16 @@ export default defineComponent({
       logger.debug(`${instance.proxy?.$options.name}-unmounted`)
       return true
     }
+
+    watch(
+      () => locale.value,
+      (val) => {
+        const control = instance.maplibreObject as NavigationControl
+        if (control) {
+          commonState.reload()
+        }
+      }
+    )
 
     return () => createCommentVNode(kebabCase(instance.proxy?.$options.name || ''))
   }

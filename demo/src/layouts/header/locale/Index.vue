@@ -6,6 +6,19 @@
  * @Description:
  * @FilePath: \vue-cesium-demo\src\layouts\header\locale\Index.vue
 -->
+<script lang="ts" setup>
+import { setLocalStorage } from '@utils/web-storage'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n()
+const menu = ref(false)
+function onChangeLocale(lang: string) {
+  locale.value = lang
+  setLocalStorage('locale', lang)
+}
+</script>
+
 <template>
   <q-btn-dropdown v-model="menu" dense color="#fff" fab-mini size="md" dropdown-icon="language" flat>
     <q-list>
@@ -23,15 +36,3 @@
     </q-list>
   </q-btn-dropdown>
 </template>
-<script lang="ts" setup>
-import { setLocalStorage } from '@utils/web-storage'
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-
-const { locale } = useI18n()
-const menu = ref(false)
-const onChangeLocale = (lang: string) => {
-  locale.value = lang
-  setLocalStorage('locale', lang)
-}
-</script>

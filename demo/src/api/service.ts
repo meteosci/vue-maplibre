@@ -6,20 +6,22 @@
  * @Description:
  * @FilePath: \vue-maplibre\demo\src\api\service.ts
  */
-import Adapter from 'axios-mock-adapter'
-import { get } from 'lodash'
-import { webStorage } from '@src/utils'
-import axios, { AxiosInstance, AxiosRequestConfig, Canceler } from 'axios'
-import { errorLog, errorCreate } from './tools'
+import type { AxiosResponseData, CustomConfig, CustomInternalAxiosRequestConfig } from '@src/types'
+import type { AxiosInstance, AxiosRequestConfig, Canceler } from 'axios'
+import type { QLoadingShowOptions } from 'quasar'
 import router from '@src/router'
 import { pinia, store } from '@src/store'
-import smCrypto from 'sm-crypto'
-import { Loading, QLoadingShowOptions, QSpinnerIos } from 'quasar'
-import { AxiosResponseData, CustomConfig, CustomInternalAxiosRequestConfig } from '@src/types'
+import { webStorage } from '@src/utils'
+import axios from 'axios'
+import Adapter from 'axios-mock-adapter'
+import { get } from 'lodash'
 import protobuf from 'protobufjs'
+import { Loading, QSpinnerIos } from 'quasar'
+import smCrypto from 'sm-crypto'
+import { errorCreate, errorLog } from './tools'
 
 const coludtaoGridProtoPromise = new Promise<protobuf.Root>((resolve, reject) => {
-  protobuf.load(`${import.meta.env.BASE_URL}protos/cloudtao.grid.proto`, function (err, root) {
+  protobuf.load(`${import.meta.env.BASE_URL}protos/cloudtao.grid.proto`, (err, root) => {
     if (err) {
       reject(err)
     }
@@ -28,19 +30,19 @@ const coludtaoGridProtoPromise = new Promise<protobuf.Root>((resolve, reject) =>
 })
 
 // 创建一个请求队列
-const requestPendings: Array<{ cancel: Canceler; url: string }> = []
+const requestPendings: Array<{ cancel: Canceler, url: string }> = []
 let loadingCount = 0
 
 /**
  * @description 创建请求实例
  * @returns
  */
-const createService = () => {
+function createService() {
   // 创建一个 axios 实例
   const service = axios.create({})
   // 请求拦截
   service.interceptors.request.use(
-    config => {
+    (config) => {
       const axiosConfig = config as CustomInternalAxiosRequestConfig
       const customConfig = axiosConfig?.customConfig
       if (customConfig.requestLoading?.show) {
@@ -48,15 +50,15 @@ const createService = () => {
       }
 
       removeRequestPending(config)
-      config.cancelToken =
-        config.cancelToken ||
-        new axios.CancelToken(cancel => {
-          requestPendings.push({ cancel, url: config.url + '&' + config.method + '&' + JSON.stringify(config.data) + JSON.stringify(config.params) })
-        })
+      config.cancelToken
+        = config.cancelToken
+          || new axios.CancelToken((cancel) => {
+            requestPendings.push({ cancel, url: `${config.url}&${config.method}&${JSON.stringify(config.data)}${JSON.stringify(config.params)}` })
+          })
 
       return axiosConfig
     },
-    error => {
+    (error) => {
       // 发送失败
       errorLog(error)
       return Promise.reject(error)
@@ -64,7 +66,7 @@ const createService = () => {
   )
   // 响应拦截
   service.interceptors.response.use(
-    response => {
+    (response) => {
       const axiosConfig = response.config as CustomInternalAxiosRequestConfig
       removeRequestPending(axiosConfig)
       const customConfig = axiosConfig?.customConfig
@@ -86,7 +88,7 @@ const createService = () => {
 
       const requestData = JSON.parse(axiosConfig.data)
       if (axiosConfig.headers['Content-Type'] === 'application/x-protobuffer' || requestData?.dataFormat === 'Protobuf') {
-        return coludtaoGridProtoPromise.then(root => {
+        return coludtaoGridProtoPromise.then((root) => {
           const gridDataMessage = root.lookupType('com.tao.proto.GridData')
           const gMessage = gridDataMessage.decode(new Uint8Array(dataAxios))
           const gridData = gridDataMessage.toObject(gMessage, {
@@ -105,7 +107,8 @@ const createService = () => {
       if (code === undefined) {
         // 如果没有 code 代表这是非约定返回 或者不是项目后端开发的接口
         return dataAxios
-      } else {
+      }
+      else {
         // 有 code 代表这是一个后端接口 可以进行进一步的判断
         switch (code) {
           case 0:
@@ -126,7 +129,7 @@ const createService = () => {
         }
       }
     },
-    error => {
+    (error) => {
       const axiosConfig = error.config as CustomInternalAxiosRequestConfig
       const customConfig = axiosConfig?.customConfig
       removeRequestPending(axiosConfig)
@@ -185,7 +188,7 @@ const createService = () => {
 
 /**
  * @description 创建请求方法
- * @param {Object} service axios 实例
+ * @param {object} service axios 实例
  */
 function createRequestFunction(service: AxiosInstance) {
   return function (config: AxiosRequestConfig, configExt?: CustomConfig) {
@@ -207,7 +210,7 @@ function createRequestFunction(service: AxiosInstance) {
       requestLoading: {
         show: true
       },
-      showErrorNotify: configExt?.showErrorNotify != undefined ? configExt.showErrorNotify : true // 有错误是否用 notify 提示
+      showErrorNotify: configExt?.showErrorNotify !== undefined ? configExt.showErrorNotify : true // 有错误是否用 notify 提示
     }
 
     const customConfig = Object.assign({}, configExtBase, configExt)
@@ -223,13 +226,13 @@ function removeRequestPending(config: CustomInternalAxiosRequestConfig) {
   const removeRequestPendings = []
   for (let i = 0; i < requestPendings.length; i++) {
     const request = requestPendings[i]
-    if (request.url === config.url + '&' + config.method + '&' + JSON.stringify(config.data) + JSON.stringify(config.params)) {
+    if (request.url === `${config.url}&${config.method}&${JSON.stringify(config.data)}${JSON.stringify(config.params)}`) {
       request.cancel('request canceled', config, request)
       removeRequestPendings.push(request)
     }
   }
 
-  removeRequestPendings.forEach(item => {
+  removeRequestPendings.forEach((item) => {
     const index = requestPendings.indexOf(item)
     index !== -1 && requestPendings.splice(index, 1)
   })
@@ -267,9 +270,9 @@ function closeRequestLoading() {
  */
 function ArrayToHex(arr) {
   return arr
-    .map(item => {
+    .map((item) => {
       item = item.toString(16)
-      return item.length === 1 ? '0' + item : item
+      return item.length === 1 ? `0${item}` : item
     })
     .join('')
 }
@@ -281,26 +284,30 @@ function utf8ToArray(str) {
   const arr = []
   for (let i = 0, len = str.length; i < len; i++) {
     const point = str.codePointAt(i)
-    if (point <= 0x007f) {
+    if (point <= 0x007F) {
       // 单字节，标量值：00000000 00000000 0zzzzzzz
       arr.push(point)
-    } else if (point <= 0x07ff) {
+    }
+    else if (point <= 0x07FF) {
       // 双字节，标量值：00000000 00000yyy yyzzzzzz
-      arr.push(0xc0 | (point >>> 6)) // 110yyyyy（0xc0-0xdf）
-      arr.push(0x80 | (point & 0x3f)) // 10zzzzzz（0x80-0xbf）
-    } else if (point <= 0xd7ff || (point >= 0xe000 && point <= 0xffff)) {
+      arr.push(0xC0 | (point >>> 6)) // 110yyyyy（0xc0-0xdf）
+      arr.push(0x80 | (point & 0x3F)) // 10zzzzzz（0x80-0xbf）
+    }
+    else if (point <= 0xD7FF || (point >= 0xE000 && point <= 0xFFFF)) {
       // 三字节：标量值：00000000 xxxxyyyy yyzzzzzz
-      arr.push(0xe0 | (point >>> 12)) // 1110xxxx（0xe0-0xef）
-      arr.push(0x80 | ((point >>> 6) & 0x3f)) // 10yyyyyy（0x80-0xbf）
-      arr.push(0x80 | (point & 0x3f)) // 10zzzzzz（0x80-0xbf）
-    } else if (point >= 0x010000 && point <= 0x10ffff) {
+      arr.push(0xE0 | (point >>> 12)) // 1110xxxx（0xe0-0xef）
+      arr.push(0x80 | ((point >>> 6) & 0x3F)) // 10yyyyyy（0x80-0xbf）
+      arr.push(0x80 | (point & 0x3F)) // 10zzzzzz（0x80-0xbf）
+    }
+    else if (point >= 0x010000 && point <= 0x10FFFF) {
       // 四字节：标量值：000wwwxx xxxxyyyy yyzzzzzz
       i++
-      arr.push(0xf0 | ((point >>> 18) & 0x1c)) // 11110www（0xf0-0xf7）
-      arr.push(0x80 | ((point >>> 12) & 0x3f)) // 10xxxxxx（0x80-0xbf）
-      arr.push(0x80 | ((point >>> 6) & 0x3f)) // 10yyyyyy（0x80-0xbf）
-      arr.push(0x80 | (point & 0x3f)) // 10zzzzzz（0x80-0xbf）
-    } else {
+      arr.push(0xF0 | ((point >>> 18) & 0x1C)) // 11110www（0xf0-0xf7）
+      arr.push(0x80 | ((point >>> 12) & 0x3F)) // 10xxxxxx（0x80-0xbf）
+      arr.push(0x80 | ((point >>> 6) & 0x3F)) // 10yyyyyy（0x80-0xbf）
+      arr.push(0x80 | (point & 0x3F)) // 10zzzzzz（0x80-0xbf）
+    }
+    else {
       // 五、六字节，暂时不支持
       arr.push(point)
       throw new Error('input is not supported')

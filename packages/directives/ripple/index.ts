@@ -1,8 +1,8 @@
-import { createDirective } from '@vue-maplibre/utils/private/vm'
 import { css } from '@vue-maplibre/utils/private/dom'
-import { position, stop, addEvt, cleanEvt } from '@vue-maplibre/utils/private/event'
-import throttle from '@vue-maplibre/utils/private/throttle'
+import { addEvt, cleanEvt, position, stop } from '@vue-maplibre/utils/private/event'
 import { isKeyCode } from '@vue-maplibre/utils/private/key-composition'
+import throttle from '@vue-maplibre/utils/private/throttle'
+import { createDirective } from '@vue-maplibre/utils/private/vm'
 
 function showRipple(evt, el, ctx, forceCenter) {
   ctx.modifiers.stop === true && stop(evt)
@@ -11,16 +11,16 @@ function showRipple(evt, el, ctx, forceCenter) {
   let center = ctx.modifiers.center
   center = center === true || forceCenter === true
 
-  const node = document.createElement('span'),
-    innerNode = document.createElement('span'),
-    pos = position(evt),
-    { left, top, width, height } = el.getBoundingClientRect(),
-    diameter = Math.sqrt(width * width + height * height),
-    radius = diameter / 2,
-    centerX = `${(width - diameter) / 2}px`,
-    x = center ? centerX : `${pos.left - left - radius}px`,
-    centerY = `${(height - diameter) / 2}px`,
-    y = center ? centerY : `${pos.top - top - radius}px`
+  const node = document.createElement('span')
+  const innerNode = document.createElement('span')
+  const pos = position(evt)
+  const { left, top, width, height } = el.getBoundingClientRect()
+  const diameter = Math.sqrt(width * width + height * height)
+  const radius = diameter / 2
+  const centerX = `${(width - diameter) / 2}px`
+  const x = center ? centerX : `${pos.left - left - radius}px`
+  const centerY = `${(height - diameter) / 2}px`
+  const y = center ? centerY : `${pos.top - top - radius}px`
 
   innerNode.className = 'vc-ripple__inner'
   css(innerNode, {
@@ -30,13 +30,14 @@ function showRipple(evt, el, ctx, forceCenter) {
     opacity: 0
   })
 
-  node.className = `vc-ripple${color ? ' text-' + color : ''}`
+  node.className = `vc-ripple${color ? ` text-${color}` : ''}`
   node.setAttribute('dir', 'ltr')
   node.appendChild(innerNode)
   el.appendChild(node)
 
   const abort = () => {
     node.remove()
+    // eslint-disable-next-line ts/no-use-before-define
     clearTimeout(timer)
   }
   ctx.abort.push(abort)
@@ -82,20 +83,20 @@ export default createDirective({
 
       start(evt) {
         if (
-          ctx.enabled === true &&
-          evt.qSkipRipple !== true &&
-          (ctx.modifiers.early === true ? ['mousedown', 'touchstart'].includes(evt.type) === true : evt.type === 'click')
+          ctx.enabled === true
+          && evt.qSkipRipple !== true
+          && (ctx.modifiers.early === true ? ['mousedown', 'touchstart'].includes(evt.type) === true : evt.type === 'click')
         ) {
           showRipple(evt, el, ctx, evt.qKeyEvent === true)
         }
       },
 
-      keystart: throttle(evt => {
+      keystart: throttle((evt) => {
         if (
-          ctx.enabled === true &&
-          evt.qSkipRipple !== true &&
-          isKeyCode(evt, ctx.modifiers.keyCodes) === true &&
-          evt.type === `key${ctx.modifiers.early === true ? 'down' : 'up'}`
+          ctx.enabled === true
+          && evt.qSkipRipple !== true
+          && isKeyCode(evt, ctx.modifiers.keyCodes) === true
+          && evt.type === `key${ctx.modifiers.early === true ? 'down' : 'up'}`
         ) {
           showRipple(evt, el, ctx, true)
         }
@@ -128,7 +129,7 @@ export default createDirective({
 
   beforeUnmount(el) {
     const ctx = el.__vcripple
-    ctx.abort.forEach(fn => {
+    ctx.abort.forEach((fn) => {
       fn()
     })
     cleanEvt(ctx, 'main')

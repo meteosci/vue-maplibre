@@ -6,12 +6,112 @@
  * @Description:
  * @FilePath: \maplibre-template-project\src\pages\system\Login.vue
 -->
+<script lang="ts" setup>
+import type { ThemeOptions } from '@src/types'
+import { store } from '@src/store'
+import { useQuasar } from 'quasar'
+import { computed, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const $q = useQuasar()
+const $router = useRouter()
+const $route = useRoute()
+
+const title = computed(() => {
+  return import.meta.env.VITE_VUE_APP_TITLE
+})
+
+// const form = ref({
+//   username: import.meta.env.MODE === 'development' ? 'admin' : '',
+//   password: import.meta.env.MODE === 'development' ? '123456' : ''
+// })
+
+const form = ref({
+  username: 'admin',
+  password: '123456'
+})
+
+const rules = {
+  username: [val => (val && val.length > 0) || '请输入用户名'],
+  password: [val => (val && val.length > 0) || '请输入用户名'],
+  rememberMe: [val => !!val || 'You need to accept the license and terms first']
+}
+
+const theme = computed<ThemeOptions>(() => {
+  const themeStore = store.system.useThemeStore()
+  return themeStore.themeConfig[themeStore.activeName]
+})
+
+onMounted(async () => {
+  // // **************** 验证天擎自动登录
+  // // 第一步 获取 cookie
+  // // 先看看本地有没有
+  // let cookie = webStorage.getLocalStorage('cmadaas-cookie') as string
+  // if (cookie) {
+  //   document.cookie = `JSESSIONID=${cookie}` // 非必要
+  // } else {
+  //   // 如果没有就从后端请求 并存起来
+  //   const res = await api.common.getCmadaasCookie()
+  //   const myCookie = res.data['set-cookie']
+  //   cookie = myCookie.split(';')[0].split('=')[1]
+  //   webStorage.setLocalStorage('cmadaas-cookie', cookie)
+  //   document.cookie = `JSESSIONID=${cookie}` // 非必要
+  // }
+  // // 如果url中有code 认为是授权登录 自动走授权登录流程
+  // if ($route.query.code) {
+  //   const code = $route.query.code
+  //   const res = await api.common.loginByAutho(cookie, code)
+  //   console.log(res)
+  // }
+  // // 第二步 验证是否登录过
+  // const res = await api.common.getAuthoLoginInfo(cookie)
+  // const data = res.data
+  // if (data.success) {
+  //   // 已登录
+  //   logger.log(`登录成功。当前登录用户${data.loginUser.username}`, data)
+  //   // 一些用户信息保存起来并跳转默认页面
+  //   webStorage.setLocalStorage('token', 'test')
+  //   webStorage.setLocalStorage('uuid', data.loginUser.id)
+  //   const userStore = useUserStore()
+  //   userStore.set({
+  //     ...data.loginUser,
+  //     username: data.loginUser.username
+  //   })
+  //   $router.replace(($router.currentRoute.value.query.redirect as string) || import.meta.env.VITE_VUE_DEFAULT_ROUTE_PATH)
+  // } else {
+  //   logger.warn('登录失效，请重新登录。')
+  //   webStorage.removeLocalStorage('cmadaas-cookie')
+  // }
+})
+
+async function onSubmit() {
+  store.system
+    .useAccountStore()
+    .login(form.value)
+    .then(() => {
+      // 重定向对象不存在则返回顶层路径
+      $router.replace(($router.currentRoute.value.query.redirect as string) || import.meta.env.VITE_VUE_DEFAULT_ROUTE_PATH)
+    })
+}
+
+function onReset() {
+  form.value = { username: '', password: '' }
+}
+
+function onOathLogin() {
+  window.location.href
+    = 'http://gx.uts.cma:18010/idp/oauth2/authorize?client_id=gxDAAS&redirect_uri=http://10.158.48.67:9002/login&response_type=code&state=http%3A%2F%2F10.158.48.67%3A9002%2Flogin'
+}
+</script>
+
 <template>
   <div class="login-bg">
     <div class="page-login z-top row">
       <div class="login-container col-6">
         <q-form greedy class="form-login item-center" @submit="onSubmit" @reset="onReset">
-          <div class="text-h6 q-my-sm">用户登录</div>
+          <div class="text-h6 q-my-sm">
+            用户登录
+          </div>
           <q-input v-model="form.username" outlined label="用户名" class="login-input" lazy-rules :rules="rules.username">
             <template #prepend>
               <q-icon class="icon" name="perm_identity" />
@@ -111,107 +211,6 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
-import qs from 'qs'
-import { useQuasar } from 'quasar'
-import { ref, reactive, toRefs, computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { store } from '@src/store'
-import { ThemeOptions } from '@src/types'
-import * as api from '@src/api'
-import { logger, webStorage } from '@src/utils'
-import { useUserStore } from '@src/store/system/user'
-
-const $q = useQuasar()
-const $router = useRouter()
-const $route = useRoute()
-
-const title = computed(() => {
-  return import.meta.env.VITE_VUE_APP_TITLE
-})
-
-// const form = ref({
-//   username: import.meta.env.MODE === 'development' ? 'admin' : '',
-//   password: import.meta.env.MODE === 'development' ? '123456' : ''
-// })
-
-const form = ref({
-  username: 'admin',
-  password: '123456'
-})
-
-const rules = {
-  username: [val => (val && val.length > 0) || '请输入用户名'],
-  password: [val => (val && val.length > 0) || '请输入用户名'],
-  rememberMe: [val => !!val || 'You need to accept the license and terms first']
-}
-
-const theme = computed<ThemeOptions>(() => {
-  const themeStore = store.system.useThemeStore()
-  return themeStore.themeConfig[themeStore.activeName]
-})
-
-onMounted(async () => {
-  // // **************** 验证天擎自动登录
-  // // 第一步 获取 cookie
-  // // 先看看本地有没有
-  // let cookie = webStorage.getLocalStorage('cmadaas-cookie') as string
-  // if (cookie) {
-  //   document.cookie = `JSESSIONID=${cookie}` // 非必要
-  // } else {
-  //   // 如果没有就从后端请求 并存起来
-  //   const res = await api.common.getCmadaasCookie()
-  //   const myCookie = res.data['set-cookie']
-  //   cookie = myCookie.split(';')[0].split('=')[1]
-  //   webStorage.setLocalStorage('cmadaas-cookie', cookie)
-  //   document.cookie = `JSESSIONID=${cookie}` // 非必要
-  // }
-  // // 如果url中有code 认为是授权登录 自动走授权登录流程
-  // if ($route.query.code) {
-  //   const code = $route.query.code
-  //   const res = await api.common.loginByAutho(cookie, code)
-  //   console.log(res)
-  // }
-  // // 第二步 验证是否登录过
-  // const res = await api.common.getAuthoLoginInfo(cookie)
-  // const data = res.data
-  // if (data.success) {
-  //   // 已登录
-  //   logger.log(`登录成功。当前登录用户${data.loginUser.username}`, data)
-  //   // 一些用户信息保存起来并跳转默认页面
-  //   webStorage.setLocalStorage('token', 'test')
-  //   webStorage.setLocalStorage('uuid', data.loginUser.id)
-  //   const userStore = useUserStore()
-  //   userStore.set({
-  //     ...data.loginUser,
-  //     username: data.loginUser.username
-  //   })
-  //   $router.replace(($router.currentRoute.value.query.redirect as string) || import.meta.env.VITE_VUE_DEFAULT_ROUTE_PATH)
-  // } else {
-  //   logger.warn('登录失效，请重新登录。')
-  //   webStorage.removeLocalStorage('cmadaas-cookie')
-  // }
-})
-
-const onSubmit = async () => {
-  store.system
-    .useAccountStore()
-    .login(form.value)
-    .then(() => {
-      // 重定向对象不存在则返回顶层路径
-      $router.replace(($router.currentRoute.value.query.redirect as string) || import.meta.env.VITE_VUE_DEFAULT_ROUTE_PATH)
-    })
-}
-
-const onReset = () => {
-  form.value = { username: '', password: '' }
-}
-
-const onOathLogin = () => {
-  window.location.href =
-    'http://gx.uts.cma:18010/idp/oauth2/authorize?client_id=gxDAAS&redirect_uri=http://10.158.48.67:9002/login&response_type=code&state=http%3A%2F%2F10.158.48.67%3A9002%2Flogin'
-}
-</script>
 
 <style lang="scss" scoped>
 .login-bg {

@@ -6,15 +6,16 @@
  * @LastEditTime: 2025-03-28 23:29:25
  * @FilePath: \vue-maplibre\packages\components\layer\gltf\index.ts
  */
-import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
-import props from './props'
-import { commonEmits } from '@vue-maplibre/utils/private/emits'
+import type CustomGLTFLayer from '@vue-maplibre/shared/layer/GLTFLayer'
+import type { GLTFLayerOptions, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
+import type { ExtractPropTypes } from 'vue'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
-import { GLTFLayerOptions, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
-import useLog from '@vue-maplibre/composables/private/use-log'
 import { Layer } from '@vue-maplibre/shared'
+import { logger } from '@vue-maplibre/utils'
+import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { kebabCase } from 'lodash-unified'
-import CustomGLTFLayer from '@vue-maplibre/shared/layer/GLTFLayer'
+import { createCommentVNode, defineComponent, getCurrentInstance, watch } from 'vue'
+import props from './props'
 
 const emits = {
   ...commonEmits,
@@ -27,7 +28,6 @@ export default defineComponent({
   emits,
   setup(props: VmLayerGltfProps, ctx) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
-    const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = ['loaded']
     instance.className = 'GLTFLayer' // 最终其实是 CustomStyleLayer
@@ -41,7 +41,7 @@ export default defineComponent({
       return
     }
 
-    watch([() => props.position, () => props.rotate, () => props.scale], val => {
+    watch([() => props.position, () => props.rotate, () => props.scale], (val) => {
       const $services = commonState.getServices()
       const { map } = $services
 

@@ -6,20 +6,21 @@
  * @Description:
  * @FilePath: \maplibre-template-project\src\api\tools.ts
  */
-import { Notify } from 'quasar'
-import { store, pinia } from '@store/index'
 import { logger } from '@src/utils'
+import { pinia, store } from '@store/index'
+import { Notify } from 'quasar'
 
 /**
  * @description 安全地解析 json 字符串
- * @param {String} jsonString 需要解析的 json 字符串
- * @param {String} defaultValue 默认值
+ * @param {string} jsonString 需要解析的 json 字符串
+ * @param {string} defaultValue 默认值
  */
 export function parse(jsonString = '{}', defaultValue = {}) {
   let result: any = defaultValue
   try {
     result = JSON.parse(jsonString)
-  } catch (error) {
+  }
+  catch (error) {
     logger.error(error)
   }
   return result
@@ -28,8 +29,8 @@ export function parse(jsonString = '{}', defaultValue = {}) {
 /**
  * @description 接口请求返回
  * @param {Any} data 返回值
- * @param {String} msg 状态信息
- * @param {Number} code 状态码
+ * @param {string} msg 状态信息
+ * @param {number} code 状态码
  */
 export function response(data = {}, msg = '', code = 0) {
   return [200, { code, msg, data }]
@@ -38,7 +39,7 @@ export function response(data = {}, msg = '', code = 0) {
 /**
  * @description 接口请求返回 正确返回
  * @param {Any} data 返回值
- * @param {String} msg 状态信息
+ * @param {string} msg 状态信息
  */
 export function responseSuccess(data = {}, msg = '成功') {
   return response(data, msg)
@@ -47,8 +48,8 @@ export function responseSuccess(data = {}, msg = '成功') {
 /**
  * @description 接口请求返回 错误返回
  * @param {Any} data 返回值
- * @param {String} msg 状态信息
- * @param {Number} code 状态码
+ * @param {string} msg 状态信息
+ * @param {number} code 状态码
  */
 export function responseError(data = {}, msg = '请求失败', code = 500) {
   return response(data, msg, code)
@@ -83,7 +84,7 @@ export function errorLog(error) {
 
 /**
  * @description 创建一个错误
- * @param {String} msg 错误信息
+ * @param {string} msg 错误信息
  */
 export function errorCreate(msg) {
   const error = new Error(msg)

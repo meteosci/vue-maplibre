@@ -7,10 +7,10 @@
  * @FilePath: \vue-maplibre\packages\utils\types.ts
  */
 
-import type { Ref, Plugin, ComponentInternalInstance, ComponentPublicInstance } from 'vue'
+import type { Language } from '@vue-maplibre/locale'
 import type { Evented, Map } from 'maplibre-gl'
 import type { Emitter } from 'mitt'
-import type { Language } from '@vue-maplibre/locale'
+import type { ComponentInternalInstance, ComponentPublicInstance, Plugin, Ref } from 'vue'
 
 export interface AnyObject {
   [propName: string]: any
@@ -20,7 +20,7 @@ export type LooseDictionary = { [index in string]: any }
 
 export type AnyFunction<T = any> = (...args: any[]) => T
 
-export type Listener = {
+export interface Listener {
   target: Evented
   eventName: string
   handler: AnyFunction
@@ -32,7 +32,7 @@ export type Arrayable<T> = T | T[]
 export type Awaitable<T> = Promise<T> | T
 export type MaybeRef<T> = T | Ref<T>
 
-export type VueClassObjectProp = {
+export interface VueClassObjectProp {
   [value: string]: any
 }
 export type VueClassProp = string | Array<VueClassProp> | VueClassObjectProp
@@ -56,9 +56,9 @@ export interface VmComponentInternalInstance extends ComponentInternalInstance {
   className?: string
   maplibreObject?: unknown
   vmMitt?: Emitter<VmMittEvents>
-  createMaplibreObject?(): Promise<unknown>
-  mount?(): Promise<boolean | undefined>
-  unmount?(): Promise<boolean | undefined>
+  createMaplibreObject?: () => Promise<unknown>
+  mount?: () => Promise<boolean | undefined>
+  unmount?: () => Promise<boolean | undefined>
   children?: Array<VmComponentInternalInstance>
   alreadyListening: string[]
   removeCallbacks: Array<AnyFunction<any>>
@@ -71,15 +71,15 @@ export type VmComponentPublicInstance<T = any> = ComponentPublicInstance<
     /**
      * Load the component manually.
      */
-    load(): Promise<VmReadyObject | boolean>
+    load: () => Promise<VmReadyObject | boolean>
     /**
      * Destroy the loaded component manually.
      */
-    unload(): Promise<boolean>
+    unload: () => Promise<boolean>
     /**
      * Reload the component manually.
      */
-    reload(): Promise<boolean>
+    reload: () => Promise<boolean>
     /**
      * Determine whether the component is created by this.
      */
@@ -91,7 +91,7 @@ export type VmComponentPublicInstance<T = any> = ComponentPublicInstance<
     /**
      * Get the maplibreObject created by component.
      */
-    getMaplibreObject(): unknown
+    getMaplibreObject: () => unknown
   }
 >
 

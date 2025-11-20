@@ -6,17 +6,15 @@
  * @LastEditTime: 2024-06-08 11:01:30
  * @FilePath: \vue-maplibre\packages\components\layer\index.ts
  */
-import { App } from 'vue'
-import LayerNative from './native'
+import type { SFCWithInstall } from '@vue-maplibre/utils/types'
+import type { App } from 'vue'
 import LayerGltf from './gltf'
-import { Map } from 'maplibre-gl'
-
-import { SFCWithInstall } from '@vue-maplibre/utils/types'
+import LayerNative from './native'
 
 const components = [LayerGltf, LayerNative]
 
-const install = (app: App): void => {
-  components.forEach(cmp => {
+function install(app: App): void {
+  components.forEach((cmp) => {
     app.component(cmp.name, cmp)
   })
 }
@@ -25,7 +23,7 @@ export default {
   install
 }
 
-components.forEach(cmp => {
+components.forEach((cmp) => {
   cmp['install'] = (app: App): void => {
     app.component(cmp.name, cmp)
   }

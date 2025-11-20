@@ -1,3 +1,4 @@
+import { isBoolean, isPlainObject } from 'lodash'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2022-05-13 16:40:38
@@ -7,7 +8,6 @@
  * @FilePath: \lc_-sys_-platform\src\store\system\layout.ts
  */
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { isBoolean, isPlainObject } from 'lodash'
 // import { ElRecord } from '@src/utils/types'
 
 // main is the name of the store. It is unique across your application
@@ -44,7 +44,7 @@ export const useLayoutStore = defineStore('layout', {
      */
     toggleGlobalLayout(layoutOpts) {
       const optsArray = Object.keys(layoutOpts)
-      optsArray.forEach(opt => {
+      optsArray.forEach((opt) => {
         isBoolean(layoutOpts[opt]) && (this.global[opt] = layoutOpts[opt])
       })
     },
@@ -56,10 +56,11 @@ export const useLayoutStore = defineStore('layout', {
     toggleDynamicRenderPageLayout(layoutOpts) {
       const fn = (opts, layout) => {
         const optsArray = Object.keys(opts)
-        optsArray.forEach(opt => {
+        optsArray.forEach((opt) => {
           if (isPlainObject(opts[opt])) {
             fn(opts[opt], layout[opt])
-          } else {
+          }
+          else {
             isBoolean(opts[opt]) && (layout[opt] = opts[opt])
           }
         })

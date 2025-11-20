@@ -8,13 +8,14 @@
  */
 
 import { LocalStorage, SessionStorage } from 'quasar'
+
 const webStoragePrefix = import.meta.env.VITE_VUE_APP_PREFIX
 
 /**
  * 设置本地存储的键值对。
  *
- * @param {string} [key='default'] - 要设置的键，默认为'default'。
- * @param {string} [value=''] - 要设置的值，默认为空字符串。
+ * @param {string} [key] - 要设置的键，默认为'default'。
+ * @param {string} [value] - 要设置的值，默认为空字符串。
  */
 export function setLocalStorage(key = 'default', value = '') {
   LocalStorage.set(`${webStoragePrefix}-${__APP_VERSION__}-${key}`, value)
@@ -23,7 +24,7 @@ export function setLocalStorage(key = 'default', value = '') {
 /**
  * 获取本地存储中指定键的值。
  *
- * @param {string} [key='default'] - 要获取值的键，默认为'default'。
+ * @param {string} [key] - 要获取值的键，默认为'default'。
  * @returns {string | null} 存储的值，如果不存在则为null。
  */
 export function getLocalStorage(key = 'default') {
@@ -33,7 +34,7 @@ export function getLocalStorage(key = 'default') {
 /**
  * 获取所有本地存储的键值对。
  *
- * @returns {Object} 包含所有本地存储键值对的对象。
+ * @returns {object} 包含所有本地存储键值对的对象。
  */
 export function getAllLocalStorage() {
   return LocalStorage.getAll()
@@ -42,7 +43,7 @@ export function getAllLocalStorage() {
 /**
  * 移除本地存储中指定键的值。
  *
- * @param {string} [key='default'] - 要移除的键，默认为'default'。
+ * @param {string} [key] - 要移除的键，默认为'default'。
  */
 export function removeLocalStorage(key = 'default') {
   LocalStorage.remove(`${webStoragePrefix}-${__APP_VERSION__}-${key}`)
@@ -51,8 +52,8 @@ export function removeLocalStorage(key = 'default') {
 /**
  * 设置会话存储的键值对。
  *
- * @param {string} [key='default'] - 要设置的键，默认为'default'。
- * @param {string} [value=''] - 要设置的值，默认为空字符串。
+ * @param {string} [key] - 要设置的键，默认为'default'。
+ * @param {string} [value] - 要设置的值，默认为空字符串。
  */
 export function setSessionStorage(key = 'default', value = '') {
   SessionStorage.set(`${webStoragePrefix}-${__APP_VERSION__}-${key}`, value)
@@ -61,7 +62,7 @@ export function setSessionStorage(key = 'default', value = '') {
 /**
  * 获取会话存储中指定键的值。
  *
- * @param {string} [key='default'] - 要获取值的键，默认为'default'。
+ * @param {string} [key] - 要获取值的键，默认为'default'。
  * @returns {string | null} 存储的值，如果不存在则为null。
  */
 export function getSessionStorage(key = 'default') {
@@ -71,7 +72,7 @@ export function getSessionStorage(key = 'default') {
 /**
  * 获取所有会话存储的键值对。
  *
- * @returns {Object} 包含所有会话存储键值对的对象。
+ * @returns {object} 包含所有会话存储键值对的对象。
  */
 export function getAllSessionStorage() {
   return SessionStorage.getAll()
@@ -80,7 +81,7 @@ export function getAllSessionStorage() {
 /**
  * 移除会话存储中指定键的值。
  *
- * @param {string} [key='default'] - 要移除的键，默认为'default'。
+ * @param {string} [key] - 要移除的键，默认为'default'。
  */
 export function removeSessionStorage(key = 'default') {
   SessionStorage.remove(`${webStoragePrefix}-${__APP_VERSION__}-${key}`)

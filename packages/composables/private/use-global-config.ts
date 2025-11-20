@@ -7,12 +7,11 @@
  * @FilePath: \vue-maplibre\packages\composables\private\use-global-config.ts
  */
 
-import { configProviderContextKey } from '@vue-maplibre/utils/private/config'
-import { ConfigProviderContext } from '@vue-maplibre/utils/types'
-import { inject, ref, computed, unref, provide, getCurrentInstance } from 'vue'
-import type { Ref, App } from 'vue'
-import { MaybeRef } from '@vue-maplibre/utils/types'
+import type { ConfigProviderContext, MaybeRef } from '@vue-maplibre/utils/types'
+import type { App, Ref } from 'vue'
 import { keysOf } from '@vue-maplibre/utils/objects'
+import { configProviderContextKey } from '@vue-maplibre/utils/private/config'
+import { computed, getCurrentInstance, inject, provide, ref, unref } from 'vue'
 
 const globalConfig = ref<ConfigProviderContext>()
 
@@ -26,12 +25,13 @@ export function useGlobalConfig(key?: keyof ConfigProviderContext, defaultValue 
   const config = getCurrentInstance() ? inject(configProviderContextKey, globalConfig) : globalConfig
   if (key) {
     return computed(() => config.value?.[key] ?? defaultValue)
-  } else {
+  }
+  else {
     return config
   }
 }
 
-export const provideGlobalConfig = (config: MaybeRef<ConfigProviderContext>, app?: App, global = false) => {
+export function provideGlobalConfig(config: MaybeRef<ConfigProviderContext>, app?: App, global = false) {
   const inSetup = !!getCurrentInstance()
   const oldConfig = inSetup ? useGlobalConfig() : undefined
 
@@ -43,13 +43,15 @@ export const provideGlobalConfig = (config: MaybeRef<ConfigProviderContext>, app
 
   const context = computed(() => {
     const cfg = unref(config)
-    if (!oldConfig?.value) return cfg
+    if (!oldConfig?.value)
+      return cfg
     return mergeConfig(oldConfig.value, cfg)
   })
 
   if (app?.provide) {
     app.provide(configProviderContextKey, context)
-  } else {
+  }
+  else {
     provide(configProviderContextKey, context)
   }
 
@@ -59,7 +61,7 @@ export const provideGlobalConfig = (config: MaybeRef<ConfigProviderContext>, app
   return context
 }
 
-const mergeConfig = (a: ConfigProviderContext, b: ConfigProviderContext): ConfigProviderContext => {
+function mergeConfig(a: ConfigProviderContext, b: ConfigProviderContext): ConfigProviderContext {
   const keys = [...new Set([...keysOf(a), ...keysOf(b)])]
   const obj: Record<string, any> = {}
   for (const key of keys) {

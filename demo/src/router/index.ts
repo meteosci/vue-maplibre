@@ -1,3 +1,8 @@
+import * as api from '@src/api'
+import { pinia, store } from '@src/store'
+import * as util from '@src/utils/util'
+import * as webStorage from '@src/utils/web-storage'
+import NProgress from 'nprogress'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-08-26 17:00:10
@@ -6,14 +11,9 @@
  * @Description:
  * @FilePath: \vue-maplibre\demo\src\router\index.ts
  */
-import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
+import { createMemoryHistory, createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import routes from './routes'
-import NProgress from 'nprogress'
-import { store, pinia } from '@src/store'
 import 'nprogress/nprogress.css'
-import * as api from '@src/api'
-import * as webStorage from '@src/utils/web-storage'
-import * as util from '@src/utils/util'
 
 const createHistory = import.meta.env.SERVER
   ? createMemoryHistory
@@ -56,27 +56,32 @@ Router.beforeEach(async (to, from, next) => {
         next({
           path: import.meta.env.VITE_VUE_DEFAULT_ROUTE_PATH
         })
-      } else {
+      }
+      else {
         next()
       }
-    } catch (e) {
-      if (whiteList.indexOf(to.path) !== -1) {
+    }
+    catch (e) {
+      if (whiteList.includes(to.path)) {
         // 在免登录白名单，直接进入
         next()
-      } else {
+      }
+      else {
         next('/login')
       }
     }
-  } else {
-    if (whiteList.indexOf(to.path) !== -1) {
+  }
+  else {
+    if (whiteList.includes(to.path)) {
       next()
-    } else {
+    }
+    else {
       next('/login')
     }
   }
 })
 
-Router.afterEach(to => {
+Router.afterEach((to) => {
   // 进度条
   NProgress.done()
   // 更改标题

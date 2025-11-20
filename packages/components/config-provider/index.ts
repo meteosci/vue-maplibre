@@ -6,8 +6,8 @@
  * @LastEditTime: 2024-06-14 21:59:25
  * @FilePath: \vue-maplibre\packages\components\config-provider\index.ts
  */
-import { SFCWithInstall } from '@vue-maplibre/utils/types'
-import { App } from 'vue'
+import type { SFCWithInstall } from '@vue-maplibre/utils/types'
+import type { App } from 'vue'
 import ConfigProvider from './src'
 
 ConfigProvider.install = (app: App): void => {

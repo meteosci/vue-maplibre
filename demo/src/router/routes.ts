@@ -7,7 +7,7 @@
  * @FilePath: \vue-maplibre\demo\src\router\routes.ts
  */
 
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
 /**
  * 在布局内显示

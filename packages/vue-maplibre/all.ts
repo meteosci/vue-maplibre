@@ -7,17 +7,18 @@
  * @FilePath: \vue-maplibre\packages\vue-maplibre\all.ts
  */
 import installer from './defaults'
+
+export { default as makeInstaller } from './make-installer'
 export * from '@vue-maplibre/components'
 export * from '@vue-maplibre/composables'
 export * from '@vue-maplibre/directives'
-export * from '@vue-maplibre/shared'
-export * from '@vue-maplibre/utils'
 export * from '@vue-maplibre/locale'
+export * from '@vue-maplibre/shared'
+
+export * from '@vue-maplibre/utils'
 
 // type define
 export * from '@vue-maplibre/utils/private/emits'
-
-export { default as makeInstaller } from './make-installer'
 
 export const install = installer.install
 export const version = installer.version

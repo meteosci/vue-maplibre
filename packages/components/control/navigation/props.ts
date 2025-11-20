@@ -6,8 +6,8 @@
  * @LastEditTime: 2024-06-14 23:50:50
  * @FilePath: \vue-maplibre\packages\components\control\navigation\props.ts
  */
-import { ControlPosition } from 'maplibre-gl'
-import { PropType } from 'vue'
+import type { ControlPosition } from 'maplibre-gl'
+import type { PropType } from 'vue'
 
 export default {
   /**

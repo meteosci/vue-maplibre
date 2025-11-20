@@ -6,10 +6,11 @@
  * @Description:
  * @FilePath: \vue-maplibre\packages\composables\use-vue-maplibre\index.ts
  */
-import { getCurrentInstance, inject } from 'vue'
-import useLog from '@vue-maplibre/composables/private/use-log'
-import { VmComponentInternalInstance, VmMapProvider } from '@vue-maplibre/utils/types'
+
+import type { VmComponentInternalInstance, VmMapProvider } from '@vue-maplibre/utils/types'
+import { logger } from '@vue-maplibre/utils'
 import { vmKey } from '@vue-maplibre/utils/private/config'
+import { getCurrentInstance, inject } from 'vue'
 import { useGlobalConfig } from '../private/use-global-config'
 
 export default function useVueMaplibre(containerId?: string): VmMapProvider {
@@ -18,7 +19,6 @@ export default function useVueMaplibre(containerId?: string): VmMapProvider {
   if ((!provides || !(vmKey in provides)) && !containerId) {
     containerId = 'mapContainer'
   }
-  const logger = useLog()
 
   if (instance) {
     const globalConfig = useGlobalConfig()
@@ -32,14 +32,16 @@ export default function useVueMaplibre(containerId?: string): VmMapProvider {
         ...globalConfig.value,
         ...mapProvider
       }
-    } else {
+    }
+    else {
       const mapProvider = inject<VmMapProvider>(vmKey)
       return {
         ...globalConfig.value,
         ...mapProvider
       }
     }
-  } else {
+  }
+  else {
     logger.warn('useVueMaplibre function can only be used inside setup.')
   }
 }

@@ -6,9 +6,22 @@
  * @LastEditTime: 2025-02-24 21:52:42
  * @FilePath: \vue-maplibre\packages\components\map\src\index.ts
  */
-import {
+import type { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmReadyObject } from '@vue-maplibre/utils/types'
+import type { MapOptions } from 'maplibre-gl'
+import type {
   ExtractPropTypes,
-  VNode,
+  VNode
+} from 'vue'
+import { useCommon, useLocale, useVueMaplibre } from '@vue-maplibre/composables'
+import { TouchHold } from '@vue-maplibre/directives'
+import { logger, mergeDescriptors } from '@vue-maplibre/utils'
+import { vmKey } from '@vue-maplibre/utils/private/config'
+import { commonEmits } from '@vue-maplibre/utils/private/emits'
+import { hSlot } from '@vue-maplibre/utils/private/render'
+import { getInstanceListener } from '@vue-maplibre/utils/private/vm'
+import { kebabCase } from 'lodash-unified'
+import { Map } from 'maplibre-gl'
+import {
   computed,
   createCommentVNode,
   defineComponent,
@@ -16,22 +29,11 @@ import {
   h,
   provide,
   ref,
-  withDirectives,
-  watch
+  watch,
+  withDirectives
 } from 'vue'
-import { Map, MapOptions } from 'maplibre-gl'
-import useLog from '@vue-maplibre/composables/private/use-log'
-import { VmComponentInternalInstance, VmComponentPublicInstance, VmMapProvider, VmReadyObject } from '@vue-maplibre/utils/types'
-import { kebabCase } from 'lodash-unified'
-import { hSlot } from '@vue-maplibre/utils/private/render'
-import { commonEmits } from '@vue-maplibre/utils/private/emits'
-import { TouchHold } from '@vue-maplibre/directives'
-import mapProps from './props'
-import { vmKey } from '@vue-maplibre/utils/private/config'
 import mapEmits from './events'
-import { useCommon, useLocale, useVueMaplibre } from '@vue-maplibre/composables'
-import { getInstanceListener } from '@vue-maplibre/utils/private/vm'
-import { mergeDescriptors } from '@vue-maplibre/utils'
+import mapProps from './props'
 
 const emits = {
   ...commonEmits,
@@ -40,7 +42,7 @@ const emits = {
   'update:center': e => true,
   'update:bearing': e => true,
   'update:pitch': e => true,
-  touchEnd: evt => true
+  'touchEnd': evt => true
 }
 
 export default defineComponent({
@@ -51,7 +53,6 @@ export default defineComponent({
   setup(props, ctx) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
     const mapRef = ref<HTMLElement>()
-    const logger = useLog(instance)
     const { t, locale } = useLocale()
     instance.maplibreEvents = [...Object.keys(mapEmits)]
     instance.className = 'Map'
@@ -79,7 +80,7 @@ export default defineComponent({
     // 不能直接改自动调用重载方法重新初始化地图。
     watch(
       () => props.maxBounds,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setMaxBounds(val)
       },
@@ -90,7 +91,7 @@ export default defineComponent({
 
     watch(
       () => props.minZoom,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setMinZoom(val)
       }
@@ -98,7 +99,7 @@ export default defineComponent({
 
     watch(
       () => props.maxZoom,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setMaxZoom(val)
       }
@@ -106,7 +107,7 @@ export default defineComponent({
 
     watch(
       () => props.minPitch,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setMinPitch(val)
       }
@@ -114,14 +115,14 @@ export default defineComponent({
 
     watch(
       () => props.maxPitch,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setMaxPitch(val)
       }
     )
     watch(
       () => props.center,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setCenter(val)
       },
@@ -132,7 +133,7 @@ export default defineComponent({
 
     watch(
       () => props.zoom,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setZoom(val)
       }
@@ -140,7 +141,7 @@ export default defineComponent({
 
     watch(
       () => props.bearing,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setBearing(val)
       }
@@ -148,7 +149,7 @@ export default defineComponent({
 
     watch(
       () => props.pitch,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setPitch(val)
       }
@@ -156,7 +157,7 @@ export default defineComponent({
 
     watch(
       () => props.renderWorldCopies,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setRenderWorldCopies(val)
       }
@@ -164,7 +165,7 @@ export default defineComponent({
 
     watch(
       () => props.mapStyle,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setStyle(val)
       }
@@ -172,7 +173,7 @@ export default defineComponent({
 
     watch(
       () => props.pixelRatio,
-      val => {
+      (val) => {
         const map = instance.map
         map && map.setPixelRatio(val)
       }
@@ -180,7 +181,7 @@ export default defineComponent({
 
     watch(
       () => locale.value,
-      val => {
+      (val) => {
         const map = instance.map
         if (map) {
           map._locale = val.vm.mapLocale as any
@@ -198,79 +199,11 @@ export default defineComponent({
       return props.containerId || (instance.attrs.id as string) || 'mapContainer'
     })
 
-    instance.createMaplibreObject = async () => {
-      const options: MapOptions = {
-        container: mapRef.value,
-        style: props.mapStyle
-      }
-
-      Object.keys(props).forEach(vueProp => {
-        if (props[vueProp] === undefined || props[vueProp] === null) {
-          return
-        }
-        options[vueProp] = props[vueProp]
-      })
-
-      if (!options.locale) {
-        options.locale = locale.value.vm.mapLocale
-      }
-
-      const map = new Map(options)
-
-      instance.map = map
-
-      // console.log('更新存储的地图实例')
-      instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
-
-      return map
-    }
-
-    instance.mount = async () => {
-      instance.map.on('zoom', mapChanged)
-      instance.map.on('pitch', mapChanged)
-      instance.map.on('move', mapChanged)
-
-      instance.map.on('load', () => {
-        $vm.vmMitt.emit('__vue_maplibre_vm_map_ready__', instance.map)
-      })
-
-      return true
-    }
-
-    instance.unmount = async () => {
-      const { map } = instance
-
-      instance.map.off('zoom', mapChanged)
-      instance.map.off('pitch', mapChanged)
-      instance.map.off('move', mapChanged)
-
-      if (map) {
-        map._controls.forEach(control => {
-          map.removeControl(control)
-        })
-        map.remove()
-
-        // console.log('删除存储的旧地图实例')
-        if (instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]) {
-          const $vm = instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]
-          const map = $vm?.map
-
-          if (map) {
-            // 如果地图不为空，说明地图实例还在，需要销毁。否则说明地图正在初始化，不能删除了。
-            delete instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]
-          }
-        }
-      }
-
-      logger.debug('vm-map-unloaded')
-      return true
-    }
-
-    const onTouchHold = e => {
+    const onTouchHold = (e): void => {
       ctx.emit('touchEnd', e)
     }
 
-    const mapChanged = e => {
+    const mapChanged = (e): void => {
       const map = instance.map
       if (!map) {
         return
@@ -296,12 +229,77 @@ export default defineComponent({
       }
     }
 
-    const getServices = () => {
+    const getServices = (): any => {
       return mergeDescriptors(commonState.getServices(), {
         get map() {
           return instance.map
         }
       })
+    }
+
+    instance.createMaplibreObject = async () => {
+      const options: MapOptions = {
+        container: mapRef.value,
+        style: props.mapStyle
+      }
+
+      Object.keys(props).forEach((vueProp) => {
+        if (props[vueProp] === undefined || props[vueProp] === null) {
+          return
+        }
+        options[vueProp] = props[vueProp]
+      })
+
+      if (!options.locale) {
+        options.locale = locale.value.vm.mapLocale as Record<string, string>
+      }
+
+      const map = new Map(options)
+
+      instance.map = map
+      instance.appContext.config.globalProperties.$VueMaplibre[containerId.value] = getServices()
+      return map
+    }
+
+    instance.mount = async () => {
+      instance.map.on('zoom', mapChanged)
+      instance.map.on('pitch', mapChanged)
+      instance.map.on('move', mapChanged)
+
+      instance.map.on('load', () => {
+        $vm.vmMitt.emit('__vue_maplibre_vm_map_ready__', instance.map)
+      })
+
+      return true
+    }
+
+    instance.unmount = async () => {
+      const { map } = instance
+
+      instance.map.off('zoom', mapChanged)
+      instance.map.off('pitch', mapChanged)
+      instance.map.off('move', mapChanged)
+
+      if (map) {
+        map._controls.forEach((control) => {
+          map.removeControl(control)
+        })
+        map.remove()
+
+        // console.log('删除存储的旧地图实例')
+        if (instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]) {
+          const $vm = instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]
+          const map = $vm?.map
+
+          if (map) {
+            // 如果地图不为空，说明地图实例还在，需要销毁。否则说明地图正在初始化，不能删除了。
+            delete instance.appContext.config.globalProperties.$VueMaplibre[containerId.value]
+          }
+        }
+      }
+
+      logger.debug('vm-map-unloaded')
+      return true
     }
 
     provide<VmMapProvider>(vmKey, getServices())
@@ -344,25 +342,25 @@ export type VmMapProps = Partial<
        * @param instance
        * @returns
        */
-      onBeforeLoad: (instance: VmComponentInternalInstance) => void
+      'onBeforeLoad': (instance: VmComponentInternalInstance) => void
       /**
        * Triggers when the maplibreObject is successfully loaded.
        * @param readyObj
        * @returns
        */
-      onReady: (readyObj: VmReadyObject) => void
+      'onReady': (readyObj: VmReadyObject) => void
       /**
        * Triggers when the maplibreObject loading failed.
        * @param e
        * @returns
        */
-      onUnready: (e: any) => void
+      'onUnready': (e: any) => void
       /**
        * Triggers when the maplibreObject is destroyed.
        * @param instance
        * @returns
        */
-      onDestroyed: (instance: VmComponentInternalInstance) => void
+      'onDestroyed': (instance: VmComponentInternalInstance) => void
       /**
        * Triggers when the zoom changed.
        * @param zoom
@@ -392,7 +390,7 @@ export type VmMapProps = Partial<
        * @param evt
        * @returns
        */
-      onTouchEnd: (evt: TouchEvent) => void
+      'onTouchEnd': (evt: TouchEvent) => void
     }
   >
 >

@@ -1,3 +1,11 @@
+import type { Menu } from '@src/types'
+import type { RouteRecordRaw } from 'vue-router'
+import { menuHeader } from '@src/config/menu'
+import mainLayout from '@src/layouts/MainLayout.vue'
+import router from '@src/router'
+import constantRoutes, { frameInRoutes } from '@src/router/routes'
+import * as logger from '@src/utils/logger'
+import * as util from '@src/utils/util'
 /*
  * @Author: tanghuang-liu 916650458@qq.com
  * @Date: 2022-05-13 16:47:56
@@ -7,17 +15,9 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import constantRoutes, { frameInRoutes } from '@src/router/routes'
-import mainLayout from '@src/layouts/MainLayout.vue'
-import router from '@src/router'
-import { menuHeader } from '@src/config/menu'
-import * as logger from '@src/utils/logger'
-import * as util from '@src/utils/util'
-import { useDBStore } from './db'
 import { useMenuStore } from './menu'
 import { useSearchStore } from './search'
-import { RouteRecordRaw } from 'vue-router'
-import { Menu } from '@src/types'
+
 const StaticMenuHeader = [...menuHeader] // 静态菜单暂存，重新登录后，需要重新加载动态菜单与此处的静态菜单合并
 
 function isEmpty(value) {
@@ -28,7 +28,7 @@ function isEmpty(value) {
 }
 const pages = import.meta.glob<any>('../../pages/**/*.vue', { eager: true })
 
-const resolveComponent = path => {
+function resolveComponent(path) {
   const importPage = pages[`../../pages${path}/Index.vue`]
 
   if (!importPage) {
@@ -47,12 +47,11 @@ const resolveComponent = path => {
  * @param list
  * @returns {[]}
  */
-// eslint-disable-next-line @typescript-eslint/member-delimiter-style
 function buildRouter(parent: RouteRecordRaw, list: Menu[]): RouteRecordRaw[] {
   if (parent == null) {
     parent = { path: '/', children: [] }
   }
-  list.forEach(item => {
+  list.forEach((item) => {
     if (import.meta.env.MODE !== 'development' && item.title === '菜单管理') {
       return
     }
@@ -62,7 +61,8 @@ function buildRouter(parent: RouteRecordRaw, list: Menu[]): RouteRecordRaw[] {
       let component: any = null
       if (item.component === 'MainLayout') {
         component = mainLayout
-      } else {
+      }
+      else {
         // vite 中动态导入别名不能用别名，只能用相对路径
         // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
         // component = () => import(`../../../pages${item.path}/index.vue`)
@@ -73,7 +73,7 @@ function buildRouter(parent: RouteRecordRaw, list: Menu[]): RouteRecordRaw[] {
         path: item.path,
         name: item.name,
         // 动态路由支持懒加载
-        component: component,
+        component,
         meta: {
           title: item.title,
           auth: true,
@@ -104,7 +104,7 @@ function buildPermissions(menuTree, permissionList) {
   if (menuTree == null) {
     menuTree = []
   }
-  menuTree.forEach(item => {
+  menuTree.forEach((item) => {
     if (item.permission != null && item.permission !== '') {
       // 权限为空
       permissionList.push(item.permission)
@@ -126,7 +126,7 @@ function buildMenu(menuTree) {
     menuTree = []
   }
   let menus = []
-  menuTree.forEach(item => {
+  menuTree.forEach((item) => {
     if (item.type !== 10) {
       // 只有菜单类型才加入
       return
@@ -140,8 +140,8 @@ function buildMenu(menuTree) {
       icon = item.icon
     }
     menus.push({
-      icon: icon,
-      children: children,
+      icon,
+      children,
       ...item
     })
   })
@@ -172,14 +172,15 @@ export const usePermissionStore = defineStore('permission', {
       let need = []
       if (typeof value === 'string') {
         need.push(value)
-      } else if (value && value instanceof Array && value.length > 0) {
+      }
+      else if (value && Array.isArray(value) && value.length > 0) {
         need = need.concat(value)
       }
       if (need.length === 0) {
         throw new Error('need permissions! Like v-permission="permission-menu-edit" ')
       }
       const userPermissionList = this.permissions
-      return userPermissionList.some(permission => {
+      return userPermissionList.some((permission) => {
         return need.includes(permission)
       })
     },
@@ -196,12 +197,12 @@ export const usePermissionStore = defineStore('permission', {
       this.permissions = []
     },
     generateRoutes({ menuTree }) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         // 处理路由
         const accessedRoutes = buildRouter(null, menuTree) // 根据后台获取到的资源树构建路由列表
         const permissions = buildPermissions(menuTree, []) // 从资源树中抽取权限code列表
         this.setRoutes({ accessedRoutes, permissions }) // 将菜单和权限存储到pinia里面
-        accessedRoutes.forEach(route => {
+        accessedRoutes.forEach((route) => {
           if (route.name === 'layout' && route.path === '/') {
             route.children = route.children.concat(frameInRoutes[0].children)
           }

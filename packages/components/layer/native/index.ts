@@ -6,14 +6,15 @@
  * @LastEditTime: 2024-08-18 17:47:44
  * @FilePath: \vue-maplibre\packages\components\layer\native\index.ts
  */
-import { ExtractPropTypes, createCommentVNode, defineComponent, getCurrentInstance, h, watch } from 'vue'
-import props from './props'
-import { commonEmits } from '@vue-maplibre/utils/private/emits'
+import type { AnyObject, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
+import type { AddLayerObject, RasterDEMSourceSpecification } from 'maplibre-gl'
+import type { ExtractPropTypes } from 'vue'
 import { useCommon, useLocale } from '@vue-maplibre/composables'
-import { AnyObject, VmComponentInternalInstance, VmComponentPublicInstance, VmReadyObject } from '@vue-maplibre/utils/types'
-import useLog from '@vue-maplibre/composables/private/use-log'
+import { logger } from '@vue-maplibre/utils'
+import { commonEmits } from '@vue-maplibre/utils/private/emits'
 import { kebabCase } from 'lodash-unified'
-import { AddLayerObject, RasterDEMSourceSpecification } from 'maplibre-gl'
+import { createCommentVNode, defineComponent, getCurrentInstance, watch } from 'vue'
+import props from './props'
 
 const emits = {
   ...commonEmits
@@ -25,7 +26,6 @@ export default defineComponent({
   emits,
   setup(props: VmLayerNativeProps, ctx) {
     const instance = getCurrentInstance() as unknown as VmComponentInternalInstance
-    const logger = useLog(instance)
     const { t } = useLocale()
     instance.maplibreEvents = []
     instance.className = 'VmLayerNative'
@@ -41,7 +41,7 @@ export default defineComponent({
 
     watch(
       () => props.layout,
-      val => {
+      (val) => {
         const $services = commonState.getServices()
         const { map } = $services
 
@@ -58,7 +58,7 @@ export default defineComponent({
 
     watch(
       () => props.paint,
-      val => {
+      (val) => {
         const $services = commonState.getServices()
         const { map } = $services
 
@@ -85,7 +85,7 @@ export default defineComponent({
 
       const options: AnyObject = {}
 
-      Object.keys(props).forEach(vueProp => {
+      Object.keys(props).forEach((vueProp) => {
         if (props[vueProp] === undefined || props[vueProp] === null) {
           return
         }
@@ -102,7 +102,8 @@ export default defineComponent({
         })
 
         return map.getTerrain()
-      } else {
+      }
+      else {
         if (options.sourceLayer) {
           options['source-layer'] = options.sourceLayer
         }
@@ -126,7 +127,8 @@ export default defineComponent({
         if (map.getTerrain()) {
           map.setTerrain(null)
         }
-      } else {
+      }
+      else {
         if (map.getLayer(props.id)) {
           map.removeLayer(props.id)
         }

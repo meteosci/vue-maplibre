@@ -6,55 +6,16 @@
  * @LastEditTime: 2024-12-26 22:36:31
  * @FilePath: \vue-maplibre\demo\src\pages\map\Index.vue
 -->
-<template>
-  <div class="page-demo-map" style="width: 100%; height: 100%; display: flex">
-    <VmMap
-      map-style="https://demotiles.maplibre.org/style.json"
-      :center="center"
-      :zoom="zoom"
-      container-id="mapContainer"
-      @click="onClick"
-      @ready="onMapReady"
-      @load="onLoad"
-    >
-      <VmControlNavigation></VmControlNavigation>
-      <VmControlTerrain source="terrainSource" position="top-right"></VmControlTerrain>
-      <template v-if="mapsReady['mapContainer']">
-        <WidgetDemo></WidgetDemo>
-        <VmLayerNative id="conferences" type="symbol" :source="source" :layout="layout"></VmLayerNative>
-        <VmLayerGltf :position="position" url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"></VmLayerGltf>
-      </template>
-    </VmMap>
-    <VmMap
-      map-style="https://demotiles.maplibre.org/style.json"
-      :center="center"
-      :zoom="zoom"
-      container-id="mapContainer1"
-      @click="onClick"
-      @ready="onMapReady"
-      @load="onLoad"
-    >
-      <VmControlTerrain source="terrainSource" position="top-right"></VmControlTerrain>
-      <template v-if="mapsReady['mapContainer1']">
-        <VmLayerNative id="conferences" type="symbol" :source="source" :layout="layout"></VmLayerNative>
-        <VmLayerGltf :position="position" url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"></VmLayerGltf>
-      </template>
-    </VmMap>
-
-    <VmControlNavigation map-container-id="mapContainer1"></VmControlNavigation>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref } from 'vue'
-import { VmMap, VmLayerGltf, VmLayerGltfProps, VmLayerNative, VmControlNavigation, VmControlTerrain } from '@vue-maplibre/components'
-import { GeoJSONSourceSpecification, LngLatLike, SymbolLayerSpecification } from 'maplibre-gl'
-import WidgetDemo from './WidgetDemo.vue'
+import type { VmLayerGltfProps } from '@vue-maplibre/components'
+import type { GeoJSONSourceSpecification, LngLatLike, SymbolLayerSpecification } from 'maplibre-gl'
 import { useVueMaplibre } from '@meteosci/vue-maplibre'
+import { VmMap } from '@vue-maplibre/components'
+import { ref } from 'vue'
 
-const center = ref<LngLatLike>([108, 32])
+const center = ref<LngLatLike>([11.39085, 47.27574])
 const position = ref<VmLayerGltfProps['position']>([108, 32, 0])
-const zoom = ref(18)
+const zoom = ref(12)
 const mapRef = ref(null)
 const mapReady = ref(false)
 const mapsReady = ref({})
@@ -197,29 +158,112 @@ const source: GeoJSONSourceSpecification = {
   }
 }
 
-const onClick = e => {
+const mapStyle = ref({
+  version: 8,
+  sources: {
+    osm: {
+      type: 'raster',
+      tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
+      tileSize: 256,
+      attribution: '&copy; OpenStreetMap Contributors',
+      maxzoom: 19
+    },
+    // Use a different source for terrain and hillshade layers, to improve render quality
+    terrainSource: {
+      type: 'raster-dem',
+      url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json',
+      tileSize: 256
+    },
+    hillshadeSource: {
+      type: 'raster-dem',
+      url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json',
+      tileSize: 256
+    }
+  },
+  layers: [
+    {
+      id: 'osm',
+      type: 'raster',
+      source: 'osm'
+    },
+    {
+      id: 'hills',
+      type: 'hillshade',
+      source: 'hillshadeSource',
+      layout: { visibility: 'visible' },
+      paint: { 'hillshade-shadow-color': '#473B24' }
+    }
+  ],
+  terrain: {
+    source: 'terrainSource',
+    exaggeration: 1
+  },
+  sky: {}
+})
+
+function onClick(e) {
   console.log(e)
 }
 
-const onLoad = e => {
+function onLoad(e) {
   console.log('onLoad', e)
 }
 
-const onMapReady = e => {
+function onMapReady(e) {
   console.log('onMapReady', e)
   const { map } = e
-  map.on('load', async () => {
-    const image = await map.loadImage('https://vue-maplibre.meteosci.com/images/osgeo-logo.png')
-    map.addImage('custom-marker', image.data)
-    // mapReady.value = true
-    mapsReady.value[e.vm.props.containerId as string] = true
-    // 强制刷新一次
-    map.resize()
-    mapReady.value = true
-  })
+  // map.on('load', async () => {
+  //   const image = await map.loadImage('https://vue-maplibre.meteosci.com/images/osgeo-logo.png')
+  //   map.addImage('custom-marker', image.data)
+  //   // mapReady.value = true
+  //   mapsReady.value[e.vm.props.containerId as string] = true
+  //   // 强制刷新一次
+  //   map.resize()
+  //   mapReady.value = true
+  // })
 }
 // window.zoom = zoom
 </script>
+
+<template>
+  <div class="page-demo-map" style="width: 100%; height: 100%; display: flex">
+    <VmMap
+      :map-style="mapStyle"
+      :center="center"
+      :zoom="zoom"
+      container-id="mapContainer"
+      :max-zoom="20"
+      @click="onClick"
+      @ready="onMapReady"
+      @load="onLoad"
+    >
+      <!-- <VmControlNavigation></VmControlNavigation> -->
+      <!-- <VmControlTerrain source="terrainSource" position="top-right"></VmControlTerrain> -->
+      <!-- <template v-if="mapsReady['mapContainer']">
+        <WidgetDemo></WidgetDemo>
+        <VmLayerNative id="conferences" type="symbol" :source="source" :layout="layout"></VmLayerNative>
+        <VmLayerGltf :position="position" url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"></VmLayerGltf>
+      </template> -->
+    </VmMap>
+    <!-- <VmMap
+      map-style="https://demotiles.maplibre.org/style.json"
+      :center="center"
+      :zoom="zoom"
+      container-id="mapContainer1"
+      @click="onClick"
+      @ready="onMapReady"
+      @load="onLoad"
+    >
+      <VmControlTerrain source="terrainSource" position="top-right"></VmControlTerrain>
+      <template v-if="mapsReady['mapContainer1']">
+        <VmLayerNative id="conferences" type="symbol" :source="source" :layout="layout"></VmLayerNative>
+        <VmLayerGltf :position="position" url="https://dps.cloudtao.com.cn/public/map/model/gltf/34M_17/34M_17.gltf"></VmLayerGltf>
+      </template>
+    </VmMap> -->
+
+    <!-- <VmControlNavigation map-container-id="mapContainer1"></VmControlNavigation> -->
+  </div>
+</template>
 
 <style lang="scss">
 .page-demo-map {

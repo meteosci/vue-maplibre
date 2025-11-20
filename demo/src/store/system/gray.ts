@@ -28,7 +28,7 @@ export const useGrayStore = defineStore('gray', {
     },
     /**
      * @description 设置灰度模式
-     * @param {Boolean} active active
+     * @param {boolean} active active
      */
     set(active) {
       this.active = active

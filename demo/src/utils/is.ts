@@ -1,6 +1,6 @@
-const hasMap = typeof Map === 'function',
-  hasSet = typeof Set === 'function',
-  hasArrayBuffer = typeof ArrayBuffer === 'function'
+const hasMap = typeof Map === 'function'
+const hasSet = typeof Set === 'function'
+const hasArrayBuffer = typeof ArrayBuffer === 'function'
 
 /**
  * 判断两个值是否深度相等。
@@ -34,7 +34,7 @@ export function isDeepEqual(a, b) {
       }
 
       // 逐个比较数组元素
-      for (i = length; i-- !== 0; ) {
+      for (i = length; i-- !== 0;) {
         if (isDeepEqual(a[i], b[i]) !== true) {
           return false
         }
@@ -95,7 +95,7 @@ export function isDeepEqual(a, b) {
       }
 
       // 逐个比较ArrayBuffer元素
-      for (i = length; i-- !== 0; ) {
+      for (i = length; i-- !== 0;) {
         if (a[i] !== b[i]) {
           return false
         }
@@ -129,7 +129,7 @@ export function isDeepEqual(a, b) {
     }
 
     // 逐个比较对象属性值
-    for (i = length; i-- !== 0; ) {
+    for (i = length; i-- !== 0;) {
       const key = keys[i]
       if (isDeepEqual(a[key], b[key]) !== true) {
         return false
@@ -180,5 +180,5 @@ export function isRegexp(v) {
  * @returns {boolean} 如果是有限的数字类型，则返回true，否则返回false。
  */
 export function isNumber(v) {
-  return typeof v === 'number' && isFinite(v)
+  return typeof v === 'number' && Number.isFinite(v)
 }

@@ -6,10 +6,10 @@
  * @LastEditTime: 2024-04-15 14:46:49
  * @FilePath: \vue-maplibre\demo\src\types\system.ts
  */
-import { themeLight } from '@src/config/theme'
+import type { themeLight } from '@src/config/theme'
 import type { InternalAxiosRequestConfig } from 'axios'
-import { QLoadingShowOptions } from 'quasar'
 import type { Emitter } from 'mitt'
+import type { QLoadingShowOptions } from 'quasar'
 
 export interface UserInfo {
   username: string
@@ -19,7 +19,7 @@ export interface UserInfo {
 
 export type ThemeOptions = typeof themeLight
 
-export type Menu = {
+export interface Menu {
   id: string
   component: string
   icon: string
@@ -39,7 +39,7 @@ export type Menu = {
   backBtnConfig?: BackBtnConfig
 }
 
-export type BackBtnConfig = {
+export interface BackBtnConfig {
   show: boolean
   className?: string
 }
@@ -51,7 +51,7 @@ export interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestCo
   customConfig?: CustomConfig
 }
 
-export type CustomConfig = {
+export interface CustomConfig {
   /**
    * 指定某接口是否需要加载全局 loading 窗口
    */
@@ -68,7 +68,7 @@ export type CustomConfig = {
 /**
  * 请求接口返回数据之一。
  */
-export type AxiosResponseData = {
+export interface AxiosResponseData {
   /**
    * 请求返回的数据
    */
@@ -87,7 +87,7 @@ export type AxiosResponseData = {
 /**
  * 全局（跨组件）通信的事件
  */
-export type CTMittEvents = {
+export interface CTMittEvents {
   //
 }
 

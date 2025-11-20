@@ -1,3 +1,8 @@
+/* eslint-disable node/prefer-global/process */
+import { resolve } from 'node:path'
+import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 /*
  * @Author: zouyaoji@https://github.com/zouyaoji
  * @Date: 2021-12-08 23:26:13
@@ -7,16 +12,12 @@
  * @FilePath: \maplibre-ext\demo\vite.config.mts
  */
 import { defineConfig, loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import { resolve } from 'path'
-import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 import commonjs from 'vite-plugin-commonjs'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line ts/no-require-imports
 const packageJson = require('./package.json')
 
-const htmlPlugin = () => {
+function htmlPlugin() {
   return {
     name: 'html-transform',
     transformIndexHtml(html) {
@@ -105,7 +106,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
       }
     },
     define: {
-      __APP_VERSION__: JSON.stringify(packageJson.version),
+      '__APP_VERSION__': JSON.stringify(packageJson.version),
       'process.env': {}
     }
   }

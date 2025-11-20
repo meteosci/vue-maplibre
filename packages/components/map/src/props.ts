@@ -1,4 +1,4 @@
-import {
+import type {
   AroundCenterOptions,
   CameraUpdateTransformFunction,
   ControlPosition,
@@ -9,9 +9,10 @@ import {
   LngLatLike,
   RequestTransformFunction,
   StyleSpecification,
+  TransformConstrainFunction,
   WebGLContextAttributesWithType
 } from 'maplibre-gl'
-import { PropType } from 'vue'
+import type { PropType } from 'vue'
 
 export default {
   /**
@@ -54,10 +55,6 @@ export default {
     type: Boolean,
     default: true
   },
-  // customAttribution: {
-  //   type: [String, Array] as PropType<string | string[]>,
-  //   default: 'MapLibre'
-  // },
   /**
    * If `true`, the MapLibre logo will be shown.
    * @defaultValue false
@@ -81,32 +78,16 @@ export default {
    * @defaultValue antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: false, failIfMajorPerformanceCaveat: false, desynchronized: false, contextType: 'webgl2withfallback'
    */
   canvasContextAttributes: {
-    type: Object as PropType<WebGLContextAttributesWithType>
+    type: Object as PropType<WebGLContextAttributesWithType>,
+    default: () => ({
+      antialias: false,
+      preserveDrawingBuffer: false,
+      powerPreference: 'high-performance',
+      failIfMajorPerformanceCaveat: false,
+      desynchronized: false,
+      contextType: undefined
+    })
   },
-  // /**
-  //  * If `true`, map creation will fail if the performance of MapLibre GL JS would be dramatically worse than expected.
-  //  * (i.e. a software renderer would be used).
-  //  * @defaultValue false
-  //  */
-  // failIfMajorPerformanceCaveat: {
-  //   type: Boolean,
-  //   default: false
-  // },
-  // /**
-  //  * If `true`, the map's canvas can be exported to a PNG using `map.getCanvas().toDataURL()`. This is `false` by default as a performance optimization.
-  //  * @defaultValue false
-  //  */
-  // preserveDrawingBuffer: {
-  //   type: Boolean,
-  //   default: false
-  // },
-  /**
-   * If `true`, the gl context will be created with MSAA antialiasing, which can be useful for antialiasing custom layers. This is `false` by default as a performance optimization.
-   */
-  // antialias: {
-  //   type: Boolean,
-  //   default: false
-  // },
   /**
    * If `false`, the map won't attempt to re-request tiles once they expire per their HTTP `cacheControl`/`expires` headers.
    * @defaultValue true
@@ -222,7 +203,8 @@ export default {
    * @defaultValue undefined
    */
   cooperativeGestures: {
-    type: [Boolean, Object] as PropType<boolean | GestureOptions>
+    type: [Boolean, Object] as PropType<boolean | GestureOptions>,
+    default: false
   },
   /**
    * If `true`, the map will automatically resize when the browser window resizes.
@@ -239,6 +221,14 @@ export default {
   center: {
     type: [Object, Array] as PropType<LngLatLike>,
     default: [0, 0]
+  },
+  /**
+   * The elevation of the initial geographical centerpoint of the map, in meters above sea level. If `elevation` is not specified in the constructor options, it will default to `0`.
+   * @defaultValue 0
+   */
+  elevation: {
+    type: Number,
+    default: 0
   },
   /**
    * The initial zoom level of the map. If `zoom` is not specified in the constructor options, MapLibre GL JS will look for it in the map's style object. If it is not specified in the style, either, it will default to `0`.
@@ -315,6 +305,14 @@ export default {
     type: Function as PropType<CameraUpdateTransformFunction>
   },
   /**
+   * A callback that overrides how the map constrains the viewport's lnglat and zoom to respect the longitude and latitude bounds.
+   * @see [Customize the map transform constrain](https://maplibre.org/maplibre-gl-js/docs/examples/customize-the-map-transform-constrain/)
+   * Expected to return an object containing center and zoom.
+   */
+  transformConstrain: {
+    type: Function as PropType<TransformConstrainFunction>
+  },
+  /**
    * A patch to apply to the default localization table for UI strings, e.g. control tooltips. The `locale` object maps namespaced UI string IDs to translated strings in the target language; see `src/ui/default_locale.js` for an example with all supported string IDs. The object may specify all UI strings (thereby adding support for a new translation) or only a subset of strings (thereby patching the default translation table).
    * @defaultValue null
    */
@@ -350,7 +348,8 @@ export default {
    * @defaultValue true
    */
   clickTolerance: {
-    type: Number
+    type: Number,
+    default: 3
   },
   /**
    * The initial bounds of the map. If `bounds` is specified, it overrides `center` and `zoom` constructor options.
@@ -394,6 +393,21 @@ export default {
     default: true
   },
   /**
+   * If `false`, the map's roll control with "drag to rotate" interaction will be disabled.
+   * @defaultValue false
+   */
+  rollEnabled: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * If `true`, gesture inertia (such as panning) is disabled. If not provided, gesture inertia defaults to the user's device settings.
+   * @defaultValue undefined
+   */
+  reduceMotion: {
+    type: Boolean
+  },
+  /**
    * The pixel ratio. The canvas' `width` attribute will be `container.clientWidth * pixelRatio` and its `height` attribute will be `container.clientHeight * pixelRatio`. Defaults to `devicePixelRatio` if not specified.
    */
   pixelRatio: {
@@ -418,8 +432,8 @@ export default {
   },
   /**
    * Determines whether to cancel, or retain, tiles from the current viewport which are still loading but which belong to a farther (smaller) zoom level than the current one.
-   * * If `true`, when zooming in, tiles which didn't manage to load for previous zoom levels will become canceled. This might save some computing resources for slower devices, but the map details might appear more abruptly at the end of the zoom.
-   * * If `false`, when zooming in, the previous zoom level(s) tiles will progressively appear, giving a smoother map details experience. However, more tiles will be rendered in a short period of time.
+   * If `true`, when zooming in, tiles which didn't manage to load for previous zoom levels will become canceled. This might save some computing resources for slower devices, but the map details might appear more abruptly at the end of the zoom.
+   * If `false`, when zooming in, the previous zoom level(s) tiles will progressively appear, giving a smoother map details experience. However, more tiles will be rendered in a short period of time.
    * @defaultValue true
    */
   cancelPendingTileRequestsWhileZooming: {
@@ -433,7 +447,22 @@ export default {
    * keep the camera above ground when pitch \> 90 degrees.
    */
   centerClampedToGround: {
-    type: Boolean
+    type: Boolean,
+    default: true
+  },
+  /**
+   * Allows overzooming by splitting vector tiles after max zoom.
+   * Defines the number of zoom level that will overscale from map's max zoom and below.
+   * For example if the map's max zoom is 20 and this is set to 3, the zoom levels of 20, 19 and 18 will be overscaled
+   * and the rest will be split.
+   * When undefined, all zoom levels after source's max zoom will be overscaled.
+   * This can help in reducing the size of the overscaling and improve performance in high zoom levels.
+   * The drawback is that it changes rendering for polygon centered labels and changes the results of query rendered features.
+   * @defaultValue undefined
+   * @experimental
+   */
+  experimentalZoomLevelsToOverscale: {
+    type: Number
   },
   /**
    * The HTML element's string `id`, which MapLibre GL JS will render the map.

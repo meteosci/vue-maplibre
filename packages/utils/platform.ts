@@ -8,22 +8,22 @@
  */
 export function platform() {
   const ua = globalThis.navigator.userAgent
-  const isWindowsPhone = /(?:Windows Phone)/.test(ua)
-  const isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone
-  const isAndroid = /(?:Android)/.test(ua)
-  const isFireFox = /(?:Firefox)/.test(ua)
-  const isChrome = /(?:Chrome|CriOS)/.test(ua)
-  const isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua))
-  const isPhone = /(?:iPhone)/.test(ua) && !isTablet
+  const isWindowsPhone = /Windows Phone/.test(ua)
+  const isSymbian = /SymbianOS/.test(ua) || isWindowsPhone
+  const isAndroid = /Android/.test(ua)
+  const isFireFox = /Firefox/.test(ua)
+  const isChrome = /Chrome|CriOS/.test(ua)
+  const isTablet = /iPad|PlayBook/.test(ua) || (isAndroid && !/Mobile/.test(ua)) || (isFireFox && /Tablet/.test(ua))
+  const isPhone = /iPhone/.test(ua) && !isTablet
   const isPc = !isPhone && !isAndroid && !isSymbian
   const isIOS = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
   return {
-    isTablet: isTablet,
-    isPhone: isPhone,
-    isAndroid: isAndroid,
-    isPc: isPc,
-    isFireFox: isFireFox,
-    isChrome: isChrome,
+    isTablet,
+    isPhone,
+    isAndroid,
+    isPc,
+    isFireFox,
+    isChrome,
     isIOS,
     hasTouch: 'ontouchstart' in globalThis || globalThis.navigator.maxTouchPoints > 0
   }
@@ -37,7 +37,7 @@ export function generateUUID() {
     }
     if (typeof crypto.getRandomValues === 'function' && typeof Uint8Array === 'function') {
       // https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
-      const callback = c => {
+      const callback = (c) => {
         const num = Number(c)
         return (num ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (num / 4)))).toString(16)
       }
@@ -46,12 +46,13 @@ export function generateUUID() {
   }
   let timestamp = new Date().getTime()
   let perforNow = (typeof performance !== 'undefined' && performance.now && performance.now() * 1000) || 0
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     let random = Math.random() * 16
     if (timestamp > 0) {
       random = (timestamp + random) % 16 | 0
       timestamp = Math.floor(timestamp / 16)
-    } else {
+    }
+    else {
       random = (perforNow + random) % 16 | 0
       perforNow = Math.floor(perforNow / 16)
     }

@@ -1,3 +1,7 @@
+import type { ThemeOptions } from '@src/types'
+import setting from '@src/config/setting.js'
+import { themeDark as dark, themeLight as light } from '@src/config/theme'
+import { get } from 'lodash'
 /*
  * @Author: tanghuang-liu 916650458@qq.com
  * @Date: 2022-05-13 17:06:55
@@ -7,11 +11,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import setting from '@src/config/setting.js'
-import { get } from 'lodash'
 import { useDBStore } from './db'
-import { themeLight as light, themeDark as dark } from '@src/config/theme'
-import { ThemeOptions } from '@src/types'
 
 let oldThemeName = ''
 export const useThemeStore = defineStore('theme', {
@@ -30,7 +30,7 @@ export const useThemeStore = defineStore('theme', {
   getters: {
     /**
      * @description 返回当前的主题信息 不是一个名字 而是当前激活主题的所有数据
-     * @param {Object} state state
+     * @param {object} state state
      */
     activeSetting(state) {
       return state.list.find(theme => theme.name === state.activeName)
@@ -39,26 +39,27 @@ export const useThemeStore = defineStore('theme', {
   actions: {
     /**
      * @description 将 vuex 中的主题应用到 dom
-     * @param {Object} state state
+     * @param {object} state state
      */
     dom() {
       const oldThemeClass = `theme-${oldThemeName}`
       const themeClass = `theme-${this.activeName}`
       if (document.body.className.includes(oldThemeClass)) {
         document.body.className = document.body.className.replace(oldThemeClass, themeClass)
-      } else {
-        document.body.className += ' ' + themeClass
+      }
+      else {
+        document.body.className += ` ${themeClass}`
       }
 
       const theme: ThemeOptions = this.themeConfig[this.activeName]
       const keys = Object.keys(theme.global)
-      keys.forEach(key => {
+      keys.forEach((key) => {
         document.body.style.setProperty(`--${key}`, theme.global[key])
       })
     },
     /**
      * @description 激活一个主题
-     * @param {String} themeValue 需要激活的主题名称
+     * @param {string} themeValue 需要激活的主题名称
      */
     async set(themeName) {
       oldThemeName = this.activeName
@@ -91,7 +92,8 @@ export const useThemeStore = defineStore('theme', {
       // 检查这个主题在主题列表里是否存在
       if (this.list.find(e => e.name === activeName)) {
         this.activeName = activeName
-      } else {
+      }
+      else {
         this.activeName = this.list[0].name
         // 持久化
         dbStore.set({

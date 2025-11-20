@@ -9,11 +9,11 @@
 export { default as enUS } from './lang/en-us'
 export { default as zhCN } from './lang/zh-cn'
 
-export type TranslatePair = {
+export interface TranslatePair {
   [key: string]: string | string[] | TranslatePair
 }
 
-export type Language = {
+export interface Language {
   name: string
   vm: TranslatePair
 }

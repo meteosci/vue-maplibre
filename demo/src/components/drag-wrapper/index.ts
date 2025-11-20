@@ -6,10 +6,11 @@
  * @LastEditTime: 2025-03-29 17:57:52
  * @FilePath: \vue-maplibre\demo\src\components\drag-wrapper\index.ts
  */
-import { defineComponent, onMounted, onBeforeUnmount, h, ref, getCurrentInstance } from 'vue'
-import interact from 'interactjs'
-import { hSlot } from '@vue-maplibre/utils/private/render'
+
 import type { ActionName, ActionProps } from '@interactjs/core/types'
+import { hSlot } from '@vue-maplibre/utils/private/render'
+import interact from 'interactjs'
+import { defineComponent, getCurrentInstance, h, onBeforeUnmount, onMounted, ref } from 'vue'
 
 export default defineComponent({
   name: 'DragWrapper',
@@ -26,11 +27,11 @@ export default defineComponent({
     const instance = getCurrentInstance()
 
     // methods
-    const dragMoveListener = event => {
+    const dragMoveListener = (event) => {
       const target = event.target
       // keep the dragged position in the data-x/data-y attributes
-      const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-      const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+      const x = (Number.parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+      const y = (Number.parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
       // translate the element
       const transformValue = `translate(${x}px, ${y}px)${props.centered ? ' translate(-50%, -50%)' : ''}`

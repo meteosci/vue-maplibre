@@ -16,7 +16,7 @@ export function title(titleText) {
 
 /**
  * @description 打开新页面
- * @param {String} url 地址
+ * @param {string} url 地址
  */
 export function open(url) {
   const a = document.createElement('a')
@@ -53,7 +53,8 @@ export function randomLenNum(len, date) {
   random = Math.ceil(Math.random() * 100000000000000)
     .toString()
     .substring(0, len || 4)
-  if (date) random = random + Date.now()
+  if (date)
+    random = random + Date.now()
   return random
 }
 
@@ -65,9 +66,9 @@ export function randomLenNum(len, date) {
  */
 export function hexToRgb(hex: string) {
   return {
-    red: parseInt('0x' + hex.slice(1, 3)),
-    green: parseInt('0x' + hex.slice(3, 5)),
-    blue: parseInt('0x' + hex.slice(5, 7))
+    red: Number.parseInt(`0x${hex.slice(1, 3)}`),
+    green: Number.parseInt(`0x${hex.slice(3, 5)}`),
+    blue: Number.parseInt(`0x${hex.slice(5, 7)}`)
   }
 }
 

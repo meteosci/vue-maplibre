@@ -8,5 +8,6 @@
  */
 // lint-staged.config.js
 export default {
-  'packages/**/*.{ts,vue,js,tsx,jsx,json}': ['pnpm lint:eslint', 'pnpm lint:prettier']
+  'packages/**/*.{ts,vue,js,tsx,jsx}': ['eslint --fix'],
+  'packages/**/*.{json,md,css,scss,less,html}': ['eslint --fix']
 }

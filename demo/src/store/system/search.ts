@@ -8,6 +8,7 @@
  */
 import setting from '@src/config/setting.js'
 import { acceptHMRUpdate, defineStore } from 'pinia'
+
 export const useSearchStore = defineStore('search', {
   state: () => {
     return {
@@ -25,31 +26,32 @@ export const useSearchStore = defineStore('search', {
   actions: {
     /**
      * @description 切换激活状态
-     * @param {Object} state state
+     * @param {object} state state
      */
     toggle() {
       this.active = !this.active
     },
     /**
      * @description 设置激活模式
-     * @param {Object} state state
-     * @param {Boolean} active active
+     * @param {object} state state
+     * @param {boolean} active active
      */
     set(active: boolean) {
       this.active = active
     },
     /**
      * @description 初始化
-     * @param {Object} state state
+     * @param {object} state state
      * @param {Array} menu menu
      */
     init(menu) {
       const pool = []
       const push = function (menu, titlePrefix = []) {
-        menu.forEach(m => {
+        menu.forEach((m) => {
           if (m.children) {
             push(m.children, [...titlePrefix, m.title])
-          } else {
+          }
+          else {
             pool.push({
               ...m,
               fullTitle: [...titlePrefix, m.title].join(' / ')

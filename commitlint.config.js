@@ -28,8 +28,8 @@ export default {
         'revert', // 回退/回滚 撤销修改
         'ci', // 修改 CI 配置、脚本
         'build', // 构建流程、外部依赖变更（如升级 npm 包、修改 webpack/vite 配置等）
-        'workflow', //工作流改进
-        'ci', //持续集成
+        'workflow', // 工作流改进
+        'ci', // 持续集成
         'types', // 类型定义文件更改
         'wip', // 开发中
         'release' // 发布
