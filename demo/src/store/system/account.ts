@@ -37,7 +37,7 @@ export const useAccountStore = defineStore('account', {
       // token 代表用户当前登录状态 建议在网络请求中携带 token
       // 整个系统依赖这两个数据进行校验和存储
       const loginRes = (await api.system.login(data)).data
-      webStorage.setLocalStorage('token', loginRes.accessToken)
+      webStorage.setLocalStorage('token', loginRes?.token ?? loginRes?.accessToken)
       webStorage.setLocalStorage('uuid', loginRes.id)
       const userStore = useUserStore()
       userStore.set({

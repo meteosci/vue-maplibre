@@ -55,7 +55,9 @@ export default ({
         username: data.username,
         password: data.password
       })
-      return user ? tools.responseSuccess(assign({}, user, { accessToken: 'f5befe1a-962c-4cdd-bf45-77ce306dbbce' })) : tools.responseError({}, '账号或密码不正确')
+      return user
+        ? [200, tools.responseSuccess(assign({}, user, { token: 'f5befe1a-962c-4cdd-bf45-77ce306dbbce' }))]
+        : [401, tools.responseError({}, '账号或密码不正确')]
     })
     // 接口请求
     return requestForMock({
@@ -71,7 +73,7 @@ export default ({
   getUserInfo() {
     // if (import.meta.env.VITE_MOCK_ENABLED !== 'true') {
     //   return request({
-    //     url: '/user/info',
+    //     url: '/api/user/info',
     //     method: 'get'
     //   })
     // }
@@ -82,13 +84,13 @@ export default ({
         id: uuid
       })
       if (user) {
-        return tools.responseSuccess(assign({}, user))
+        return [200, tools.responseSuccess(assign({}, user))]
       }
       else {
         webStorage.removeLocalStorage('token')
         webStorage.removeLocalStorage('uuid')
         router.push('/login')
-        return tools.responseError({}, '未授权, 请登录!')
+        return [401, tools.responseError({}, '未授权, 请登录!')]
       }
     })
     // 接口请求
@@ -111,7 +113,7 @@ export default ({
     // }
     // 模拟数据
     mock.onAny('/api/menu/accessible').reply((config) => {
-      return tools.responseSuccess(menus)
+      return [200, tools.responseSuccess(menus)]
     })
     // 接口请求
     return requestForMock({

@@ -12,7 +12,6 @@ import Inspect from 'vite-plugin-inspect'
 import mkcert from 'vite-plugin-mkcert'
 import { loadEnv } from 'vitepress'
 import { groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-
 import { MarkdownTransform } from '../plugins/markdown-transform'
 
 const { docPackage, vmPackage, getPackageDependencies, projRoot } = buildPkg
@@ -58,7 +57,21 @@ const alias: AliasOptions = [
 
 export function getViteConfig({ mode }: { mode: string }) {
   const env = loadEnv(mode, process.cwd(), '')
+
+  const isBuild = mode === 'production'
+
   return {
+    ssr: {
+      noExternal: ['maplibre-gl', '@meteosci/vue-maplibre']
+    },
+    build: isBuild
+      ? {
+          commonjsOptions: {
+            transformMixedEsModules: true
+          }
+        }
+      : {},
+
     esbuild: {
       target: 'es2022'
     },

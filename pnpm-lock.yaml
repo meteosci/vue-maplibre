@@ -452,6 +452,9 @@ importers:
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
+      maplibre-gl:
+        specifier: ^5.13.0
+        version: 5.13.0
       markdown-it-container:
         specifier: ^4.0.0
         version: 4.0.0

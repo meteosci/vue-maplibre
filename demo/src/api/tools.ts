@@ -33,7 +33,7 @@ export function parse(jsonString = '{}', defaultValue = {}) {
  * @param {number} code 状态码
  */
 export function response(data = {}, msg = '', code = 0) {
-  return [200, { code, msg, data }]
+  return { code, msg, data }
 }
 
 /**

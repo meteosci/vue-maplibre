@@ -95,5 +95,5 @@ export interface CTMittEvents {
  * 全局通信事件提供者
  */
 export interface CTEventProvider {
-  mitt: Emitter<CTMittEvents>
+  mitt: Emitter<any>
 }

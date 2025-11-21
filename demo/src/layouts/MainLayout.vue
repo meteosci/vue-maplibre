@@ -32,7 +32,7 @@ const themeStore = store.system.useThemeStore()
 
 const drawer = ref(false)
 
-const ctMitt: Emitter<CTMittEvents> = mitt()
+const ctMitt: Emitter<any> = mitt()
 
 // 用户登录后从本地数据库加载一系列的设置
 store.system.useAccountStore().load()

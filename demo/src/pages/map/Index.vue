@@ -8,7 +8,7 @@
 -->
 <script setup lang="ts">
 import type { VmLayerGltfProps } from '@vue-maplibre/components'
-import type { GeoJSONSourceSpecification, LngLatLike, SymbolLayerSpecification } from 'maplibre-gl'
+import type { GeoJSONSourceSpecification, LngLatLike, StyleSpecification, SymbolLayerSpecification } from 'maplibre-gl'
 import { useVueMaplibre } from '@meteosci/vue-maplibre'
 import { VmMap } from '@vue-maplibre/components'
 import { ref } from 'vue'
@@ -158,7 +158,7 @@ const source: GeoJSONSourceSpecification = {
   }
 }
 
-const mapStyle = ref({
+const mapStyle = ref<StyleSpecification>({
   version: 8,
   sources: {
     osm: {
