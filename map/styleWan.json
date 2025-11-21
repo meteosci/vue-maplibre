@@ -1,0 +1,618 @@
+{
+  "version": 8,
+  "name": "OSM Liberty",
+  "metadata": {
+    "maputnik:license": "https://github.com/maputnik/osm-liberty/blob/gh-pages/LICENSE.md",
+    "maputnik:renderer": "mbgljs",
+    "openmaptiles:version": "3.x"
+  },
+  "sources": {
+    "cloudtao_china": {
+      "type": "vector",
+      "tiles": [
+        "https://vue-maplibre.meteosci.com/map/tiles/vector/china/{z}/{x}/{y}.mvt"
+      ],
+      "minzoom": 0,
+      "maxzoom": 5
+    },
+    "cloudtao_world": {
+      "type": "vector",
+      "tiles": [
+        "https://vue-maplibre.meteosci.com/map/tiles/vector/world/{z}/{x}/{y}.mvt"
+      ],
+      "minzoom": 0,
+      "maxzoom": 4
+    }
+  },
+  "sprite": "https://vue-maplibre.meteosci.com/font/sprite/sprite",
+  "glyphs": "https://vue-maplibre.meteosci.com/font/glyphs/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "陆地面",
+      "type": "background",
+      "paint": {
+        "background-color": "#EAEAEA"
+      },
+      "layout": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "海洋",
+      "type": "fill",
+      "source": "cloudtao_world",
+      "source-layer": "water",
+      "paint": {
+        "fill-color": "#ADC8E8"
+      },
+      "layout": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "关注区",
+      "type": "fill",
+      "source": "cloudtao_china",
+      "source-layer": "admin",
+      "paint": {
+        "fill-color": "#fff"
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "adcode",
+          "510000"
+        ]
+      ],
+      "minzoom": 3
+    },
+    {
+      "id": "关注区阴影",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "admin",
+      "paint": {
+        "line-color": "#818185",
+        "line-width": 3
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "adcode",
+          "510000"
+        ]
+      ],
+      "minzoom": 3,
+      "layout": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "国界线",
+      "type": "line",
+      "source": "cloudtao_world",
+      "source-layer": "admin",
+      "paint": {
+        "line-color": "rgba(198, 198, 198, 1)",
+        "line-width": 1,
+        "line-opacity": 0
+      },
+      "minzoom": 0,
+      "maxzoom": 7,
+      "layout": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "区县界线",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "admin",
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "3"
+        ],
+        [
+          "==",
+          "province",
+          "四川省"
+        ]
+      ],
+      "paint": {
+        "line-color": "#B0B0B0",
+        "line-width": 0.8
+      },
+      "minzoom": 6,
+      "layout": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "区县界线外省",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "admin",
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "3"
+        ],
+        [
+          "!=",
+          "province",
+          "四川省"
+        ]
+      ],
+      "paint": {
+        "line-color": "#B0B0B0",
+        "line-width": 0.8
+      },
+      "minzoom": 7,
+      "layout": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "市界线",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "admin",
+      "minzoom": 0,
+      "paint": {
+        "line-width": 0.9,
+        "line-color": "#505050"
+      },
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "2"
+        ],
+        [
+          "==",
+          "province",
+          "四川省"
+        ]
+      ]
+    },
+    {
+      "id": "市界线外省",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "admin",
+      "minzoom": 6,
+      "paint": {
+        "line-width": 0.9,
+        "line-color": "#505050"
+      },
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "2"
+        ],
+        [
+          "!=",
+          "province",
+          "四川省"
+        ]
+      ]
+    },
+    {
+      "id": "省界线",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "admin",
+      "paint": {
+        "line-color": "#A97D7D",
+        "line-width": 1.2
+      },
+      "minzoom": 0,
+      "maxzoom": 24,
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "河流线-1级",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "waterway",
+      "filter": [
+        "==",
+        "fclass",
+        "1"
+      ],
+      "paint": {
+        "line-color": "#78BCED",
+        "line-width": 1.5
+      },
+      "layout": {
+        "visibility": "visible"
+      },
+      "minzoom": 0,
+      "maxzoom": 24
+    },
+    {
+      "id": "河流线-2级",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "waterway",
+      "filter": [
+        "==",
+        "fclass",
+        "2"
+      ],
+      "paint": {
+        "line-color": "#78BCED",
+        "line-width": 1
+      },
+      "layout": {
+        "visibility": "visible"
+      },
+      "minzoom": 5,
+      "maxzoom": 24
+    },
+    {
+      "id": "河流线-3级",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "waterway",
+      "filter": [
+        "==",
+        "fclass",
+        "3"
+      ],
+      "paint": {
+        "line-color": "#78BCED",
+        "line-width": 0.8
+      },
+      "layout": {
+        "visibility": "visible"
+      },
+      "minzoom": 7,
+      "maxzoom": 24
+    },
+    {
+      "id": "河流线-4级",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "waterway",
+      "filter": [
+        "==",
+        "fclass",
+        "4"
+      ],
+      "paint": {
+        "line-color": "#78BCED",
+        "line-width": 0.5
+      },
+      "layout": {
+        "visibility": "visible"
+      },
+      "minzoom": 9,
+      "maxzoom": 24
+    },
+    {
+      "id": "中国国境线",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "boundary",
+      "minzoom": 1,
+      "maxzoom": 6,
+      "paint": {
+        "line-color": "#000000",
+        "line-width": 1
+      },
+      "layout": {
+        "visibility": "visible"
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "关注区界线",
+      "type": "line",
+      "source": "cloudtao_china",
+      "source-layer": "admin",
+      "paint": {
+        "line-color": "#3441A4",
+        "line-width": 3,
+        "line-blur": 3
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "adcode",
+          "510000"
+        ]
+      ],
+      "minzoom": 3,
+      "layout": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "国家名",
+      "type": "symbol",
+      "source": "cloudtao_world",
+      "source-layer": "place_label",
+      "layout": {
+        "text-field": "{name}",
+        "text-size": [
+          "interpolate",
+          [
+            "cubic-bezier",
+            0.2,
+            0,
+            0.7,
+            1
+          ],
+          [
+            "zoom"
+          ],
+          1,
+          [
+            "step",
+            [
+              "get",
+              "symbolrank"
+            ],
+            11,
+            4,
+            9,
+            5,
+            8
+          ],
+          9,
+          [
+            "step",
+            [
+              "get",
+              "symbolrank"
+            ],
+            22,
+            4,
+            19,
+            5,
+            17
+          ]
+        ],
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "visibility": "none"
+      },
+      "paint": {
+        "text-halo-width": 2,
+        "text-halo-color": "rgba(255,255,255,0.75)"
+      },
+      "maxzoom": 5
+    },
+    {
+      "id": "省会名",
+      "type": "symbol",
+      "source": "cloudtao_china",
+      "source-layer": "place_label",
+      "layout": {
+        "text-field": "{name}",
+        "text-size": [
+          "interpolate",
+          [
+            "cubic-bezier",
+            0.85,
+            0.7,
+            0.65,
+            1
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          [
+            "step",
+            [
+              "get",
+              "symbolrank"
+            ],
+            10,
+            6,
+            9.5,
+            7,
+            9
+          ],
+          9,
+          [
+            "step",
+            [
+              "get",
+              "symbolrank"
+            ],
+            21,
+            6,
+            16,
+            7,
+            13
+          ]
+        ]
+      },
+      "minzoom": 3,
+      "maxzoom": 8,
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "#FFFFFF",
+        "text-halo-width": 1
+      },
+      "filter": [
+        "all",
+        [
+          "in",
+          "fclass",
+          "capital",
+          "sar"
+        ]
+      ]
+    },
+    {
+      "id": "天地图_矢量中文注记",
+      "type": "raster",
+      "source": "cva_w",
+      "layout": {
+        "visibility": "none"
+      }
+    },
+    {
+      "id": "地级市名",
+      "type": "symbol",
+      "source": "cloudtao_china",
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "city"
+        ],
+        [
+          "==",
+          "province",
+          "四川省"
+        ]
+      ],
+      "source-layer": "place_label",
+      "layout": {
+        "text-field": "{name}",
+        "text-line-height": 1.1,
+        "text-size": 15
+      },
+      "minzoom": 5,
+      "maxzoom": 10,
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "#FFFFFF",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "地级市名外省",
+      "type": "symbol",
+      "source": "cloudtao_china",
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "city"
+        ],
+        [
+          "!=",
+          "province",
+          "四川省"
+        ]
+      ],
+      "source-layer": "place_label",
+      "layout": {
+        "text-field": "{name}",
+        "text-line-height": 1.1,
+        "text-size": 15,
+        "text-allow-overlap": true,
+        "text-ignore-placement": true
+      },
+      "minzoom": 6.5,
+      "maxzoom": 10,
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "#FFFFFF",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "区县名",
+      "type": "symbol",
+      "source": "cloudtao_china",
+      "source-layer": "place_label",
+      "layout": {
+        "text-field": "{name}",
+        "text-size": 13
+      },
+      "minzoom": 6.5,
+      "maxzoom": 18,
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "#FFFFFF",
+        "text-halo-width": 1
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "district"
+        ],
+        [
+          "==",
+          "province",
+          "四川省"
+        ]
+      ]
+    },
+    {
+      "id": "区县名外省",
+      "type": "symbol",
+      "source": "cloudtao_china",
+      "source-layer": "place_label",
+      "layout": {
+        "text-field": "{name}",
+        "text-size": 13
+      },
+      "minzoom": 7,
+      "maxzoom": 18,
+      "paint": {
+        "text-color": "#000000",
+        "text-halo-color": "#FFFFFF",
+        "text-halo-width": 1
+      },
+      "filter": [
+        "all",
+        [
+          "==",
+          "fclass",
+          "district"
+        ],
+        [
+          "!=",
+          "province",
+          "四川省"
+        ]
+      ]
+    }
+  ]
+}
