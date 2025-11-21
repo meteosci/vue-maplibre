@@ -11,8 +11,8 @@
       "activeMatch": "/component/"
     },
     {
-      "text": "Resource",
-      "link": "/resource/index",
+      "text": "Discussions",
+      "link": "https://github.com/meteosci/vue-maplibre/discussions",
       "activeMatch": "/resource/"
     }
   ],
@@ -28,8 +28,8 @@
       "activeMatch": "/component/"
     },
     {
-      "text": "资源",
-      "link": "/resource/index",
+      "text": "讨论",
+      "link": "https://github.com/meteosci/vue-maplibre/discussions",
       "activeMatch": "/resource/"
     }
   ]

@@ -10,13 +10,15 @@
     "strict": true,
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "lib": ["WebWorker"],
+    "lib": ["ESNext", "DOM", "WebWorker"],
     "paths": {
       "@meteosci/vue-maplibre": ["../packages/vue-maplibre"],
-      "~/*": ["./.vitepress/vitepress/*"]
+      "~/*": ["./.vitepress/vitepress/*"],
+      "vue": ["./node_modules/vue"]
     },
-    "types": ["../typings/components"],
-    "jsx": "preserve"
+    "types": ["unplugin-icons/types/vue", "element-plus/global"],
+    "jsx": "preserve",
+    "jsxImportSource": "vue"
   },
   "include": ["**/*", ".vitepress/**/*", "../typings/global.d.ts"],
   "exclude": ["node_modules"]

@@ -6,23 +6,9 @@
  * @LastEditTime: 2024-06-18 13:59:05
  * @FilePath: \vue-maplibre\docs\examples\layer-gltf\usage.vue
 -->
-<template>
-  <div class="map-demo-container">
-    <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom" :pitch="60" :bearing="-28.5" @ready="onMapReady">
-      <VmLayerGltf
-        v-if="isMapReady"
-        :position="[148.9819, -35.39847, 0]"
-        url="https://vue-maplibre.meteosci.com/model/gltf/34M_17/34M_17.gltf"
-      ></VmLayerGltf>
-
-      <VmLayerNative v-if="isMapReady" id="openstreetmap-tiles" type="raster" :source="source"></VmLayerNative>
-    </VmMap>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
-import { LngLatLike, Map, SourceSpecification } from 'maplibre-gl'
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type { LngLatLike, Map, SourceSpecification } from 'maplibre-gl'
 import { ref } from 'vue'
 
 const center = ref<LngLatLike>([148.9819, -35.3981])
@@ -38,7 +24,7 @@ const source: SourceSpecification = {
 }
 let _map: Map
 
-const onMapReady = (e: VmReadyObject) => {
+function onMapReady(e: VmReadyObject) {
   const { map } = e
 
   map.on('load', () => {
@@ -48,3 +34,17 @@ const onMapReady = (e: VmReadyObject) => {
   })
 }
 </script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom" :pitch="60" :bearing="-28.5" @ready="onMapReady">
+      <VmLayerGltf
+        v-if="isMapReady"
+        :position="[148.9819, -35.39847, 0]"
+        url="https://vue-maplibre.meteosci.com/model/gltf/34M_17/34M_17.gltf"
+      />
+
+      <VmLayerNative v-if="isMapReady" id="openstreetmap-tiles" type="raster" :source="source" />
+    </VmMap>
+  </div>
+</template>

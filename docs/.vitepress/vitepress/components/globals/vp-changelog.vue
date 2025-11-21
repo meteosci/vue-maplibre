@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import axios from 'axios'
-import VPLink from '../common/vp-link.vue'
-import VPMarkdown from '../common/vp-markdown.vue'
+import changelogLocale from '../../../i18n/component/changelog.json'
 import { useLang } from '../../composables/lang'
 import { useLocale } from '../../composables/locale'
-import changelogLocale from '../../../i18n/component/changelog.json'
+import VPLink from '../common/vp-link.vue'
+import VPMarkdown from '../common/vp-markdown.vue'
 
 interface Release {
   id: number
@@ -18,24 +17,32 @@ const currentRelease = ref()
 const changelog = useLocale(changelogLocale)
 const lang = useLang()
 
-const onVersionChange = (val) => {
+function onVersionChange(val) {
   const _releases = releases.value
-  currentRelease.value = _releases[_releases.findIndex((r) => r.name === val)]
+  currentRelease.value = _releases[_releases.findIndex(r => r.name === val)]
 }
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get<Release[]>(
+    const response = await fetch(
       'https://api.github.com/repos/meteosci/vue-maplibre/releases'
     )
-
-    releases.value = data
-    currentRelease.value = data[0]
-  } catch {
+    const data: Release[] = await response.json()
+    if (response.ok) {
+      releases.value = data
+      currentRelease.value = data[0]
+    }
+    else {
+      releases.value = []
+      currentRelease.value = undefined
+    }
+  }
+  catch {
     releases.value = []
     currentRelease.value = undefined
     // do something
-  } finally {
+  }
+  finally {
     loading.value = false
   }
 })
@@ -48,7 +55,6 @@ onMounted(async () => {
         <div class="changelog-versions">
           <p>{{ changelog['select-version'] }}:</p>
           <ElSelect
-            v-if="releases.length"
             :model-value="currentRelease.name"
             :placeholder="changelog['select-version']"
             style="width: 200px"

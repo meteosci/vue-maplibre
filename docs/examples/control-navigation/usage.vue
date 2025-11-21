@@ -6,20 +6,22 @@
  * @LastEditTime: 2025-03-28 21:54:54
  * @FilePath: \vue-maplibre\docs\examples\control-navigation\usage.vue
 -->
-<template>
-  <div class="map-demo-container">
-    <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom">
-      <VmControlNavigation position="top-left">asd</VmControlNavigation>
-      <!-- <VmControlNavigation position="top-right"></VmControlNavigation>
-      <VmControlNavigation position="bottom-left"></VmControlNavigation> -->
-    </VmMap>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { LngLatLike } from 'maplibre-gl'
+import type { LngLatLike } from 'maplibre-gl'
 import { ref } from 'vue'
 
 const center = ref<LngLatLike>([108, 32])
 const zoom = ref(1)
 </script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom">
+      <VmControlNavigation position="top-left">
+        asd
+      </VmControlNavigation>
+      <!-- <VmControlNavigation position="top-right"></VmControlNavigation>
+      <VmControlNavigation position="bottom-left"></VmControlNavigation> -->
+    </VmMap>
+  </div>
+</template>

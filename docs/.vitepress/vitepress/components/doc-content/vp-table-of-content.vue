@@ -1,57 +1,47 @@
-<!--
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-06-14 11:12:54
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 09:36:29
- * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\doc-content\vp-table-of-content.vue
--->
 <script setup lang="ts">
-import { computed } from 'vue'
-import MarkdownIt from 'markdown-it'
-import { useToc } from '../../composables/use-toc'
-
+import { computed, ref } from 'vue'
 import sponsorLocale from '../../../i18n/component/sponsor.json'
 import { useLang } from '../../composables/lang'
-import SponsorsButton from '../sponsors/sponsors-button.vue'
+import { useToc } from '../../composables/use-toc'
 import SponsorRightBigLogoList from '../sponsors/right-big-logo-list.vue'
-import SponsorRightTextList from '../sponsors/right-richtext-list.vue'
 import SponsorRightLogoSmallList from '../sponsors/right-logo-small-list.vue'
-import tag from '../../../plugins/tag'
+import SponsorRightTextList from '../sponsors/right-richtext-list.vue'
+import SponsorsButton from '../sponsors/sponsors-button.vue'
 // import SponsorLarge from '../vp-sponsor-large.vue'
 
-const localMd = MarkdownIt().use(tag)
 const headers = useToc()
 const lang = useLang()
 const sponsor = computed(() => sponsorLocale[lang.value])
+const removeTag = (str: string) => str.replace(/<span.*<\/span>/g, '')
+const container = ref()
 </script>
 
 <template>
   <aside ref="container" class="toc-wrapper">
     <nav class="toc-content">
-      <h3 class="toc-content__heading">Contents</h3>
-      <ClientOnly>
-        <el-anchor :offset="70" :bound="120">
-          <el-anchor-link
-            v-for="{ link, text, children } in headers"
-            :key="link"
-            :href="link"
-            :title="text"
-          >
-            <div v-html="localMd.render(text)" />
-            <template v-if="children" #sub-link>
-              <el-anchor-link
-                v-for="{ link: childLink, text: childText } in children"
-                :key="childLink"
-                :href="childLink"
-                :title="text"
-              >
-                <div v-html="localMd.render(childText)" />
-              </el-anchor-link>
-            </template>
-          </el-anchor-link>
-        </el-anchor>
-      </ClientOnly>
+      <h3 class="toc-content__heading">
+        Contents
+      </h3>
+      <el-anchor :offset="70" :bound="120">
+        <el-anchor-link
+          v-for="{ link, text, children } in headers"
+          :key="link"
+          :href="link"
+          :title="text"
+        >
+          <div :title="removeTag(text)" v-html="text" />
+          <template v-if="children" #sub-link>
+            <el-anchor-link
+              v-for="{ link: childLink, text: childText } in children"
+              :key="childLink"
+              :href="childLink"
+              :title="text"
+            >
+              <div :title="removeTag(childText)" v-html="childText" />
+            </el-anchor-link>
+          </template>
+        </el-anchor-link>
+      </el-anchor>
       <!-- <SponsorLarge
         class="mt-8 toc-ads flex flex-col"
         item-style="width: 180px; height: 55px;"
@@ -59,17 +49,26 @@ const sponsor = computed(() => sponsorLocale[lang.value])
       <p class="text-14px font-300 color-$text-color-secondary">
         {{ sponsor.sponsoredBy }}
       </p>
-      <sponsors-button class="sponsors-button mt-4 w-100%" />
-      <sponsor-right-big-logo-list />
-      <sponsor-right-logo-small-list />
-      <sponsor-right-text-list />
+      <SponsorsButton class="sponsors-button mt-4 w-100%" />
+      <SponsorRightBigLogoList />
+      <SponsorRightLogoSmallList />
+      <SponsorRightTextList />
     </nav>
+    <div class="toc-content-mask" />
   </aside>
 </template>
+
 <style scoped lang="scss">
-.sponsors-button::v-deep {
-  button {
+.sponsors-button {
+  :deep(button) {
     width: 100%;
+  }
+}
+.el-anchor__item {
+  .el-anchor__link > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

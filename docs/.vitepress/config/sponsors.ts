@@ -1,53 +1,60 @@
-/*
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-06-08 19:56:02
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-13 22:14:38
- * @FilePath: \vue-maplibre\docs\.vitepress\config\sponsors.ts
- */
-export const rightRichTextSponsors = []
+export interface Sponsor {
+  url: string
+  name_cn?: string
+  name: string
+  slogan_cn?: string
+  slogan: string
+  img: string
+  isDark?: boolean
+  imgL?: string
+  slogan_index?: string
+  banner_img?: string
+  className?: string
+}
 
-export const rightBigLogoSponsors = [
-  {
-    name: '广告位',
-    img: '/images/sponsors/figure-2.png',
-    imgL: '/images/sponsors/figure-2.png',
-    url: 'https://zouyaoji.top/vue-cesium/',
-    slogan: 'Waiting for a vacant position',
-    slogan_cn: '虚位以待',
-    slogan_index: '虚位以待',
-  },
-]
+export const rightRichTextSponsors: Sponsor[] = []
 
-export const rightLogoSmallSponsors = [
+export const rightBigLogoSponsors: Sponsor[] = [
   {
-    name: '广告位',
-    img: '/images/sponsors/figure-2.png',
-    imgL: '/images/sponsors/figure-2.png',
+    name: 'Vue for Cesium',
+    img: '/images/sponsors/vue-cesium-logo.svg',
+    imgL: '/images/sponsors/vue-cesium-logo.svg',
     url: 'https://zouyaoji.top/vue-cesium/',
-    slogan: 'Waiting for a vacant position',
-    slogan_cn: '虚位以待',
+    slogan: 'A Vue3 based component library of MaplibreGL for developers.',
+    slogan_cn: '基于 Vue 3，面向开发者的 MaplibreGL 组件库。',
+    slogan_index: 'Vue for Cesium'
   }
 ]
 
-export const leftCustomImgSponsors = [
+export const rightLogoSmallSponsors: Sponsor[] = [
+  // {
+  //   name: 'Vue for Cesium',
+  //   img: '/images/sponsors/vue-cesium-logo.svg',
+  //   imgL: '/images/sponsors/vue-cesium-logo.svg',
+  //   url: 'https://zouyaoji.top/vue-cesium/',
+  //   slogan: 'A Vue3 based component library of MaplibreGL for developers.',
+  //   slogan_cn: '基于 Vue 3，面向开发者的 MaplibreGL 组件库。'
+  // }
+]
+
+export const leftCustomImgSponsors: Sponsor[] = [
   {
-    name: '广告位',
-    img: '/images/sponsors/figure-2.png',
+    name: 'Vue for Cesium',
+    img: '/images/sponsors/vue-cesium-logo.svg',
+    imgL: '/images/sponsors/vue-cesium-logo.svg',
     url: 'https://zouyaoji.top/vue-cesium/',
-    slogan: 'Waiting for a vacant position',
-    slogan_cn: '虚位以待',
-    banner_img: '/images/sponsors/figure-2.png',
+    banner_img: '/images/sponsors/vue-cesium-logo-normal.svg',
+    slogan: 'A Vue3 based component library of MaplibreGL for developers.',
+    slogan_cn: '基于 Vue 3，面向开发者的 MaplibreGL 组件库。'
   }
 ]
 
 export const platinumSponsors = [
   ...leftCustomImgSponsors,
   ...rightBigLogoSponsors,
-  ...rightRichTextSponsors,
+  ...rightRichTextSponsors
 ]
 
-export const leftLogoSponsors = []
+export const leftLogoSponsors: Sponsor[] = []
 
 export const goldSponsors = [...rightLogoSmallSponsors, ...leftLogoSponsors]

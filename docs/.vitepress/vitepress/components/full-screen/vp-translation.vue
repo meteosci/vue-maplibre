@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useToggle } from '@vueuse/core'
-import VPLink from '../common/vp-link.vue'
 import { useTranslation } from '../../composables/translation'
+// import VPLink from '../common/vp-link.vue'
 import ExpandIcon from '../icons/expand.vue'
 
 const emit = defineEmits(['close'])
@@ -10,7 +10,7 @@ const { languageMap, langs, lang, switchLang, locale } = useTranslation()
 
 const [show, toggle] = useToggle()
 
-const onSwitchLang = (lang: string) => {
+function onSwitchLang(lang: string) {
   switchLang(lang)
   emit('close')
 }

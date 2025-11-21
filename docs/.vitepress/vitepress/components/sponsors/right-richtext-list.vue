@@ -1,13 +1,17 @@
 <script setup lang="ts">
+import type { Sponsor } from '../../../config/sponsors'
+import { withBase } from 'vitepress'
 import { computed } from 'vue'
-import { rightRichTextSponsors } from '../../../config/sponsors'
 import { sendEvent } from '../../../config/analytics'
-import { useLang } from '../../composables/lang'
+import { rightRichTextSponsors } from '../../../config/sponsors'
 import { isDark } from '../../composables/dark'
+
+import { useLang } from '../../composables/lang'
+
 const lang = useLang()
 const langZhCN = 'zh-CN'
 const isZhCn = computed(() => lang.value === langZhCN)
-const onItemClick = (item: any) => {
+function onItemClick(item: Sponsor) {
   sendEvent('sp_click', item.name, 'right_richtext_list')
 }
 </script>
@@ -17,36 +21,33 @@ const onItemClick = (item: any) => {
     <a
       v-for="item in rightRichTextSponsors"
       :key="item.name"
-      :href="item.url"
+      :href="withBase(item.url)"
       :title="`${item.name_cn || item.name} - ${item.slogan_cn || item.slogan}`"
       target="_blank"
       @click="onItemClick(item)"
     >
       <div
-        :class="[
+        class="flex bg-#F9F9F9 pl-12px pr-12px pt-16px pb-16px rd-4px" :class="[
           isDark && '!bg-#262729',
-          'flex bg-#F9F9F9 pl-12px pr-12px pt-16px pb-16px rd-4px',
         ]"
       >
         <div class="w-32px m-r-8px h-56px">
           <img
             class="mt-2px rd-4px w-32px h-32px"
-            :src="item.img"
+            :src="withBase(item.img)"
             :alt="item.name"
-          />
+          >
         </div>
         <div class="flex-1 h-56px">
           <div
-            :class="[
-              'color-#303133 font-400 text-13px',
+            class="color-#303133 font-400 text-13px" :class="[
               isDark && '!color-#E5E9F3',
             ]"
           >
             {{ isZhCn ? item.name_cn || item.name : item.name }}
           </div>
           <div
-            :class="[
-              'm-t-2px font-400 text-12px color-#909399 break-all',
+            class="m-t-2px font-400 text-12px color-#909399 break-all" :class="[
               isDark && '!color-#A3A6AD',
             ]"
           >

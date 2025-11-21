@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import MarkdownIt from 'markdown-it'
-
-const md = new MarkdownIt()
+import { computed } from 'vue'
 
 const props = defineProps({
-  content: { type: String, required: true },
+  content: { type: String, required: true }
 })
+
+const md = new MarkdownIt()
 
 const attr = 'rel="noreferrer noopenner" target="_blank"'
 
@@ -15,11 +15,11 @@ const parsed = computed(() => {
   return md
     .render(props.content)
     .replace(
-      /#([0-9]+) by/g,
-      `<a href="https://github.com/element-plus/element-plus/pull/$1" ${attr}>#$1</a> by`
+      /#(\d+) by/g,
+      `<a href="https://github.com/meteosci/vue-maplibre/pull/$1" ${attr}>#$1</a> by`
     )
     .replace(
-      /@([A-Za-z0-9_-]+)/g,
+      /@([\w-]+)/g,
       `<a href="https://github.com/$1" ${attr}>@$1</a>`
     )
 })

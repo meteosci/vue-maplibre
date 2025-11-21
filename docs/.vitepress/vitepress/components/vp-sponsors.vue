@@ -2,29 +2,34 @@
 import { computed } from 'vue'
 import sponsorLocale from '../../i18n/component/sponsor.json'
 import { useLang } from '../composables/lang'
-import VPSponsorSmall from './vp-sponsor-small.vue'
+import { useDynamicClass } from '../composables/useDynamicClass'
 import VPSponsorLarge from './vp-sponsor-large.vue'
+import VPSponsorSmall from './vp-sponsor-small.vue'
 
 const lang = useLang()
 const sponsor = computed(() => sponsorLocale[lang.value])
-</script>
 
-<template>
-  <div class="page-content-main-b">
-    <p class="title">{{ sponsor.sponsoredBy }}</p>
-    <VPSponsorLarge />
-    <VPSponsorSmall />
-  </div>
-</template>
-
-<style lang="scss" scoped>
-.page-content-main-b {
-  padding-bottom: 10px;
-  padding-top: 0;
-  .title {
+const { dynamicClass } = useDynamicClass(
+  className => `
+  .${className} {
+    padding-bottom: 10px;
+    padding-top: 0;
+  }
+  .${className} .title {
     color: var(--text-color-secondary);
     font-weight: 300;
     font-size: 14px;
   }
-}
-</style>
+`
+)
+</script>
+
+<template>
+  <div :class="dynamicClass">
+    <p class="title">
+      {{ sponsor.sponsoredBy }}
+    </p>
+    <VPSponsorLarge />
+    <VPSponsorSmall />
+  </div>
+</template>

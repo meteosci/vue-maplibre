@@ -24,6 +24,9 @@ function makeInstaller(components: Plugin[] = []) {
     const vmMitt: Emitter<VmMittEvents> = mitt()
 
     const defaultConfig: ConfigProviderContext = {
+      $q: app.config.globalProperties?.$q,
+      showNotify: false,
+      debug: false,
       vmMitt
     }
 

@@ -6,27 +6,17 @@
  * @LastEditTime: 2024-06-18 14:03:03
  * @FilePath: \vue-maplibre\docs\examples\config-provider\usage.vue
 -->
-<template>
-  <div class="map-demo-container">
-    <div class="toolbar">
-      <el-button mb-2 @click="toggle">Switch Language: {{ locale.nativeName }}</el-button>
-    </div>
-    <VmConfigProvider :locale="locale">
-      <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom">
-        <VmControlNavigation></VmControlNavigation>
-      </VmMap>
-    </VmConfigProvider>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { LngLatLike } from 'maplibre-gl'
-import { computed, ref } from 'vue'
-// import zhCn from '@vue-maplibre/locale/lang/zh-cn'
-// import en from '@vue-maplibre/locale/lang/en-us'
+import type { LngLatLike } from 'maplibre-gl'
 
-import zhCn from '@meteosci/vue-maplibre/dist/locale/zh-cn.mjs'
+// 本地
+// import en from '@vue-maplibre/locale/lang/en-us'
+// import zhCn from '@vue-maplibre/locale/lang/zh-cn'
+
+// npm
 import en from '@meteosci/vue-maplibre/dist/locale/en-us.mjs'
+import zhCn from '@meteosci/vue-maplibre/dist/locale/zh-cn.mjs'
+import { computed, ref } from 'vue'
 
 const language = ref('zh-cn')
 const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))
@@ -34,7 +24,22 @@ const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))
 const center = ref<LngLatLike>([108, 32])
 const zoom = ref(1)
 
-const toggle = () => {
+function toggle() {
   language.value = language.value === 'zh-cn' ? 'en' : 'zh-cn'
 }
 </script>
+
+<template>
+  <div class="map-demo-container">
+    <div class="toolbar">
+      <el-button mb-2 @click="toggle">
+        Switch Language: {{ locale.nativeName }}
+      </el-button>
+    </div>
+    <VmConfigProvider :locale="locale">
+      <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom">
+        <VmControlNavigation />
+      </VmMap>
+    </VmConfigProvider>
+  </div>
+</template>

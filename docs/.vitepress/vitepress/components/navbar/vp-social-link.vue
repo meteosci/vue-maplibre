@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
 import type { Component } from 'vue'
+import { onMounted, ref } from 'vue'
+
+import { usePreview, usePreviewPR } from '../../composables/use-playground'
 
 const props = defineProps<{
   icon: Component
@@ -9,13 +11,10 @@ const props = defineProps<{
 }>()
 
 const targetLink = ref(props.link)
+
 onMounted(() => {
-  if (props.text === 'GitHub') {
-    const isPreview = globalThis.location?.host.startsWith('preview')
-    if (isPreview) {
-      const pr = globalThis.location.host.split('-', 2)[1]
-      targetLink.value = `${targetLink.value}/pull/${pr}`
-    }
+  if (props.text === 'GitHub' && usePreview()) {
+    targetLink.value = `${targetLink.value}/pull/${usePreviewPR()}`
   }
 })
 </script>

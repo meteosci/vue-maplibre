@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import { useEventListener, useParallax, useThrottleFn } from '@vueuse/core'
-import { useLang } from '../../composables/lang'
-import homeLocale from '../../../i18n/pages/home.json'
-import HomeSponsors from '../home/home-sponsors.vue'
-import HomeCards from '../home/home-cards.vue'
-import HomeFooter from './vp-footer.vue'
 import type { CSSProperties } from 'vue'
+import { useEventListener, useParallax, useThrottleFn } from '@vueuse/core'
+import { withBase } from 'vitepress'
+import { computed, onMounted, reactive, ref } from 'vue'
+import { isDark } from '~/composables/dark'
+import homeLocale from '../../../i18n/pages/home.json'
+import { useLang } from '../../composables/lang'
+import HomeCards from '../home/home-cards.vue'
+
+import HomeSponsors from '../home/home-sponsors.vue'
+
+import HomeFooter from './vp-footer.vue'
+
 const target = ref<HTMLElement | null>(null)
 const parallax = reactive(useParallax(target))
 const jumbotronRedOffset = ref(0)
@@ -28,21 +33,21 @@ const containerStyle: CSSProperties = {
 
   position: 'relative',
 
-  perspective: '300px',
+  perspective: '300px'
 }
 
 const cardStyle = computed(() => ({
   height: '30rem',
   width: '100%',
   transition: '.3s ease-out all',
-  transform: `rotateX(${parallax.roll}deg) rotateY(${parallax.tilt}deg)`,
+  transform: `rotateX(${parallax.roll}deg) rotateY(${parallax.tilt}deg)`
 }))
 
 const layerBase: CSSProperties = {
   position: 'absolute',
   width: '100%',
   height: '100%',
-  transition: '.3s ease-out all',
+  transition: '.3s ease-out all'
 }
 
 const screenLayer = computed(() => ({
@@ -51,7 +56,7 @@ const screenLayer = computed(() => ({
   height: '80%',
   transform: `translateX(${parallax.tilt * 10 + 80}px) translateY(${
     parallax.roll * 10 + 50
-  }px)`,
+  }px)`
 }))
 
 const peopleLayer = computed(() => ({
@@ -62,7 +67,7 @@ const peopleLayer = computed(() => ({
   bottom: 0,
   transform: `translateX(${parallax.tilt * 25 + 25}px) translateY(${
     parallax.roll * 25
-  }px) scale(1)`,
+  }px) scale(1)`
 }))
 
 // center layer
@@ -72,7 +77,7 @@ const leftLayer = computed(() => ({
   height: '20%',
   transform: `translateX(${parallax.tilt * 12 + 205}px) translateY(${
     parallax.roll * 12 + 210
-  }px)`,
+  }px)`
 }))
 
 const leftBottomLayer = computed(() => ({
@@ -83,7 +88,7 @@ const leftBottomLayer = computed(() => ({
   bottom: 0,
   transform: `translateX(${parallax.tilt * 30 - 10}px) translateY(${
     parallax.roll * 30
-  }px)`,
+  }px)`
 }))
 
 const rightLayer = computed(() => ({
@@ -94,7 +99,7 @@ const rightLayer = computed(() => ({
   right: 0,
   transform: `translateX(${parallax.tilt * 25 + 5}px) translateY(${
     parallax.roll * 25
-  }px)`,
+  }px)`
 }))
 
 const handleScroll = useThrottleFn(() => {
@@ -103,21 +108,25 @@ const handleScroll = useThrottleFn(() => {
     const rect = ele.getBoundingClientRect()
     const eleHeight = ele.clientHeight
     let calHeight = (180 - rect.top) * 2
-    if (calHeight < 0) calHeight = 0
-    if (calHeight > eleHeight) calHeight = eleHeight
+    if (calHeight < 0)
+      calHeight = 0
+    if (calHeight > eleHeight)
+      calHeight = eleHeight
     jumbotronRedOffset.value = calHeight
   }
 }, 10)
 
-useEventListener(window, 'scroll', handleScroll)
+onMounted(() => {
+  useEventListener(window, 'scroll', handleScroll)
+})
 </script>
 
 <template>
   <div ref="target" class="home-page">
     <div class="banner" text="center">
       <div class="banner-desc">
-        <h1>{{ homeLang['title'] }}</h1>
-        <p>{{ homeLang['title_sub'] }}</p>
+        <h1>{{ homeLang.title }}</h1>
+        <p>{{ homeLang.title_sub }}</p>
       </div>
     </div>
     <div ref="jumbotronRef" class="jumbotron">
@@ -137,10 +146,10 @@ useEventListener(window, 'scroll', handleScroll)
       </div>
     </div>
     <img
-      src="/images/theme-index-blue.png"
+      :src="withBase(`/images/theme-index-blue${isDark ? '-dark' : ''}.png`)"
       alt="banner"
       class="mobile-banner"
-    />
+    >
     <HomeSponsors />
     <HomeCards />
   </div>
@@ -236,30 +245,24 @@ useEventListener(window, 'scroll', handleScroll)
 
   @media screen and (max-width: 959px) {
     .jumbotron {
-      display: none !important;
-    }
-
-    .mobile-banner {
-      margin-top: 10px;
-      display: inline-block;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .jumbotron {
-      width: 50%;
-      display: flex;
-      margin: auto;
-      justify-content: center;
-      align-items: center;
-
       .parallax-container {
-        width: 100%;
+        width: 700px;
+        margin: 0 auto;
       }
     }
   }
 
   @media (max-width: 768px) {
+    .jumbotron {
+      display: none !important;
+    }
+
+    .mobile-banner {
+      display: inline-block;
+      margin-top: 25px;
+      margin-bottom: -15px;
+    }
+
     .banner-stars {
       display: none;
     }

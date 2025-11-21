@@ -1,7 +1,7 @@
-import { computed } from 'vue'
+import type { PageData } from 'vitepress'
 import { useData } from 'vitepress'
 
-import type { PageData } from 'vitepress'
+import { computed } from 'vue'
 
 type EnhanceArrayElement<T, P> = T extends Array<infer U> ? (U & P)[] : never
 
@@ -12,34 +12,35 @@ type Headers = EnhanceArrayElement<
   }
 >
 
-export const useToc = () => {
+export function useToc() {
   const { page } = useData()
 
   return computed(() => resolveHeaders(page.value.headers))
 }
 
-export const resolveHeaders = (headers: PageData['headers']) => {
+export function resolveHeaders(headers: PageData['headers']) {
   return mapHeaders(groupHeaders(headers))
 }
 
 export function groupHeaders(headers: PageData['headers']) {
-  headers = headers.map((h) => Object.assign({}, h))
+  headers = headers.map(h => Object.assign({}, h))
   let lastH2
 
   headers.forEach((h) => {
     if (h.level === 2) {
       lastH2 = h
-    } else if (lastH2) {
+    }
+    else if (lastH2) {
       ;(lastH2.children || (lastH2.children = [])).push(h)
     }
   })
-  return headers.filter((h) => h.level === 2)
+  return headers.filter(h => h.level === 2)
 }
 
 export function mapHeaders(headers: Headers) {
-  return headers.map((header) => ({
+  return headers.map(header => ({
     text: header.title,
     link: `#${header.slug}`,
-    children: header.children ? mapHeaders(header.children) : undefined,
+    children: header.children ? mapHeaders(header.children) : undefined
   }))
 }

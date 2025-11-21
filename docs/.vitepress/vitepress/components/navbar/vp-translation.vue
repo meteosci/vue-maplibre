@@ -1,20 +1,13 @@
-<!--
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-06-18 09:37:40
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-21 13:43:14
- * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\navbar\vp-translation.vue
--->
 <script setup lang="ts">
-import { useRouter } from 'vitepress'
+import { useRouter, withBase } from 'vitepress'
 import { useTranslation } from '../../composables/translation'
 
 const router = useRouter()
-const { switchLang, languageMap, langs, lang, locale } = useTranslation()
+const { getTargetUrl, switchLang, languageMap, langs, lang, locale }
+  = useTranslation()
 
-const toTranslation = () => {
-  router.go(`/${lang.value}/guide/translation`)
+function toTranslation() {
+  router.go(withBase(`/${lang.value}/guide/translation`))
 }
 </script>
 
@@ -27,17 +20,22 @@ const toTranslation = () => {
         </ElIcon>
         <template #dropdown>
           <ElDropdownMenu>
-            <ElDropdownItem
-              v-for="l in langs"
-              :key="l"
-              :class="{ language: true, selected: l === lang }"
-              @click="switchLang(l)"
-            >
-              {{ languageMap[l] }}
-            </ElDropdownItem>
-            <!-- <ElDropdownItem class="language selected" @click="toTranslation">
-              {{ locale.help }}
-            </ElDropdownItem> -->
+            <a v-for="l in langs" :key="l" :href="getTargetUrl(l)">
+              <ElDropdownItem
+                class="language" :class="{ selected: l === lang }"
+                @click.stop="switchLang(l)"
+              >
+                {{ languageMap[l] }}
+              </ElDropdownItem>
+            </a>
+            <!-- <a :href="`/${lang}/guide/translation`">
+              <ElDropdownItem
+                class="language selected"
+                @click.stop="toTranslation"
+              >
+                {{ locale.help }}
+              </ElDropdownItem>
+            </a> -->
           </ElDropdownMenu>
         </template>
       </ElDropdown>
@@ -47,10 +45,12 @@ const toTranslation = () => {
 
 <style lang="scss" scoped>
 @use '../../styles/mixins' as *;
+
 .translation-container {
   display: none;
   height: 24px;
   padding: 0 12px;
+  cursor: pointer;
 
   @include respond-to('md') {
     display: block;
@@ -75,6 +75,7 @@ const toTranslation = () => {
   .language {
     padding: 0 16px;
     line-height: 28px;
+
     &.selected {
       --el-text-color-regular: var(--brand-color);
     }

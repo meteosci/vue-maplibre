@@ -1,4 +1,4 @@
-export type Link = {
+export interface Link {
   text: string
   link: string
   promotion?: string

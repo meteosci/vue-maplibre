@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { leftCustomImgSponsors } from '../../config/sponsors'
+import type { StyleValue } from 'vue'
+import type { Sponsor } from '../../config/sponsors'
+import { withBase } from 'vitepress'
+
 import { sendEvent } from '../../config/analytics'
+import { leftCustomImgSponsors } from '../../config/sponsors'
 
-defineProps({
-  itemClass: String,
-  itemStyle: [String, Object, Array],
-})
+defineProps<{
+  itemClass?: string
+  itemStyle?: StyleValue
+}>()
 
-const onItemClick = (item: any) => {
+function onItemClick(item: Sponsor) {
   sendEvent('sp_click', item.name, 'left_custom_img')
 }
 </script>
@@ -17,14 +21,14 @@ const onItemClick = (item: any) => {
     <a
       v-for="item in leftCustomImgSponsors"
       :key="item.name"
-      :href="item.url"
+      :href="withBase(item.url)"
       :title="`${item.name_cn || item.name} - ${item.slogan_cn || item.slogan}`"
-      :class="['sponsor-item inline-flex', itemClass]"
+      class="sponsor-large inline-flex" :class="[itemClass]"
       :style="itemStyle"
       target="_blank"
       @click="onItemClick(item)"
     >
-      <img :src="item.banner_img" :alt="item.name" />
+      <img :src="withBase(item.banner_img ?? '')" :alt="item.name">
     </a>
   </div>
 </template>
@@ -32,19 +36,19 @@ const onItemClick = (item: any) => {
 <style scoped lang="scss">
 @use '../styles/mixins.scss' as *;
 
-.sponsor-item {
+.sponsor-large {
   margin-bottom: 8px;
   height: 60px;
   width: 196px;
 
   @include respond-to('max') {
     width: 236px;
-    height: 72px;
+    height: 60px;
   }
 
   @media (max-width: 767px) {
     width: 236px;
-    height: 72px;
+    height: 60px;
   }
 
   img {
@@ -56,7 +60,7 @@ const onItemClick = (item: any) => {
 }
 
 @media (max-width: 768px) {
-  .sponsor-item {
+  .sponsor-large {
     img {
       border-radius: 4px;
       min-height: 45px;

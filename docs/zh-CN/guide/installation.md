@@ -13,13 +13,13 @@ Vue Maplibre 支持最近两个版本的浏览器。
 
 由于 Vue 3 不再支持 IE11，Vue Maplibre 也不再支持 IE 浏览器。
 
-| 版本 | ![Chrome](https://cdn.jsdelivr.net/npm/@browser-logos/chrome/chrome_32x32.png) <br> Chrome | ![IE](https://cdn.jsdelivr.net/npm/@browser-logos/edge/edge_32x32.png) <br> Edge | ![Firefox](https://cdn.jsdelivr.net/npm/@browser-logos/firefox/firefox_32x32.png) <br> Firefox | ![Safari](https://cdn.jsdelivr.net/npm/@browser-logos/safari/safari_32x32.png) <br> Safari |
+| 版本    | ![Chrome](https://cdn.jsdelivr.net/npm/@browser-logos/chrome/chrome_32x32.png) <br> Chrome | ![IE](https://cdn.jsdelivr.net/npm/@browser-logos/edge/edge_32x32.png) <br> Edge | ![Firefox](https://cdn.jsdelivr.net/npm/@browser-logos/firefox/firefox_32x32.png) <br> Firefox | ![Safari](https://cdn.jsdelivr.net/npm/@browser-logos/safari/safari_32x32.png) <br> Safari |
 | ------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | 0.0.1 + | Chrome ≥ 85                                                                                | Edge ≥ 85                                                                        | Firefox ≥ 79                                                                                   | Safari ≥ 14.1                                                                              |
 
 ### 版本
 
-Vue Maplibre 目前还处于开发迭代中。
+<!-- Vue Maplibre 目前还处于开发迭代中。 -->
 
 [![VueMaplibre version badge](https://img.shields.io/npm/v/@meteosci/vue-maplibre.svg?style=flat-square)](https://www.npmjs.org/package/@meteosci/vue-maplibre)
 
@@ -68,10 +68,7 @@ $ pnpm install @meteosci/vue-maplibre
 ```html
 <head>
   <!-- Import style -->
-  <link
-    rel="stylesheet"
-    href="//cdn.jsdelivr.net/npm/@meteosci/vue-maplibre/dist/index.css"
-  />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@meteosci/vue-maplibre/dist/index.css" />
   <!-- Import Vue 3 -->
   <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
   <!-- Import component library -->

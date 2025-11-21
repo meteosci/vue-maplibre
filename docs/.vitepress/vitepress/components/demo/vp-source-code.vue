@@ -2,10 +2,14 @@
 import { computed } from 'vue'
 
 const props = defineProps({
+  visible: {
+    type: Boolean,
+    required: true
+  },
   source: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 })
 
 const decoded = computed(() => {
@@ -14,14 +18,14 @@ const decoded = computed(() => {
 </script>
 
 <template>
-  <div class="example-source-wrapper">
-    <div class="example-source language-vue" v-html="decoded" />
+  <div v-show="visible" class="example-source-wrapper">
+    <div class="example-source" v-html="decoded" />
   </div>
 </template>
 
 <style scoped lang="scss">
-.language-vue {
-  margin: 0;
-  border-radius: 0;
+:deep(.language-vue) {
+  margin: 0 !important;
+  border-radius: 0 !important;
 }
 </style>

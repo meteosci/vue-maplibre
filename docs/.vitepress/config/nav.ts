@@ -1,5 +1,6 @@
-import { ensureLang } from '../utils/lang'
+import { isExternal } from 'vitepress/dist/client/shared'
 import navLocale from '../i18n/pages/sidebar.json'
+import { ensureLang } from '../utils/lang'
 
 // Mapping the first sub link to the nav link to avoid 404 error.
 
@@ -10,9 +11,9 @@ function getNav() {
         link: string
         text: string
         activeMatch?: string
-      }[] = Object.values(locales).map((item) => ({
+      }[] = Object.values(locales).map(item => ({
         ...item,
-        link: `${ensureLang(lang)}${item.link}`,
+        link: `${isExternal(item.link) ? '' : ensureLang(lang)}${item.link}`
       }))
 
       return [lang, item]

@@ -19,7 +19,7 @@ Since Vue 3 no longer supports IE11, Vue Maplibre does not support IE either.
 
 ### Version
 
-Vue Maplibre is currently in a rapid development iteration.
+<!-- Vue Maplibre is currently in a rapid development iteration. -->
 
 [![VueMaplibre version badge](https://img.shields.io/npm/v/@meteosci/vue-maplibre.svg?style=flat-square)](https://www.npmjs.org/package/@meteosci/vue-maplibre)
 
@@ -70,10 +70,7 @@ You can also use other CDN providers.
 ```html
 <head>
   <!-- Import style -->
-  <link
-    rel="stylesheet"
-    href="//cdn.jsdelivr.net/npm/@meteosci/vue-maplibre/dist/index.css"
-  />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@meteosci/vue-maplibre/dist/index.css" />
   <!-- Import Vue 3 -->
   <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
   <!-- Import component library -->

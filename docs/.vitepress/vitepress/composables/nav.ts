@@ -1,9 +1,8 @@
-import { computed } from 'vue'
 import { useData } from 'vitepress'
-
+import { computed } from 'vue'
 import { useLang } from './lang'
 
-export const useNav = () => {
+export function useNav() {
   const { theme } = useData()
   const lang = useLang()
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import CommonThemeToggler from '../common/vp-theme-toggler.vue'
 import { isDark } from '../../composables/dark'
 import { useNavbarLocale } from '../../composables/navbar-locale'
+import CommonThemeToggler from '../common/vp-theme-toggler.vue'
 
 const locale = useNavbarLocale()
 </script>

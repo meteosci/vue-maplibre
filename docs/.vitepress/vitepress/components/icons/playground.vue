@@ -1,3 +1,5 @@
+<!-- eslint-disable style/no-mixed-spaces-and-tabs -->
+<!-- eslint-disable style/no-tabs -->
 <template>
   <svg version="1.1" x="0px" y="0px" viewBox="0 0 44 44" xml:space="preserve">
     <path

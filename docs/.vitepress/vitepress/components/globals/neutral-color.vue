@@ -1,3 +1,55 @@
+<script lang="ts" setup>
+import { isDark } from '~/composables/dark'
+import { getCssVarName, getCssVarValue } from '~/utils/colors'
+
+const backgroundTypes = ['page', '', 'overlay']
+const backgroundColors = backgroundTypes.map((type) => {
+  return {
+    name: type
+      ? `${type[0].toUpperCase() + type.slice(1)} Background`
+      : 'Base Background',
+    var: getCssVarValue(getCssVarName('bg-color', type))
+  }
+})
+
+const borderTypes = ['darker', 'dark', '', 'light', 'lighter', 'extra-light']
+const borderColors = borderTypes.map((type) => {
+  return {
+    name: type
+      ? `${type[0].toUpperCase() + type.slice(1)} Border`
+      : 'Base Border',
+    var: getCssVarValue(getCssVarName('border-color', type))
+  }
+})
+
+const fillTypes = [
+  'darker',
+  'dark',
+  '',
+  'light',
+  'lighter',
+  'extra-light',
+  'blank'
+]
+const fillColors = fillTypes.map((type) => {
+  return {
+    name: type ? `${type[0].toUpperCase() + type.slice(1)} Fill` : 'Base Fill',
+    var: getCssVarValue(getCssVarName('fill-color', type))
+  }
+})
+
+const textTypes = ['primary', 'regular', 'secondary', 'placeholder', 'disabled']
+const textColors = textTypes.map((type) => {
+  return {
+    name: `${type[0].toUpperCase() + type.slice(1)} Text`,
+    var: getCssVarValue(getCssVarName('text-color', type))
+  }
+})
+
+const black = '#000000'
+const white = '#FFFFFF'
+</script>
+
 <template>
   <el-row :gutter="12">
     <el-col :span="6" :xs="{ span: 12 }">
@@ -65,7 +117,9 @@
           :style="{ background: black }"
         >
           Basic Black
-          <div class="value" text="xs">{{ black }}</div>
+          <div class="value" text="xs">
+            {{ black }}
+          </div>
         </div>
         <div
           class="demo-color-box demo-color-box-other"
@@ -76,13 +130,17 @@
           }"
         >
           Basic White
-          <div class="value" text="xs">{{ white }}</div>
+          <div class="value" text="xs">
+            {{ white }}
+          </div>
         </div>
         <div
           class="demo-color-box demo-color-box-other demo-color-box-lite bg-transparent"
         >
           Transparent
-          <div class="value" text="xs">Transparent</div>
+          <div class="value" text="xs">
+            Transparent
+          </div>
         </div>
 
         <div
@@ -92,10 +150,10 @@
           :style="{
             background: bg.var.value,
             border:
-              '1px solid ' +
-              (!isDark || bg.name === 'Base Background'
-                ? 'var(--el-border-color-light)'
-                : 'transparent'),
+              `1px solid ${
+                !isDark || bg.name === 'Base Background'
+                  ? 'var(--el-border-color-light)'
+                  : 'transparent'}`,
           }"
         >
           {{ bg.name }}
@@ -107,55 +165,3 @@
     </el-col>
   </el-row>
 </template>
-
-<script lang="ts" setup>
-import { isDark } from '~/composables/dark'
-import { getCssVarName, getCssVarValue } from '~/utils/colors'
-
-const backgroundTypes = ['page', '', 'overlay']
-const backgroundColors = backgroundTypes.map((type) => {
-  return {
-    name: type
-      ? `${type[0].toUpperCase() + type.slice(1)} Background`
-      : 'Base Background',
-    var: getCssVarValue(getCssVarName('bg-color', type)),
-  }
-})
-
-const borderTypes = ['darker', 'dark', '', 'light', 'lighter', 'extra-light']
-const borderColors = borderTypes.map((type) => {
-  return {
-    name: type
-      ? `${type[0].toUpperCase() + type.slice(1)} Border`
-      : 'Base Border',
-    var: getCssVarValue(getCssVarName('border-color', type)),
-  }
-})
-
-const fillTypes = [
-  'darker',
-  'dark',
-  '',
-  'light',
-  'lighter',
-  'extra-light',
-  'blank',
-]
-const fillColors = fillTypes.map((type) => {
-  return {
-    name: type ? `${type[0].toUpperCase() + type.slice(1)} Fill` : 'Base Fill',
-    var: getCssVarValue(getCssVarName('fill-color', type)),
-  }
-})
-
-const textTypes = ['primary', 'regular', 'secondary', 'placeholder', 'disabled']
-const textColors = textTypes.map((type) => {
-  return {
-    name: `${type[0].toUpperCase() + type.slice(1)} Text`,
-    var: getCssVarValue(getCssVarName('text-color', type)),
-  }
-})
-
-const black = '#000000'
-const white = '#FFFFFF'
-</script>

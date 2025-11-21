@@ -1,11 +1,12 @@
-import { computed, unref } from 'vue'
-import { useData } from 'vitepress'
-import { isClient, useBrowserLocation } from '@vueuse/core'
 import type { MaybeRef } from '@vueuse/core'
+import { isClient, useBrowserLocation } from '@vueuse/core'
+import { useData } from 'vitepress'
+
+import { computed, unref } from 'vue'
 
 const location = useBrowserLocation()
 
-export const useFeatureFlag = (flag: MaybeRef<string>) => {
+export function useFeatureFlag(flag: MaybeRef<string>) {
   const { theme } = useData()
   return computed(() => {
     const _flag = unref(flag)

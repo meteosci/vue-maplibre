@@ -1,24 +1,16 @@
-/*
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-06-08 19:56:02
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-15 16:36:49
- * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\composables\translation.ts
- */
+import { useStorage } from '@vueuse/core'
+import { useData, useRoute, useRouter, withBase } from 'vitepress'
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vitepress'
-import { isClient, useStorage } from '@vueuse/core'
-import { PREFERRED_LANG_KEY } from '../constant'
-
-import langs from '../../i18n/lang.json'
 import translationLocale from '../../i18n/component/translation.json'
+import langs from '../../i18n/lang.json'
+import { PREFERRED_LANG_KEY } from '../constant'
 import { useLang } from './lang'
 
-export const useTranslation = () => {
+export function useTranslation() {
   const route = useRoute()
   const router = useRouter()
   const lang = useLang()
+  const { site } = useData()
 
   const languageMap = {
     'en-US': 'English',
@@ -34,7 +26,8 @@ export const useTranslation = () => {
 
     // When there is no zh-CN in the list, meaning this is the PR preview
     // so we simply return the current list which contains only en-US
-    if (!langs.includes('zh-CN')) return []
+    if (!langs.includes('zh-CN'))
+      return []
     const langsCopy = langs.slice(0)
     langsCopy.splice(langsCopy.indexOf(currentLang), 1)
 
@@ -48,23 +41,20 @@ export const useTranslation = () => {
 
   const language = useStorage(PREFERRED_LANG_KEY, 'en-US')
 
-  const switchLang = (targetLang: string) => {
-    if (lang.value === targetLang) return
+  const getTargetUrl = (lang: string) => {
+    const firstSlash = route.path.indexOf('/', site.value.base.length)
+    return firstSlash === -1
+      ? `/${lang}/`
+      : `/${lang}/${route.path.slice(firstSlash + 1)}`
+  }
 
+  const switchLang = (targetLang: string) => {
+    if (lang.value === targetLang)
+      return
     language.value = targetLang
 
-    const firstSlash = route.path.indexOf('/', 1)
-
-    const goTo = `/${targetLang}/${route.path.slice(firstSlash + 1)}`
-
-    router.go(goTo)
-
-    if (isClient) {
-      navigator?.serviceWorker.controller?.postMessage({
-        type: 'LANG',
-        lang: targetLang
-      })
-    }
+    const goTo: string = getTargetUrl(targetLang)
+    router.go(withBase(goTo))
   }
 
   return {
@@ -72,6 +62,7 @@ export const useTranslation = () => {
     languageMap,
     langs: langsRef,
     lang,
+    getTargetUrl,
     switchLang
   }
 }

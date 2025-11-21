@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useLang } from '../../composables/lang'
 import homeLocale from '../../../i18n/pages/home.json'
+import { useLang } from '../../composables/lang'
 
 const lang = useLang()
 

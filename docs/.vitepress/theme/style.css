@@ -16,7 +16,9 @@
   right: 0;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+  box-shadow:
+    0 0 10px #29d,
+    0 0 5px #29d;
   opacity: 1;
   -webkit-transform: rotate(3deg) translateY(-4px);
   -ms-transform: rotate(3deg) translateY(-4px);
@@ -64,15 +66,17 @@
     transform: rotate(1turn);
   }
 }
-
+.doc-content .header-anchor:before {
+  content: '#';
+}
 .map-demo-container {
   height: 500px;
   display: flex;
   flex-direction: column;
 }
-p:first-child{
+p:first-child {
   margin-top: 0px;
 }
-p:last-child{
+p:last-child {
   margin-bottom: 0px;
 }

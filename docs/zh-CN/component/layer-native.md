@@ -31,7 +31,6 @@ layer-native/3d-terrain
 
 :::
 
-
 ## API
 
 ### Props

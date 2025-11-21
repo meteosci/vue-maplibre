@@ -23,7 +23,7 @@
     "lineTwo": "如果您有兴趣参与 Vue Maplibre 的设计，请通过 <span><a href='mailto:370681295@qq.com' target='_blank'>370681295@qq.com</a></span> 联系我们。",
     "download": "Download",
     "axure": "Axure Components",
-    "axureIntro": "By importing Element Plus in Axure, you can easily apply all the components we provide during interaction design.",
+    "axureIntro": "By importing Vue Maplibre in Axure, you can easily apply all the components we provide during interaction design.",
     "sketch": "Sketch Template",
     "sketchIntro": "Newly designed Sketch component library in 2022 with full components for Element Plus to improve design efficiency while keeping a unified visual style.",
     "figma": "Figma Template",

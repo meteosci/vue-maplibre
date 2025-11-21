@@ -6,35 +6,19 @@
  * @LastEditTime: 2024-06-18 16:18:53
  * @FilePath: \vue-maplibre\docs\examples\layer-native\vector.vue
 -->
-<template>
-  <div class="map-demo-container">
-    <VmMap :map-style="mapStyle" :center="center" :zoom="zoom" @ready="onMapReady">
-      <VmLayerNative v-if="isMapReady" id="conferences" type="symbol" :source="source" :layout="layout"></VmLayerNative>
-      <VmLayerNative
-        v-if="isMapReady"
-        id="vector-tiles"
-        type="line"
-        :source="sourceVector"
-        :minzoom="0"
-        :maxzoom="8"
-        source-layer="border"
-        :paint="paintVector"
-      ></VmLayerNative>
-    </VmMap>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
-import {
-  LngLatLike,
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type {
   GeoJSONSourceSpecification,
-  SymbolLayerSpecification,
+  LineLayerSpecification,
+  LngLatLike,
   StyleSpecification,
-  SourceSpecification,
-  VectorSourceSpecification,
-  LineLayerSpecification
+  SymbolLayerSpecification,
+  VectorSourceSpecification
 } from 'maplibre-gl'
+// import {
+//   SourceSpecification
+// } from 'maplibre-gl'
 import { ref } from 'vue'
 
 const center = ref<LngLatLike>([11.39085, 47.27574])
@@ -46,7 +30,7 @@ const spriteURL = `https://vue-maplibre.meteosci.com/font/sprite/sprite`
 
 const mapStyle = {
   version: 8,
-  glyphs: glyphsURL + '/{fontstack}/{range}.pbf',
+  glyphs: `${glyphsURL}/{fontstack}/{range}.pbf`,
   sprite: spriteURL,
   sources: {},
   layers: []
@@ -202,7 +186,7 @@ const paintVector: LineLayerSpecification['paint'] = {
   'line-width': 3
 }
 
-const onMapReady = (e: VmReadyObject) => {
+function onMapReady(e: VmReadyObject) {
   const { map } = e
 
   map.on('load', async () => {
@@ -216,3 +200,21 @@ const onMapReady = (e: VmReadyObject) => {
   })
 }
 </script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap :map-style="mapStyle" :center="center" :zoom="zoom" @ready="onMapReady">
+      <VmLayerNative v-if="isMapReady" id="conferences" type="symbol" :source="source" :layout="layout" />
+      <VmLayerNative
+        v-if="isMapReady"
+        id="vector-tiles"
+        type="line"
+        :source="sourceVector"
+        :minzoom="0"
+        :maxzoom="8"
+        source-layer="border"
+        :paint="paintVector"
+      />
+    </VmMap>
+  </div>
+</template>

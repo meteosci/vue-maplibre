@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { isDark } from '~/composables/dark'
+</script>
+
 <template>
   <svg
     v-if="!isDark"
@@ -331,7 +335,3 @@
     />
   </svg>
 </template>
-
-<script setup lang="ts">
-import { isDark } from '~/composables/dark'
-</script>

@@ -1,7 +1,7 @@
 ---
-title: 'A Vue 3 Map Framework'
+title: 'A Vue 3 MapLibreGL Framework'
 lang: en-US
 page: true
 ---
 
-<!-- Placeholder -->
+<ParallaxHome />

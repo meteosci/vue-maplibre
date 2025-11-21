@@ -1,7 +1,60 @@
+<script lang="ts" setup>
+import type { InputInstance } from 'element-plus'
+import { Search } from '@element-plus/icons-vue'
+import { useRouter, withBase } from 'vitepress'
+import { computed, nextTick, onMounted, ref } from 'vue'
+
+import overviewIcons from '~/components/overview-icons'
+
+import { useLang } from '~/composables/lang'
+import { useSidebar } from '~/composables/sidebar'
+import overviewLocale from '../../../i18n/component/overview.json'
+
+const lang = useLang()
+const router = useRouter()
+const { sidebars } = useSidebar()
+
+const query = ref('')
+const searchRef = ref<InputInstance>()
+const locale = computed(() => overviewLocale[lang.value])
+const filteredSidebars = computed(() =>
+  sidebars.value
+    .slice(1)
+    .map(group => ({
+      ...group,
+      children: group.children.filter((item) => {
+        const value = query.value.trim().toLowerCase()
+        return (
+          group.text.toLowerCase().includes(value)
+          || item.text.toLowerCase().includes(value)
+          || item.promotion?.includes(value)
+        )
+      })
+    }))
+    .filter(group => group.children.length)
+)
+
+function toPage(link: string) {
+  router.go(withBase(link))
+}
+
+function getIcon(link: string) {
+  const name = link.split('/').pop()
+  return name ? overviewIcons[name] : null
+}
+
+onMounted(() => {
+  nextTick(() => {
+    searchRef.value?.focus()
+  })
+})
+</script>
+
 <template>
   <div class="overview-container">
     <div class="search-content">
       <el-input
+        ref="searchRef"
         v-model="query"
         :prefix-icon="Search"
         size="large"
@@ -22,26 +75,30 @@
           </el-tag>
         </p>
         <div class="card-content">
-          <el-card
+          <a
             v-for="(item, index) in group.children"
             :key="index"
             tabindex="0"
-            shadow="hover"
-            @click="toPage(item.link)"
-            @keydown.enter="toPage(item.link)"
+            :href="withBase(item.link)"
           >
-            <template #header>
-              <el-text truncated>{{ item.text }}</el-text>
-              <span v-if="item.promotion" class="vp-tag">
-                {{ item.promotion }}
-              </span>
-            </template>
+            <el-card
+              shadow="hover"
+              @click.stop="toPage(item.link)"
+              @keydown.enter="toPage(item.link)"
+            >
+              <template #header>
+                <el-text truncated>{{ item.text }}</el-text>
+                <span v-if="item.promotion" class="vp-tag">
+                  {{ item.promotion }}
+                </span>
+              </template>
 
-            <template #default>
-              <component :is="getIcon(item.link)" v-if="getIcon(item.link)" />
-              <span v-else>Todo</span>
-            </template>
-          </el-card>
+              <template #default>
+                <component :is="getIcon(item.link)" v-if="getIcon(item.link)" />
+                <span v-else>Todo</span>
+              </template>
+            </el-card>
+          </a>
         </div>
       </div>
 
@@ -54,59 +111,24 @@
         Icons designed by
         <el-link
           type="primary"
-          :underline="false"
+          underline="never"
           href="https://github.com/daodaozz08"
           target="_blank"
         >
           @叨叨
         </el-link>
+        <el-link
+          type="primary"
+          underline="never"
+          href="https://github.com/zhiwendesign"
+          target="_blank"
+        >
+          @卡卡
+        </el-link>
       </p>
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useRouter } from 'vitepress'
-import { Search } from '@element-plus/icons-vue'
-import overviewLocale from '../../../i18n/component/overview.json'
-import { useSidebar } from '~/composables/sidebar'
-import { useLang } from '~/composables/lang'
-import overviewIcons from '~/components/overview-icons'
-
-const lang = useLang()
-const router = useRouter()
-const { sidebars } = useSidebar()
-
-const query = ref('')
-
-const locale = computed(() => overviewLocale[lang.value])
-const filteredSidebars = computed(() =>
-  sidebars.value
-    .slice(1)
-    .map((group) => ({
-      ...group,
-      children: group.children.filter((item) => {
-        const value = query.value.trim().toLowerCase()
-        return (
-          group.text.toLowerCase().includes(value) ||
-          item.text.toLowerCase().includes(value) ||
-          item.promotion?.includes(value)
-        )
-      }),
-    }))
-    .filter((group) => group.children.length)
-)
-
-const toPage = (link: string) => {
-  router.go(link)
-}
-
-const getIcon = (link: string) => {
-  const name = link.split('/').pop()
-  return name ? overviewIcons[name] : null
-}
-</script>
 
 <style scoped lang="scss">
 .overview-container {
@@ -140,14 +162,18 @@ const getIcon = (link: string) => {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 16px;
 
-        ::v-deep(.el-card) {
-          cursor: pointer;
-          transition: none;
-
+        a {
+          border-radius: 4px;
           &:focus-visible {
             outline: 2px solid var(--el-color-primary);
             outline-offset: 1px;
           }
+        }
+
+        :deep(.el-card) {
+          width: 100%;
+          cursor: pointer;
+          transition: none;
 
           .el-card__header {
             display: flex;
@@ -181,7 +207,10 @@ const getIcon = (link: string) => {
     }
 
     .designed-by {
-      text-align: right;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 5px;
       font-size: 14px;
     }
   }

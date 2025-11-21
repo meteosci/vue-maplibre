@@ -14,11 +14,11 @@ lang: zh-CN
 如果你对打包后的文件大小不是很在乎，那么使用完整导入会更方便。
 
 ```typescript
+import VueMaplibre from '@meteosci/vue-maplibre'
 // main.ts
 import { createApp } from 'vue'
-import VueMaplibre from '@meteosci/vue-maplibre'
-import '@meteosci/vue-maplibre/dist/index.css'
 import App from './App.vue'
+import '@meteosci/vue-maplibre/dist/index.css'
 
 const app = createApp(App)
 
@@ -28,7 +28,7 @@ app.mount('#app')
 
 #### Volar 支持
 
-如果您使用 Volar，请在 `tsconfig.json` 中通过  `compilerOptions.types` 指定全局组件类型。
+如果您使用 Volar，请在 `tsconfig.json` 中通过 `compilerOptions.types` 指定全局组件类型。
 
 ```json
 // tsconfig.json
@@ -47,12 +47,13 @@ Vue Maplibre 提供了基于 ES Module 的开箱即用的 [Tree Shaking](https:/
 > App.vue
 
 ```vue
-<template>
-  <vm-map map-style="https://demotiles.maplibre.org/style.json"></vm-map>
-</template>
 <script setup>
 import { VmMap } from '@meteosci/vue-maplibre'
 </script>
+
+<template>
+  <VmMap map-style="https://demotiles.maplibre.org/style.json" />
+</template>
 ```
 
 ## 快捷搭建项目模板

@@ -100,6 +100,7 @@ export interface ConfigProviderContext {
   reloadMode?: 'once' | 'all'
   __mapUnloadingPromise?: Promise<boolean>
   vmMitt?: Emitter<VmMittEvents>
+  debug?: boolean
   [propName: string]: any
 }
 

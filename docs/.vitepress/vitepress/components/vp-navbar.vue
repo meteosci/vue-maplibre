@@ -1,21 +1,13 @@
-<!--
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-06-08 19:56:02
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 16:24:57
- * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\vp-navbar.vue
--->
 <script setup lang="ts">
+import { version as epVersion } from '@meteosci/vue-maplibre'
+import { inBrowser, useData, withBase } from 'vitepress'
 import { computed } from 'vue'
-import { inBrowser, useData } from 'vitepress'
-
-import VPNavbarSearch from './navbar/vp-search.vue'
+import VPNavbarHamburger from './navbar/vp-hamburger.vue'
 import VPNavbarMenu from './navbar/vp-menu.vue'
+// import VPNavbarSearch from './navbar/vp-search.vue'
+import VPNavbarSocialLinks from './navbar/vp-social-links.vue'
 import VPNavbarThemeToggler from './navbar/vp-theme-toggler.vue'
 import VPNavbarTranslation from './navbar/vp-translation.vue'
-import VPNavbarSocialLinks from './navbar/vp-social-links.vue'
-import VPNavbarHamburger from './navbar/vp-hamburger.vue'
 
 defineProps<{
   fullScreen: boolean
@@ -23,14 +15,14 @@ defineProps<{
 
 defineEmits(['toggle'])
 
-const { theme, page } = useData()
+const { theme, page, site } = useData()
 
 const currentLink = computed(() => {
   if (!inBrowser) {
     return `/${page.value?.frontmatter?.lang || ''}/`
   }
-  const existLangIndex = theme.value.langs.findIndex((lang) =>
-    window?.location?.pathname.startsWith(`/${lang}`)
+  const existLangIndex = theme.value.langs.findIndex(lang =>
+    window?.location?.pathname.startsWith(`${site.value.base}${lang}`)
   )
 
   return existLangIndex === -1 ? '/' : `/${theme.value.langs[existLangIndex]}/`
@@ -41,13 +33,18 @@ const currentLink = computed(() => {
   <div class="navbar-wrapper">
     <div class="header-container">
       <div class="logo-container">
-        <a :href="currentLink">
+        <a :href="withBase(currentLink)">
           <img
             class="logo"
             src="/images/vue-maplibre-logo.svg"
             alt="Vue Maplibre Logo"
-          />
+          >
         </a>
+        <el-tag round size="small" title="latest version">
+          {{
+            epVersion.replace('0.0.0-staging.', '')
+          }}
+        </el-tag>
       </div>
       <div class="content">
         <!-- <VPNavbarSearch class="search" :options="theme.agolia" multilang /> -->
@@ -71,6 +68,7 @@ const currentLink = computed(() => {
   align-items: center;
   height: var(--header-height);
   > a {
+    height: 28px;
     width: 128px;
   }
   .logo {

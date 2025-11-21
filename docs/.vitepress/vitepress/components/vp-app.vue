@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import en from '@vue-maplibre/locale/lang/en-us'
+import zhCn from '@vue-maplibre/locale/lang/zh-cn'
 // import { ElMessageBox } from 'element-plus'
-import nprogress from 'nprogress'
 // import dayjs from 'dayjs'
 import { isClient, useEventListener, useToggle } from '@vueuse/core'
+import { EVENT_CODE } from 'element-plus'
+import { computed, onMounted } from 'vue'
+import { useLang } from '../composables/lang'
 import { useSidebar } from '../composables/sidebar'
 import { useToggleWidgets } from '../composables/toggle-widgets'
 // import { useLang } from '../composables/lang'
 import { breakpoints } from '../constant'
-import VPOverlay from './vp-overlay.vue'
-import VPSkipLink from './vp-skip-link.vue'
-import VPNav from './vp-nav.vue'
-import VPSubNav from './vp-subnav.vue'
-import VPSidebar from './vp-sidebar.vue'
 import VPContent from './vp-content.vue'
+import VPNav from './vp-nav.vue'
+import VPOverlay from './vp-overlay.vue'
+import VPSidebar from './vp-sidebar.vue'
+import VPSkipLink from './vp-skip-link.vue'
 import VPSponsors from './vp-sponsors.vue'
-import { useLang } from '../composables/lang'
-import zhCn from '@vue-maplibre/locale/lang/zh-cn'
-import en from '@vue-maplibre/locale/lang/en-us'
+import VPSubNav from './vp-subnav.vue'
 
 // const USER_PREFER_GITHUB_PAGE = 'USER_PREFER_GITHUB_PAGE'
 const [isSidebarOpen, toggleSidebar] = useToggle(false)
@@ -31,15 +31,17 @@ const lang = useLang()
 // }
 
 useToggleWidgets(isSidebarOpen, () => {
-  if (!isClient) return
+  if (!isClient)
+    return
   if (window.outerWidth >= breakpoints.lg) {
     toggleSidebar(false)
   }
 })
 
-useEventListener('keydown', e => {
-  if (!isClient) return
-  if (e.key === 'Escape' && isSidebarOpen.value) {
+useEventListener('keydown', (e) => {
+  if (!isClient)
+    return
+  if (e.code === EVENT_CODE.esc && isSidebarOpen.value) {
     toggleSidebar(false)
     document.querySelector<HTMLButtonElement>('.sidebar-button')?.focus()
   }
@@ -48,36 +50,14 @@ useEventListener('keydown', e => {
 // const userPrefer = useStorage<boolean | string>(USER_PREFER_GITHUB_PAGE, null)
 
 onMounted(async () => {
-  if (!isClient) return
-  window.addEventListener(
-    'click',
-    e => {
-      const link = (e.target as HTMLElement).closest('a')
-      if (!link) return
+  if (!isClient)
+    return
 
-      const { protocol, hostname, pathname, target } = link
-      const currentUrl = window.location
-      const extMatch = pathname.match(/\.\w+$/)
-      // only intercept inbound links
-      if (
-        !e.ctrlKey &&
-        !e.shiftKey &&
-        !e.altKey &&
-        !e.metaKey &&
-        target !== `_blank` &&
-        protocol === currentUrl.protocol &&
-        hostname === currentUrl.hostname &&
-        !(extMatch && extMatch[0] !== '.html')
-      ) {
-        e.preventDefault()
-        if (pathname !== currentUrl.pathname) {
-          nprogress.start()
-        }
-      }
-    },
-    { capture: true }
-  )
-
+  navigator?.serviceWorker?.getRegistrations().then((registrations) => {
+    for (const registration of registrations) {
+      registration.unregister()
+    }
+  })
   // if (lang.value === 'zh-CN') {
   //   if (isMirrorUrl()) return
 
@@ -109,11 +89,6 @@ onMounted(async () => {
   //   }
   // }
   // unregister sw
-  navigator?.serviceWorker?.getRegistrations().then(registrations => {
-    for (const registration of registrations) {
-      registration.unregister()
-    }
-  })
 })
 
 const locale = computed(() => (lang.value === 'zh-CN' ? zhCn : en))
@@ -123,9 +98,17 @@ const locale = computed(() => (lang.value === 'zh-CN' ? zhCn : en))
   <VmConfigProvider :locale="locale">
     <div class="App">
       <VPSkipLink />
-      <VPOverlay class="overlay" :show="isSidebarOpen" @click="toggleSidebar(false)" />
+      <VPOverlay
+        class="overlay"
+        :show="isSidebarOpen"
+        @click="toggleSidebar(false)"
+      />
       <VPNav />
-      <VPSubNav v-if="hasSidebar" :is-sidebar-open="isSidebarOpen" @open-menu="toggleSidebar(true)" />
+      <VPSubNav
+        v-if="hasSidebar"
+        :is-sidebar-open="isSidebarOpen"
+        @open-menu="toggleSidebar(true)"
+      />
       <VPSidebar :open="isSidebarOpen" @close="toggleSidebar(false)">
         <template #top>
           <VPSponsors />
@@ -134,7 +117,7 @@ const locale = computed(() => (lang.value === 'zh-CN' ? zhCn : en))
           <slot name="sidebar-bottom" />
         </template>
       </VPSidebar>
-      <VPContent :is-sidebar-open="isSidebarOpen">
+      <VPContent>
         <template #content-top>
           <slot name="content-top" />
         </template>
@@ -151,7 +134,6 @@ const locale = computed(() => (lang.value === 'zh-CN' ? zhCn : en))
           <slot name="aside-bottom" />
         </template>
       </VPContent>
-      <Debug />
     </div>
   </VmConfigProvider>
 </template>

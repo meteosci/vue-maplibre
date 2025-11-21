@@ -2,9 +2,9 @@
 import { useNav } from '../../composables/nav'
 import VPMenuLink from './vp-menu-link.vue'
 
-const navs = useNav()
-
 defineEmits(['close'])
+
+const navs = useNav()
 </script>
 
 <template>

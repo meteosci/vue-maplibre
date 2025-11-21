@@ -16,7 +16,7 @@ const globalConfig = useGlobalConfig()
 function makeLog(prefix = '') {
   return function (...args) {
     const { t } = useLocale()
-    prefix = t('notify.log')
+    prefix = t('vm.notify.log')
 
     if (prefix) {
       if (isString(args[0])) {
@@ -43,7 +43,7 @@ function makeLog(prefix = '') {
 function makeWarn(prefix = '') {
   return function (...args) {
     const { t } = useLocale()
-    prefix = t('notify.warn')
+    prefix = t('vm.notify.warn')
 
     if (prefix) {
       if (isString(args[0])) {
@@ -70,7 +70,7 @@ function makeWarn(prefix = '') {
 function makeError(prefix = '') {
   return function (...args) {
     const { t } = useLocale()
-    prefix = t('notify.error')
+    prefix = t('vm.notify.error')
 
     if (prefix) {
       if (isString(args[0])) {
@@ -96,7 +96,7 @@ function makeError(prefix = '') {
 function makeDebug(prefix = '') {
   return function (...args) {
     const { t } = useLocale()
-    prefix = t('notify.debug')
+    prefix = t('vm.notify.debug')
 
     if (prefix) {
       if (isString(args[0])) {
@@ -105,6 +105,10 @@ function makeDebug(prefix = '') {
       else {
         args = [prefix.trim(), ...args]
       }
+    }
+
+    if (!globalConfig.value?.debug) {
+      return
     }
 
     console.log(...args)
@@ -123,7 +127,7 @@ function makeDebug(prefix = '') {
 function makeInfo(prefix = '') {
   return function (...args) {
     const { t } = useLocale()
-    prefix = t('notify.info')
+    prefix = t('vm.notify.info')
 
     if (prefix) {
       if (isString(args[0])) {

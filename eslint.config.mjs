@@ -52,7 +52,7 @@ export default antfu({
     '.github',
     'packages/theme-default/src/fonts',
     'publish',
-    'docs',
+    // 'docs',
     'demo/public/**/*',
     'typings/'
   ],

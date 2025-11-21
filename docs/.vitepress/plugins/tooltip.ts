@@ -1,6 +1,6 @@
-import type MarkdownIt from 'markdown-it'
+import type { MarkdownRenderer } from 'vitepress'
 
-export default (md: MarkdownIt): void => {
+export default (md: MarkdownRenderer): void => {
   md.renderer.rules.tooltip = (tokens, idx) => {
     const token = tokens[idx]
 
@@ -11,12 +11,15 @@ export default (md: MarkdownIt): void => {
     const tooltipRegExp = /^\^\[([^\]]*)\](`[^`]*`)?/
     const str = state.src.slice(state.pos, state.posMax)
 
-    if (!tooltipRegExp.test(str)) return false
-    if (silent) return true
+    if (!tooltipRegExp.test(str))
+      return false
+    if (silent)
+      return true
 
     const result = str.match(tooltipRegExp)
 
-    if (!result) return false
+    if (!result)
+      return false
 
     const token = state.push('tooltip', 'tooltip', 0)
     token.content = result[1].replace(/\\\|/g, '|')

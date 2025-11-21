@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import { useLockScreen } from '../composables/lock-screen'
 import VPFullScreenMenu from './full-screen/vp-menu.vue'
-import VPFullScreenTranslation from './full-screen/vp-translation.vue'
 import VPFullScreenThemeToggler from './full-screen/vp-theme-toggler.vue'
+import VPFullScreenTranslation from './full-screen/vp-translation.vue'
 
 defineProps<{
   fullScreen: boolean
@@ -41,8 +41,7 @@ const fullscreen = ref()
   &.el-fade-in-enter-active,
   &.el-fade-in-leave-active {
     .full-screen-container {
-      transition: transform var(--el-transition-duration)
-        var(--el-transition-function-ease-in-out-bezier);
+      transition: transform var(--el-transition-duration) var(--el-transition-function-ease-in-out-bezier);
     }
   }
 

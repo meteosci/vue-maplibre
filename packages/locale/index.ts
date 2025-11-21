@@ -16,4 +16,5 @@ export interface TranslatePair {
 export interface Language {
   name: string
   vm: TranslatePair
+  nativeName?: string
 }

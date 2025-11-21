@@ -3,7 +3,7 @@ import { getColorValue, useCopyColor } from '../../utils'
 
 const colorsType = ['success', 'warning', 'danger', 'info']
 
-const colorLevel = [3, 5, 7, 8, 9].map((item) => `light-${item}`)
+const colorLevel = [3, 5, 7, 8, 9].map(item => `light-${item}`)
 colorLevel.unshift('dark-2')
 
 const { copyColor } = useCopyColor()
@@ -29,9 +29,9 @@ const { copyColor } = useCopyColor()
             class="bg-secondary-sub-item transition cursor-pointer hover:shadow"
             :style="{
               width: `${100 / 6}%`,
-              background: `var(--el-color-${type}-` + level + ')',
+              background: `var(--el-color-${type}-${level})`,
             }"
-            @click="copyColor(type + '-' + level)"
+            @click="copyColor(`${type}-${level}`)"
           />
         </div>
       </div>

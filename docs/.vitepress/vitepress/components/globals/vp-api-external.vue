@@ -4,16 +4,16 @@ import VpLink from '../common/vp-link.vue'
 defineProps({
   text: {
     type: String,
-    required: true,
+    required: true
   },
   url: {
     type: String,
-    required: true,
+    required: true
   },
   prefix: {
     type: String,
-    default: '',
-  },
+    default: ''
+  }
 })
 </script>
 
@@ -27,7 +27,7 @@ defineProps({
 </template>
 
 <style scoped>
-::v-deep(.el-icon) {
+:deep(.el-icon) {
   font-size: 18px;
 }
 </style>

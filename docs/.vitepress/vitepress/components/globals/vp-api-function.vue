@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import ApiTyping from './vp-api-typing.vue'
-
 import type { PropType } from 'vue'
+import { computed } from 'vue'
+
+import ApiTyping from './vp-api-typing.vue'
 
 type ParamType = [string, string]
 
@@ -12,12 +12,12 @@ const props = defineProps({
    */
   params: {
     type: Array as PropType<Array<ParamType>>,
-    default: () => [],
+    default: () => []
   },
   returns: {
     type: String,
-    default: 'void',
-  },
+    default: 'void'
+  }
 })
 
 const mappedParams = computed(() =>
@@ -36,5 +36,5 @@ const details = computed(() => `(${mappedParams.value}) => ${props.returns}`)
 </script>
 
 <template>
-  <api-typing type="Function" :details="details" />
+  <ApiTyping type="Function" :details="details" />
 </template>

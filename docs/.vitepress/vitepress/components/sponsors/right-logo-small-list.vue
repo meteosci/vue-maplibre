@@ -1,30 +1,32 @@
 <script setup lang="ts">
-import { rightLogoSmallSponsors } from '../../../config/sponsors'
+import type { Sponsor } from '../../../config/sponsors'
+import { withBase } from 'vitepress'
 import { sendEvent } from '../../../config/analytics'
+import { rightLogoSmallSponsors } from '../../../config/sponsors'
+
 import { isDark } from '../../composables/dark'
-const onItemClick = (item: any) => {
+
+function onItemClick(item: Sponsor) {
   sendEvent('sp_click', item.name, 'right_logo_small')
 }
 </script>
 
 <template>
   <div class="flex flex-wrap justify-between right-small">
-    <template
-      v-for="item in rightLogoSmallSponsors.concat([{} as any])"
-      :key="item.name"
-    >
+    <template v-for="item in rightLogoSmallSponsors" :key="item.name">
       <div
         v-if="!item.url"
-        :class="[
+        class="flex bg-#F9F9F9 rd-0px h-42px w-95px justify-center items-center" :class="[
           isDark && '!bg-#262729 color-$text-color-placeholder',
-          'flex bg-#F9F9F9 rd-0px h-42px w-95px justify-center items-center',
         ]"
       >
-        <div class="color-#ddd text-13px cursor-default">Your logo</div>
+        <div class="color-#ddd text-13px cursor-default">
+          Your logo
+        </div>
       </div>
       <a
         v-else
-        :href="item.url"
+        :href="withBase(item.url)"
         :title="`${item.name_cn || item.name} - ${
           item.slogan_cn || item.slogan
         }`"
@@ -32,12 +34,11 @@ const onItemClick = (item: any) => {
         @click="onItemClick(item)"
       >
         <div
-          :class="[
+          class="flex m-b-4px bg-#F9F9F9 rd-0px h-42px w-95px justify-center items-center" :class="[
             isDark && '!bg-#262729',
-            'flex m-b-4px bg-#F9F9F9 rd-0px h-42px w-95px justify-center items-center',
           ]"
         >
-          <img :src="item.imgL" :alt="item.name" />
+          <img :src="withBase(item.imgL ?? '')" :alt="item.name">
         </div>
       </a>
     </template>

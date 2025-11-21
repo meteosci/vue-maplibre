@@ -7,7 +7,6 @@ lang: en-US
 
 A NavigationControl control contains zoom buttons and a compass. [see](https://maplibre.org/maplibre-gl-js/docs/API/classes/NavigationControl/)
 
-
 ## Basic usage
 
 :::demo Use VmControlNavigation component to add a NavigationControl.

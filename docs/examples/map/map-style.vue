@@ -6,21 +6,16 @@
  * @LastEditTime: 2024-07-25 12:02:54
  * @FilePath: \vue-maplibre\docs\examples\map\map-style.vue
 -->
-<template>
-  <div class="map-demo-container">
-    <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom" @ready="onMapReady"></VmMap>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { LngLatLike, StyleSpecification } from 'maplibre-gl'
+import type { VmReadyObject } from '@vue-maplibre/utils'
+import type { LngLatLike, StyleSpecification } from 'maplibre-gl'
 import { ref } from 'vue'
 import mapStyleMapbox from './style'
-import { VmReadyObject } from '@vue-maplibre/utils'
+
 const center = ref<LngLatLike>([108, 32])
 const zoom = ref(1)
 
-const onMapReady = (e: VmReadyObject) => {
+function onMapReady(e: VmReadyObject) {
   const { map } = e
   map.on('load', () => {
     // 强制刷新一次
@@ -31,3 +26,9 @@ const onMapReady = (e: VmReadyObject) => {
   })
 }
 </script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom" @ready="onMapReady" />
+  </div>
+</template>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { Warning } from '@element-plus/icons-vue'
-import { useLang } from '../../composables/lang'
+import { computed } from 'vue'
 import apiTypingLocale from '../../../i18n/component/api-typing.json'
+import { useLang } from '../../composables/lang'
 
 defineProps({
   type: String,
-  details: String,
+  details: String
 })
 
 const lang = useLang()

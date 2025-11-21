@@ -6,19 +6,9 @@
  * @LastEditTime: 2024-06-18 14:03:46
  * @FilePath: \vue-maplibre\docs\examples\layer-native\3d-terrain.vue
 -->
-<template>
-  <div class="map-demo-container">
-    <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom" @ready="onMapReady">
-      <VmLayerNative v-if="isMapReady" id="terrainSource" type="raster-dem" :source="terrainSource"></VmLayerNative>
-      <VmLayerNative v-if="isMapReady" id="hillshade" type="hillshade" :source="hillshade" :layout="layout" :paint="paint"></VmLayerNative>
-      <VmControlTerrain v-if="isMapReady" source="hillshade" position="top-left">asd</VmControlTerrain>
-    </VmMap>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
-import { RasterDEMSourceSpecification, HillshadeLayerSpecification, LngLatLike } from 'maplibre-gl'
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type { HillshadeLayerSpecification, LngLatLike, RasterDEMSourceSpecification } from 'maplibre-gl'
 import { ref } from 'vue'
 
 const center = ref<LngLatLike>([11.39085, 47.27574])
@@ -39,7 +29,7 @@ const terrainSource: RasterDEMSourceSpecification = {
   url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json'
 }
 
-const onMapReady = (e: VmReadyObject) => {
+function onMapReady(e: VmReadyObject) {
   const { map } = e
 
   map.on('load', () => {
@@ -48,3 +38,15 @@ const onMapReady = (e: VmReadyObject) => {
   })
 }
 </script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom" @ready="onMapReady">
+      <VmLayerNative v-if="isMapReady" id="terrainSource" type="raster-dem" :source="terrainSource" />
+      <VmLayerNative v-if="isMapReady" id="hillshade" type="hillshade" :source="hillshade" :layout="layout" :paint="paint" />
+      <VmControlTerrain v-if="isMapReady" source="hillshade" position="top-left">
+        asd
+      </VmControlTerrain>
+    </VmMap>
+  </div>
+</template>

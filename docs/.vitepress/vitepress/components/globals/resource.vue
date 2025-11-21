@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { isClient } from '@vueuse/core'
-import { useLang } from '../../composables/lang'
-import resourceLocale from '../../../i18n/pages/resource.json'
+import { computed } from 'vue'
 import { sendEvent } from '../../../config/analytics'
-
-import AxureComponentsSvg from './resources/axure-components-svg.vue'
-import SketchTemplateSvg from './resources/sketch-template-svg.vue'
-import FigmaTemplateSvg from './resources/figma-template-svg.vue'
-import FigmaVariablesSvg from './resources/figma-variables-svg.vue'
-import FigmaUiKitSvg from './resources/figma-ui-kit-svg.vue'
-import MasterGoUiKitSvg from './resources/master-go-ui-kit-svg.vue'
+import resourceLocale from '../../../i18n/pages/resource.json'
+import { useLang } from '../../composables/lang'
+// import AxureComponentsSvg from './resources/axure-components-svg.vue'
+// import FigmaTemplateSvg from './resources/figma-template-svg.vue'
+// import FigmaUiKitSvg from './resources/figma-ui-kit-svg.vue'
+// import FigmaVariablesSvg from './resources/figma-variables-svg.vue'
+// import MasterGoUiKitSvg from './resources/master-go-ui-kit-svg.vue'
+// import SketchTemplateSvg from './resources/sketch-template-svg.vue'
 
 const mirrorUrl = 'element-plus.gitee.io'
-const isMirrorUrl = () => {
-  if (!isClient) return
+function isMirrorUrl() {
+  if (!isClient)
+    return
   return window.location.hostname === mirrorUrl
 }
 const resourceUrl = {
@@ -22,69 +22,65 @@ const resourceUrl = {
     sketch:
       'https://github.com/ElementUI/Resources/raw/master/Element_Plus_Design_System_2022_1.0_Beta.zip',
     axure:
-      'https://github.com/ElementUI/Resources/raw/master/Element_Components_v2.1.0.rplib',
+      'https://github.com/ElementUI/Resources/raw/master/Element_Components_v2.1.0.rplib'
   },
   gitee: {
     sketch:
       'https://gitee.com/element-plus/resources/raw/master/Element_Plus_Design_System_2022_1.0_Beta.zip',
     axure:
-      'https://gitee.com/element-plus/resources/raw/master/Element_Components_v2.1.0.rplib',
-  },
+      'https://gitee.com/element-plus/resources/raw/master/Element_Components_v2.1.0.rplib'
+  }
 }[isMirrorUrl() ? 'gitee' : 'github']
 
 const lang = useLang()
 const resourceLang = computed(() => resourceLocale[lang.value])
-const onClick = (item: string) => {
+function onClick(item: string) {
   sendEvent('resource_download', item)
 }
 
 const resourceCards = computed(() => [
   // {
+  //   key: '2024-master-go-ui-kit',
+  //   title: resourceLang.value.masterGo2024,
+  //   icon: MasterGoUiKitSvg,
+  //   intro: resourceLang.value.masterGo2024Intro,
+  //   url: 'https://mastergo.com/community/resource/124855257836266'
+  // },
+  // {
   //   key: '2023-figma-ui-kit',
   //   title: resourceLang.value.figma2023,
-  //   description: '2023 Figma UI Kit',
   //   icon: FigmaUiKitSvg,
   //   intro: resourceLang.value.figma2023Intro,
-  //   url: 'https://www.figma.com/community/file/1305760370797950824/element-plus-design-system-ui-kit',
+  //   url: 'https://www.figma.com/community/file/1305760370797950824/element-plus-design-system-ui-kit'
   // },
   // {
   //   key: 'figma-variables',
   //   title: resourceLang.value.figmaVariables,
   //   icon: FigmaVariablesSvg,
   //   intro: resourceLang.value.figmaVariablesIntro,
-  //   url: 'https://www.figma.com/community/file/1256091634199852065',
+  //   url: 'https://www.figma.com/community/file/1256091634199852065'
   // },
   // {
   //   key: 'figma',
   //   title: resourceLang.value.figma,
   //   icon: FigmaTemplateSvg,
   //   intro: resourceLang.value.figmaIntro,
-  //   url: 'https://www.figma.com/community/file/1021254029764378306',
-  // },
-  // {
-  //   key: '2024-master-go-ui-kit',
-  //   title: resourceLang.value.masterGo2024,
-  //   description: '2024 MasterGo UI Kit',
-  //   icon: MasterGoUiKitSvg,
-  //   intro: resourceLang.value.masterGo2024Intro,
-  //   url: 'https://mastergo.com/community/resource/124855257836266',
+  //   url: 'https://www.figma.com/community/file/1021254029764378306'
   // },
   // {
   //   key: 'sketch',
   //   title: resourceLang.value.sketch,
-  //   description: 'Sketch 70.6',
   //   icon: SketchTemplateSvg,
   //   intro: resourceLang.value.sketchIntro,
-  //   url: resourceUrl.sketch,
+  //   url: resourceUrl.sketch
   // },
   // {
   //   key: 'axure',
   //   title: resourceLang.value.axure,
-  //   description: 'Axure RP 9.0',
   //   icon: AxureComponentsSvg,
   //   intro: resourceLang.value.axureIntro,
-  //   url: resourceUrl.axure,
-  // },
+  //   url: resourceUrl.axure
+  // }
 ])
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useLang } from '../../composables/lang'
 import homeLocale from '../../../i18n/pages/home.json'
+import { useLang } from '../../composables/lang'
 
 defineProps<{
   isHome?: boolean
@@ -15,19 +15,12 @@ const homeLang = computed(() => homeLocale[lang.value])
   <footer class="footer" :class="{ 'is-home': isHome }">
     <div class="footer-main">
       <h4>{{ homeLang['10'] }}</h4>
-      <a
-        href="http://github.com/meteosci/vue-maplibre"
-        class="footer-main-link"
-        target="_blank"
-      >
-        {{ homeLang['11'] }}
-      </a>
       <!-- <a
         href="https://cn.element-plus.org/zh-CN/"
         class="footer-main-link"
         target="_blank"
       >
-        {{ homeLang['china_mirror'] }}
+        {{ homeLang.china_mirror }}
       </a> -->
       <a
         href="http://github.com/meteosci/vue-maplibre/releases"
@@ -43,16 +36,30 @@ const homeLang = computed(() => homeLocale[lang.value])
       >
         {{ homeLang['13'] }}
       </a> -->
+      <!-- <a
+        href="https://element-plus.org/sitemap.xml"
+        class="footer-main-link"
+        target="_blank"
+      >
+        {{ homeLang.site_map }}
+      </a> -->
     </div>
 
     <div class="footer-main">
       <h4>{{ homeLang['19'] }}</h4>
+      <a
+        href="https://github.com/meteosci/vue-maplibre"
+        class="footer-main-link"
+        target="_blank"
+      >
+        {{ homeLang['11'] }}
+      </a>
       <!-- <a
         href="https://discord.com/invite/gXK9XNzW3X"
         class="footer-main-link"
         target="_blank"
       >
-        {{ homeLang['discord'] }}
+        {{ homeLang.discord }}
       </a> -->
       <a
         href="http://github.com/meteosci/vue-maplibre/issues"

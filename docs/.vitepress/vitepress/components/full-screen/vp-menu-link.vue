@@ -1,19 +1,20 @@
 <script lang="ts" setup>
+import type { Link } from '../../types'
+import { usePlaygroundPreview } from '../../composables/use-playground'
+
 import VPLink from '../common/vp-link.vue'
 
-import type { Link } from '../../types'
-
-defineProps<{
+const props = defineProps<{
   item: Link
 }>()
+
+const targetLink = usePlaygroundPreview(props)
 </script>
 
 <template>
   <VPLink
-    :class="{
-      'is-menu-link': true,
-    }"
-    :href="item.link"
+    class="is-menu-link"
+    :href="targetLink"
     :no-icon="true"
   >
     {{ item.text }}

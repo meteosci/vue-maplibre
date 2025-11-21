@@ -5,9 +5,9 @@ import ApiTyping from './vp-api-typing.vue'
 const props = defineProps({
   type: {
     type: String,
-    required: true,
+    required: true
   },
-  shallow: Boolean,
+  shallow: Boolean
 })
 
 const type = computed(() => {

@@ -6,24 +6,16 @@
  * @LastEditTime: 2024-06-18 14:03:30
  * @FilePath: \vue-maplibre\docs\examples\control-terrain\usage.vue
 -->
-<template>
-  <div class="map-demo-container">
-    <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom" @ready="onMapReady">
-      <VmControlTerrain v-if="isMapReady" source="hillshadeSource" position="top-left">asd</VmControlTerrain>
-    </VmMap>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
-import { LngLatLike } from 'maplibre-gl'
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type { LngLatLike } from 'maplibre-gl'
 import { ref } from 'vue'
 
 const center = ref<LngLatLike>([11.39085, 47.27574])
 const zoom = ref(12)
 const isMapReady = ref(false)
 
-const onMapReady = (e: VmReadyObject) => {
+function onMapReady(e: VmReadyObject) {
   console.log('onMapReady', e)
   const { map } = e
 
@@ -55,3 +47,11 @@ const onMapReady = (e: VmReadyObject) => {
   })
 }
 </script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom" @ready="onMapReady">
+      <VmControlTerrain v-if="isMapReady" source="hillshadeSource" position="top-left" />
+    </VmMap>
+  </div>
+</template>

@@ -1,8 +1,11 @@
-import type MarkdownIt from 'markdown-it'
-import type Renderer from 'markdown-it/lib/renderer'
+import type { MarkdownRenderer } from 'vitepress'
 
-export default (md: MarkdownIt): void => {
-  const renderToken: Renderer.RenderRule = (tokens, idx, options, env, self) =>
+type RenderRule = Exclude<
+  MarkdownRenderer['renderer']['rules']['container'],
+  undefined
+>
+export default (md: MarkdownRenderer): void => {
+  const renderToken: RenderRule = (tokens, idx, options, env, self) =>
     self.renderToken(tokens, idx, options)
   const defaultLinkOpenRenderer = md.renderer.rules.link_open || renderToken
   const defaultLinkCloseRenderer = md.renderer.rules.link_close || renderToken
@@ -14,6 +17,7 @@ export default (md: MarkdownIt): void => {
 
     if (href) {
       token.attrJoin('class', 'vp-link')
+      // eslint-disable-next-line regexp/no-unused-capturing-group
       if (/^((ht|f)tps?):\/\/?/.test(href)) {
         isExternalLink = true
       }

@@ -1,31 +1,30 @@
-<!--
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-06-14 11:12:54
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-17 09:36:57
- * @FilePath: \vue-maplibre\docs\.vitepress\vitepress\components\navbar\vp-menu-link.vue
--->
 <script lang="ts" setup>
-import { useRoute } from 'vitepress'
-import { useStorage } from '@vueuse/core'
-import VPLink from '../common/vp-link.vue'
-import { isActiveLink } from '../../utils'
-
 import type { Link } from '../../types'
-const USER_VISITED_NEW_RESOURCE_PAGE = 'USER_VISITED_NEW_RESOURCE_PAGE'
-defineProps<{
+import { useStorage } from '@vueuse/core'
+import { useRoute } from 'vitepress'
+import { usePlaygroundPreview } from '../../composables/use-playground'
+import { isActive } from '../../utils'
+
+import VPLink from '../common/vp-link.vue'
+
+const props = defineProps<{
   item: Link
 }>()
 
+const USER_VISITED_NEW_RESOURCE_PAGE = 'USER_VISITED_NEW_RESOURCE_PAGE'
+
 const route = useRoute()
+
 const isVisited = useStorage<boolean | string>(
   USER_VISITED_NEW_RESOURCE_PAGE,
   false
 )
+
+const targetLink = usePlaygroundPreview(props)
+
 const isNewPage = (item: Link) => item.activeMatch === '/some_fake_path/'
 
-const onNavClick = (item: Link) => {
+function onNavClick(item: Link) {
   if (isNewPage(item) && !isVisited.value) {
     isVisited.value = Date.now().toString()
   }
@@ -34,22 +33,23 @@ const onNavClick = (item: Link) => {
 
 <template>
   <VPLink
-    :class="{
-      'is-menu-link': true,
-      active: isActiveLink(
-        route,
+    class="is-menu-link" :class="{
+      active: isActive(
+        route.data.relativePath,
         item.activeMatch || item.link,
-        !!item.activeMatch
+        !!item.activeMatch,
       ),
     }"
-    :href="item.link"
+    :href="targetLink"
     :no-icon="true"
     @click="onNavClick(item)"
   >
     <el-badge v-if="isNewPage(item) && !isVisited" is-dot class="badge">
-      {{ item.text }}</el-badge
-    >
-    <template v-else> {{ item.text }}</template>
+      {{ item.text }}
+    </el-badge>
+    <template v-else>
+      {{ item.text }}
+    </template>
   </VPLink>
 </template>
 
@@ -77,7 +77,7 @@ const onNavClick = (item: Link) => {
     vertical-align: unset;
   }
 
-  .badge::v-deep(.is-dot) {
+  .badge:deep(.is-dot) {
     right: 0;
   }
 }

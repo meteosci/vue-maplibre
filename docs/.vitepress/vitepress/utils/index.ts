@@ -1,31 +1,16 @@
-import {
-  endingSlashRE,
-  isActive,
-  isExternal,
-  normalize,
-} from 'vitepress/dist/client/theme-default/utils'
-
-import type { Route } from 'vitepress'
+import { isExternal } from 'vitepress/dist/client/shared'
 
 export * from './colors'
 
-export {
-  isArray,
-  isNullish,
-  isExternal,
-  isActive,
-  normalize,
-  joinUrl,
-  ensureEndingSlash,
-  ensureStartingSlash,
-  removeExtention,
-} from 'vitepress/dist/client/theme-default/utils'
+export { isActive, isExternal } from 'vitepress/dist/client/shared'
+export { ensureStartingSlash } from 'vitepress/dist/client/theme-default/support/utils'
 
+const endingSlashRE = /\/$/
 export function utoa(data: string): string {
   return btoa(unescape(encodeURIComponent(data)))
 }
 
-export const throttleAndDebounce = (fn: () => any, delay: number) => {
+export function throttleAndDebounce(fn: () => any, delay: number) {
   let timeout: ReturnType<typeof setTimeout>
   let called = false
   return () => {
@@ -38,22 +23,11 @@ export const throttleAndDebounce = (fn: () => any, delay: number) => {
       setTimeout(() => {
         called = false
       }, delay)
-    } else {
+    }
+    else {
       timeout = setTimeout(fn, delay)
     }
   }
-}
-
-// When match === true, meaning `path` is a string for build regex
-export const isActiveLink = (
-  route: Route,
-  pathPattern: string,
-  match?: boolean
-) => {
-  if (!match) return isActive(route, pathPattern)
-  const regex = new RegExp(pathPattern)
-
-  return regex.test(normalize(`/${route.data.relativePath}`))
 }
 
 export function createGitHubUrl(
@@ -72,14 +46,7 @@ export function createGitHubUrl(
   }${folder || ''}${path}${ext || ''}`
 }
 
-export function createCrowdinUrl(targetLang: string) {
-  let translateLang = ''
-  // for zh-CN zh-HK zh-TW, maybe later we will have cases like Chinese lang
-  // for now we just keep it as simple as possible.
-  if (targetLang.startsWith('zh-')) {
-    translateLang = targetLang.split('-').join('').toLocaleLowerCase()
-  } else {
-    translateLang = targetLang.split('-').shift()!.toLocaleLowerCase()
-  }
-  return `https://crowdin.com/translate/element-plus/all/en-${translateLang}`
+export function createCrowdinUrl(/** zh-CN、es-ES... */ targetLang: string) {
+  // example: https://crowdin.com/project/element-plus/zh-CN
+  return `https://crowdin.com/project/element-plus/${targetLang}`
 }

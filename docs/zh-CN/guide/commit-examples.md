@@ -1,11 +1,3 @@
-<!--
- * @Author: zouyaoji@https://github.com/zouyaoji
- * @Date: 2024-06-11 00:10:26
- * @Description: Do not edit
- * @LastEditors: zouyaoji 370681295@qq.com
- * @LastEditTime: 2024-06-14 11:06:08
- * @FilePath: \vue-maplibre\docs\zh-CN\guide\commit-examples.md
--->
 ---
 title: 提交示例
 lang: zh-CN

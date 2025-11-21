@@ -1,3 +1,4 @@
+<!-- eslint-disable style/no-tabs -->
 <template>
   <!-- Generator: Adobe Illustrator 26.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
   <svg
