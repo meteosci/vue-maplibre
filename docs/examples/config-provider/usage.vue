@@ -37,7 +37,7 @@ function toggle() {
       </el-button>
     </div>
     <VmConfigProvider :locale="locale">
-      <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom">
+      <VmMap map-style="/map/styleWan.json" :center="center" :zoom="zoom">
         <VmControlNavigation />
       </VmMap>
     </VmConfigProvider>

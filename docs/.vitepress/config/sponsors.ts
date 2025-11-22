@@ -21,7 +21,7 @@ export const rightBigLogoSponsors: Sponsor[] = [
     imgL: '/images/sponsors/vue-cesium-logo.svg',
     url: 'https://zouyaoji.top/vue-cesium/',
     slogan: 'A Vue3 based component library of MaplibreGL for developers.',
-    slogan_cn: '基于 Vue 3，面向开发者的 MaplibreGL 组件库。',
+    slogan_cn: '基于 Vue 3，面向开发者的 Maplibre GL 组件库。',
     slogan_index: 'Vue for Cesium'
   }
 ]

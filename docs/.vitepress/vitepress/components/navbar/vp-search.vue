@@ -61,7 +61,7 @@ function initialize(userOptions: any) {
   docsearch(
     Object.assign({}, userOptions, {
       container: '#docsearch',
-      indexName: 'element-plus',
+      indexName: 'vue-maplibre-docs',
       placeholder: algoliaLocale.placeholder,
       translations: algoliaLocale.translations,
       searchParameters: Object.assign({}, userOptions.searchParameters, {
@@ -73,7 +73,7 @@ function initialize(userOptions: any) {
       }),
 
       getMissingResultsUrl({ query }: { query: string }) {
-        return `https://github.com/element-plus/element-plus/issues/new?title=${encodeURIComponent(
+        return `https://github.com/meteosci/vue-maplibre/issues/new?title=${encodeURIComponent(
           `[Docs] Missing search result for \`${query}\``
         )}`
       },

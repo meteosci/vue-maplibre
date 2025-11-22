@@ -90,22 +90,6 @@
       }
     },
     {
-      "id": "国界线",
-      "type": "line",
-      "source": "cloudtao_world",
-      "source-layer": "admin",
-      "paint": {
-        "line-color": "rgba(198, 198, 198, 1)",
-        "line-width": 1,
-        "line-opacity": 0
-      },
-      "minzoom": 0,
-      "maxzoom": 7,
-      "layout": {
-        "visibility": "visible"
-      }
-    },
-    {
       "id": "区县界线",
       "type": "line",
       "source": "cloudtao_china",
@@ -340,6 +324,21 @@
       ]
     },
     {
+      "id": "国界线",
+      "type": "line",
+      "source": "cloudtao_world",
+      "source-layer": "admin",
+      "paint": {
+        "line-color": "#EAC359",
+        "line-width": 2
+      },
+      "minzoom": 0,
+      "maxzoom": 7,
+      "layout": {
+        "visibility": "visible"
+      }
+    },
+    {
       "id": "关注区界线",
       "type": "line",
       "source": "cloudtao_china",
@@ -410,7 +409,7 @@
         ],
         "text-allow-overlap": false,
         "text-ignore-placement": false,
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "text-halo-width": 2,
@@ -483,14 +482,6 @@
       ]
     },
     {
-      "id": "天地图_矢量中文注记",
-      "type": "raster",
-      "source": "cva_w",
-      "layout": {
-        "visibility": "none"
-      }
-    },
-    {
       "id": "地级市名",
       "type": "symbol",
       "source": "cloudtao_china",
@@ -542,9 +533,7 @@
       "layout": {
         "text-field": "{name}",
         "text-line-height": 1.1,
-        "text-size": 15,
-        "text-allow-overlap": true,
-        "text-ignore-placement": true
+        "text-size": 15
       },
       "minzoom": 6.5,
       "maxzoom": 10,

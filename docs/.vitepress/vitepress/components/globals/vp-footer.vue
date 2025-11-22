@@ -36,13 +36,13 @@ const homeLang = computed(() => homeLocale[lang.value])
       >
         {{ homeLang['13'] }}
       </a> -->
-      <!-- <a
-        href="https://element-plus.org/sitemap.xml"
+      <a
+        href="https://vue-maplibre.meteosci.com/sitemap.xml"
         class="footer-main-link"
         target="_blank"
       >
         {{ homeLang.site_map }}
-      </a> -->
+      </a>
     </div>
 
     <div class="footer-main">
