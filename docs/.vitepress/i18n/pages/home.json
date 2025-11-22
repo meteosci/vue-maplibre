@@ -25,7 +25,8 @@
     "title": "Vue Maplibre",
     "title_sub": "A Vue3 based component library of MaplibreGL for developers.",
     "china_mirror": "China Mirror 🇨🇳",
-    "discord": "Discord"
+    "discord": "Discord",
+    "site_map": "Site Map"
   },
   "zh-CN": {
     "1": "",
@@ -53,6 +54,7 @@
     "title": "Vue Maplibre",
     "title_sub": "基于 Vue 3，面向开发者的 MaplibreGL 组件库。",
     "china_mirror": "国内镜像站点 🇨🇳",
-    "discord": "Discord"
+    "discord": "Discord",
+    "site_map": "Site Map"
   }
 }

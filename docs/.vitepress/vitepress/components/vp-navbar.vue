@@ -2,6 +2,7 @@
 import { version as epVersion } from '@meteosci/vue-maplibre'
 import { inBrowser, useData, withBase } from 'vitepress'
 import { computed } from 'vue'
+import { useLang } from '~/composables/lang'
 import VPNavbarHamburger from './navbar/vp-hamburger.vue'
 import VPNavbarMenu from './navbar/vp-menu.vue'
 import VPNavbarSearch from './navbar/vp-search.vue'
@@ -16,6 +17,8 @@ defineProps<{
 defineEmits(['toggle'])
 
 const { theme, page, site } = useData()
+
+const lang = useLang()
 
 const currentLink = computed(() => {
   if (!inBrowser) {
@@ -47,7 +50,7 @@ const currentLink = computed(() => {
         </el-tag>
       </div>
       <div class="content">
-        <VPNavbarSearch class="search" :options="theme.agolia" multilang />
+        <VPNavbarSearch :key="lang" class="search" :options="theme.agolia" multilang />
         <VPNavbarMenu class="menu" />
         <VPNavbarThemeToggler class="theme-toggler" />
         <VPNavbarTranslation class="translation" />

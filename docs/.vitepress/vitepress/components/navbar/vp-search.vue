@@ -55,7 +55,7 @@ function update(options: any) {
 function initialize(userOptions: any) {
   // if the user has multiple locales, the search results should be filtered
   // based on the language
-  const facetFilters = props.multilang ? [`language:${lang.value}`] : []
+  const facetFilters = props.multilang ? [`lang:${lang.value}`] : []
   const algoliaLocale = searchLocale[lang.value].algolia
 
   docsearch(

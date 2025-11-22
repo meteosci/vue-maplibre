@@ -66,15 +66,14 @@ export function getViteConfig({ mode }: { mode: string }) {
     },
     build: isBuild
       ? {
+          target: 'es2022',
           commonjsOptions: {
             transformMixedEsModules: true
           }
         }
-      : {},
-
-    esbuild: {
-      target: 'es2022'
-    },
+      : {
+          target: 'es2022'
+        },
     css: {
       preprocessorOptions: {
         scss: { api: 'modern-compiler' }
