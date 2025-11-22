@@ -1,5 +1,15 @@
 ## Changelog
 
+### 0.0.23
+
+_2025-11-XX_
+
+#### Changes
+
+- Updated the initialization options of the VmMap component for compatibility with maplibre-gl 5.13.0, and synchronized related parameters.
+- Upgraded all project dependencies to their latest versions.
+
+
 ### 0.0.22
 
 _2025-03-29_
