@@ -1,0 +1,1268 @@
+---
+Title: Config Provider
+URL: https://vue-maplibre.meteosci.com/en-US/component/config-provider
+---
+
+# Config Provider
+
+Config Provider is used for providing global configurations, which enables your entire application to access these configurations everywhere.
+
+## i18n Configurations
+
+Configure i18n related properties via Config Provider, to get language switching feature.
+
+
+
+## API
+
+### Props
+
+| Name       | Description                                                                                                                                                        | Type                     | Default |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ | ------- |
+| locale     | the locale Object.                                                                                                                                                 | ^[object]`Language`      | -       |
+| reloadMode | If multiple component properties are changed at once. 'all' means reload them in sequence; 'once' means reload only once after the last property has been changed. | ^[enum]`'once' \| 'all'` | -       |
+
+### Slots
+
+| Name    | Description                                               |
+| ------- | --------------------------------------------------------- |
+| default | Default slot content of the vm-config-provider component. |
+
+## Vue Examples
+
+### usage.vue
+```vue
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-14 17:24:02
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-18 14:03:03
+ * @FilePath: \vue-maplibre\docs\examples\config-provider\usage.vue
+-->
+<script lang="ts" setup>
+import type { LngLatLike } from 'maplibre-gl'
+
+// 本地
+// import en from '@vue-maplibre/locale/lang/en-us'
+// import zhCn from '@vue-maplibre/locale/lang/zh-cn'
+
+// npm
+import en from '@meteosci/vue-maplibre/dist/locale/en-us.mjs'
+import zhCn from '@meteosci/vue-maplibre/dist/locale/zh-cn.mjs'
+import { computed, ref } from 'vue'
+
+const language = ref('zh-cn')
+const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))
+
+const center = ref<LngLatLike>([108, 32])
+const zoom = ref(1)
+
+function toggle() {
+  language.value = language.value === 'zh-cn' ? 'en' : 'zh-cn'
+}
+</script>
+
+<template>
+  <div class="map-demo-container">
+    <div class="toolbar">
+      <el-button mb-2 @click="toggle">
+        Switch Language: {{ locale.nativeName }}
+      </el-button>
+    </div>
+    <VmConfigProvider :locale="locale">
+      <VmMap map-style="/map/styleWan.json" :center="center" :zoom="zoom">
+        <VmControlNavigation />
+      </VmMap>
+    </VmConfigProvider>
+  </div>
+</template>
+
+```
+
+
+---
+Title: VmControlNavigation
+URL: https://vue-maplibre.meteosci.com/en-US/component/control-navigation
+---
+
+# VmControlNavigation
+
+A NavigationControl control contains zoom buttons and a compass. [see](https://maplibre.org/maplibre-gl-js/docs/API/classes/NavigationControl/)
+
+## Basic usage
+
+
+
+## API
+
+### Props
+
+| Name           | Description                                                      | Type                                                                  | Default     |
+| -------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- | ----------- |
+| showCompass    | If `true` the compass button is included.                        | ^[boolean]                                                            | true        |
+| showZoom       | If `true` the zoom-in and zoom-out buttons are included.         | ^[boolean]                                                            | true        |
+| visualizePitch | If `true` the pitch is visualized by rotating X-axis of compass. | ^[boolean]                                                            | false       |
+| position       | position on the map to which the control will be added.          | ^[enum]`'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | 'top-right' |
+
+### Events
+
+| Name       | Description                                              | Type                                                         |
+| ---------- | -------------------------------------------------------- | ------------------------------------------------------------ |
+| beforeLoad | Triggers before the maplibreObject is loaded.            | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+| ready      | Triggers when the maplibreObject is successfully loaded. | ^[Function]`(readyObj: VmReadyObject) => void`               |
+| unready    | Triggers when the maplibreObject loading failed.         | ^[Function]`((e: any) => void`                               |
+| destroyed  | Triggers when the maplibreObject is destroyed.           | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+
+### Exposes
+
+| Name              | Description                                         | Type                                                 |
+| ----------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| load              | Load the component manually.                        | ^[Function]`() => Promise<VmReadyObject \| boolean>` |
+| unload            | Destroy the loaded component manually.              | ^[Function]`() => Promise<boolean>`                  |
+| reload            | Load the component manually.                        | ^[Function]`() => Promise<boolean>`                  |
+| creatingPromise   | Determine whether the component is created by this. | ^[object]`Promise<VmReadyObject>`                    |
+| maplibreObject    | The maplibreObject created by component.            | ^[object]`unknown`                                   |
+| getMaplibreObject | Get the maplibreObject created by component.        | ^[Function]`() => unknown`                           |
+
+## Vue Examples
+
+### usage.vue
+```vue
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-14 23:41:49
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2025-03-28 21:54:54
+ * @FilePath: \vue-maplibre\docs\examples\control-navigation\usage.vue
+-->
+<script lang="ts" setup>
+import type { LngLatLike } from 'maplibre-gl'
+import { ref } from 'vue'
+
+const center = ref<LngLatLike>([108, 32])
+const zoom = ref(1)
+</script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom">
+      <VmControlNavigation position="top-left">
+        asd
+      </VmControlNavigation>
+      <!-- <VmControlNavigation position="top-right"></VmControlNavigation>
+      <VmControlNavigation position="bottom-left"></VmControlNavigation> -->
+    </VmMap>
+  </div>
+</template>
+
+```
+
+
+---
+Title: VmControlTerrain
+URL: https://vue-maplibre.meteosci.com/en-US/component/control-terrain
+---
+
+# VmControlTerrain
+
+A [`TerrainControl`](https://maplibre.org/maplibre-gl-js/docs/API/classes/TerrainControl/) control contains a button for turning the terrain on and off.
+
+## Basic usage
+
+
+
+## API
+
+### Props
+
+| Name         | Description                                                           | Type                                                                  | Default     |
+| ------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------- |
+| source       | The name of terrain source.                                           | ^[string]                                                             | -           |
+| exaggeration | multiplicator for the elevation. Used to make terrain more "extreme". | ^[number]                                                             | -           |
+| position     | position on the map to which the control will be added.               | ^[enum]`'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | 'top-right' |
+
+### Events
+
+| Name       | Description                                              | Type                                                         |
+| ---------- | -------------------------------------------------------- | ------------------------------------------------------------ |
+| beforeLoad | Triggers before the maplibreObject is loaded.            | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+| ready      | Triggers when the maplibreObject is successfully loaded. | ^[Function]`(readyObj: VmReadyObject) => void`               |
+| unready    | Triggers when the maplibreObject loading failed.         | ^[Function]`((e: any) => void`                               |
+| destroyed  | Triggers when the maplibreObject is destroyed.           | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+
+### Exposes
+
+| Name              | Description                                         | Type                                                 |
+| ----------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| load              | Load the component manually.                        | ^[Function]`() => Promise<VmReadyObject \| boolean>` |
+| unload            | Destroy the loaded component manually.              | ^[Function]`() => Promise<boolean>`                  |
+| reload            | Load the component manually.                        | ^[Function]`() => Promise<boolean>`                  |
+| creatingPromise   | Determine whether the component is created by this. | ^[object]`Promise<VmReadyObject>`                    |
+| maplibreObject    | The maplibreObject created by component.            | ^[object]`unknown`                                   |
+| getMaplibreObject | Get the maplibreObject created by component.        | ^[Function]`() => unknown`                           |
+
+## Vue Examples
+
+### usage.vue
+```vue
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-14 23:41:49
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-18 14:03:30
+ * @FilePath: \vue-maplibre\docs\examples\control-terrain\usage.vue
+-->
+<script lang="ts" setup>
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type { LngLatLike } from 'maplibre-gl'
+import { ref } from 'vue'
+
+const center = ref<LngLatLike>([11.39085, 47.27574])
+const zoom = ref(12)
+const isMapReady = ref(false)
+
+function onMapReady(e: VmReadyObject) {
+  console.log('onMapReady', e)
+  const { map } = e
+
+  map.on('load', () => {
+    map.resize()
+    map.addSource('terrainSource', {
+      type: 'raster-dem',
+      url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json'
+    })
+
+    map.setTerrain({
+      source: 'terrainSource'
+    })
+
+    map.addSource('hillshadeSource', {
+      type: 'raster-dem',
+      url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json',
+      tileSize: 256
+    })
+
+    map.addLayer({
+      id: 'hills',
+      type: 'hillshade',
+      source: 'hillshadeSource',
+      layout: { visibility: 'visible' },
+      paint: { 'hillshade-shadow-color': '#473B24' }
+    })
+    isMapReady.value = true
+  })
+}
+</script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom" @ready="onMapReady">
+      <VmControlTerrain v-if="isMapReady" source="hillshadeSource" position="top-left" />
+    </VmMap>
+  </div>
+</template>
+
+```
+
+
+---
+Title: VmLayerGltf
+URL: https://vue-maplibre.meteosci.com/en-US/component/layer-gltf
+---
+
+# VmLayerGltf
+
+The `VmLayerGltf` component is a custom style layer with three.js to add 3D models to a map. [see](https://maplibre.org/maplibre-gl-js/docs/examples/add-3d-model/)
+
+## Basic usage
+
+
+
+## API
+
+### Props
+
+<!-- prettier-ignore -->
+| Name | Description | Type | Default |
+| ------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------- |
+| url | The url address of the gltf model. | ^[string] | - |
+| position | The position of the gltf model.. | ^[array]`[number, number] \| [number, number, number]` | - |
+| rotate | The rotation angle of the gltf model, in radians. | ^[array]`[number, number, number]` | [Math.PI / 2, 0, 0] |
+| scale | The scale angle of the gltf model. | ^[number] | 1 |
+
+### Events
+
+| Name       | Description                                              | Type                                                         |
+| ---------- | -------------------------------------------------------- | ------------------------------------------------------------ |
+| beforeLoad | Triggers before the maplibreObject is loaded.            | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+| ready      | Triggers when the maplibreObject is successfully loaded. | ^[Function]`(readyObj: VmReadyObject) => void`               |
+| unready    | Triggers when the maplibreObject loading failed.         | ^[Function]`((e: any) => void`                               |
+| destroyed  | Triggers when the maplibreObject is destroyed.           | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+
+### Exposes
+
+| Name              | Description                                         | Type                                                 |
+| ----------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| load              | Load the component manually.                        | ^[Function]`() => Promise<VmReadyObject \| boolean>` |
+| unload            | Destroy the loaded component manually.              | ^[Function]`() => Promise<boolean>`                  |
+| reload            | Load the component manually.                        | ^[Function]`() => Promise<boolean>`                  |
+| creatingPromise   | Determine whether the component is created by this. | ^[object]`Promise<VmReadyObject>`                    |
+| maplibreObject    | The maplibreObject created by component.            | ^[object]`unknown`                                   |
+| getMaplibreObject | Get the maplibreObject created by component.        | ^[Function]`() => unknown`                           |
+
+## Vue Examples
+
+### usage.vue
+```vue
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-17 11:40:44
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-18 13:59:05
+ * @FilePath: \vue-maplibre\docs\examples\layer-gltf\usage.vue
+-->
+<script lang="ts" setup>
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type { LngLatLike, Map, SourceSpecification } from 'maplibre-gl'
+import { ref } from 'vue'
+
+const center = ref<LngLatLike>([148.9819, -35.3981])
+const zoom = ref(18)
+
+const isMapReady = ref(false)
+const source: SourceSpecification = {
+  type: 'raster',
+  tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+  tileSize: 256,
+  minzoom: 0,
+  maxzoom: 19
+}
+let _map: Map
+
+function onMapReady(e: VmReadyObject) {
+  const { map } = e
+
+  map.on('load', () => {
+    map.resize()
+    isMapReady.value = true
+    _map = map
+  })
+}
+</script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom" :pitch="60" :bearing="-28.5" @ready="onMapReady">
+      <VmLayerGltf
+        v-if="isMapReady"
+        :position="[148.9819, -35.39847, 0]"
+        url="https://vue-maplibre.meteosci.com/model/gltf/34M_17/34M_17.gltf"
+      />
+
+      <VmLayerNative v-if="isMapReady" id="openstreetmap-tiles" type="raster" :source="source" />
+    </VmMap>
+  </div>
+</template>
+
+```
+
+
+---
+Title: VmLayerNative
+URL: https://vue-maplibre.meteosci.com/en-US/component/layer-native
+---
+
+# VmLayerNative
+
+The `VmLayerNative` component is used to load native layers onto the map. The supported layer types include 'fill', 'line', 'symbol', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'hillshade', and 'background'. [see](https://maplibre.org/maplibre-style-spec/layers/). And a extension type 'raster-dem' for terrain.
+
+## Basic usage
+
+
+
+## Draw vector datas
+
+
+
+## 3D Terrain
+
+
+
+## API
+
+### Props
+
+<!-- prettier-ignore -->
+| Name | Description | Type | Default |
+| ------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------- |
+| id | Unique layer name. | ^[string] | - |
+| beforeId | The ID of an existing layer to insert the new layer before, resulting in the new layer appearing visually beneath the existing layer. If this argument is not specified, the layer will be appended to the end of the layers array and appear visually above all other layers. | ^[string] | - |
+| type | Rendering type of this layer. | ^[enum]`'fill' \| 'line' \| 'symbol' \| 'circle' \| 'heatmap' \| 'fill-extrusion' \| 'raster' \| 'hillshade' \| 'background'` | - |
+| metadata | Arbitrary properties useful to track with the layer, but do not influence rendering. Properties should be prefixed to avoid collisions, like 'maplibre:'. | ^[object]`any` | - |
+| source | Name of a source description to be used for this layer. Required for all layer types except. | ^[string] / ^[object]`SourceSpecification` | - |
+| sourceLayer | Layer to use from a vector tile source. Required for vector tile sources; prohibited for all other source types, including GeoJSON sources. | ^[string] | - |
+| minzoom | The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden. in range [0, 24]. | ^[number] | - |
+| maxzoom | The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden. in range [0, 24]. | ^[number] | - |
+| filter | A expression specifying conditions on source features. Only features that match the filter are displayed. Zoom expressions in filters are only evaluated at integer zoom levels. The feature-state expression is not supported in filter expressions. | ^[boolean] / ^[object]`FilterSpecification` | - |
+| layout | Layout properties for the layer. | ^[object]`FillLayerSpecification['layout'] \| LineLayerSpecification['layout'] \| SymbolLayerSpecification['layout'] \| CircleLayerSpecification['layout'] \| HeatmapLayerSpecification['layout'] \| FillExtrusionLayerSpecification['layout'] \| RasterLayerSpecification['layout'] \| HillshadeLayerSpecification['layout'] \| BackgroundLayerSpecification['layout']` | - |
+| paint | Default paint properties for this layer. | ^[object]`FillLayerSpecification['paint'] \| LineLayerSpecification['paint'] \| SymbolLayerSpecification['paint'] \| CircleLayerSpecification['paint'] \| HeatmapLayerSpecification['paint'] \| FillExtrusionLayerSpecification['paint'] \| RasterLayerSpecification['paint'] \| HillshadeLayerSpecification['paint'] \| BackgroundLayerSpecification['paint']` | - |
+
+### Events
+
+| Name       | Description                                              | Type                                                         |
+| ---------- | -------------------------------------------------------- | ------------------------------------------------------------ |
+| beforeLoad | Triggers before the maplibreObject is loaded.            | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+| ready      | Triggers when the maplibreObject is successfully loaded. | ^[Function]`(readyObj: VmReadyObject) => void`               |
+| unready    | Triggers when the maplibreObject loading failed.         | ^[Function]`((e: any) => void`                               |
+| destroyed  | Triggers when the maplibreObject is destroyed.           | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+
+### Exposes
+
+| Name              | Description                                         | Type                                                 |
+| ----------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| load              | Load the component manually.                        | ^[Function]`() => Promise<VmReadyObject \| boolean>` |
+| unload            | Destroy the loaded component manually.              | ^[Function]`() => Promise<boolean>`                  |
+| reload            | Load the component manually.                        | ^[Function]`() => Promise<boolean>`                  |
+| creatingPromise   | Determine whether the component is created by this. | ^[object]`Promise<VmReadyObject>`                    |
+| maplibreObject    | The maplibreObject created by component.            | ^[object]`unknown`                                   |
+| getMaplibreObject | Get the maplibreObject created by component.        | ^[Function]`() => unknown`                           |
+
+## Vue Examples
+
+### 3d-terrain.vue
+```vue
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-17 14:26:43
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-18 14:03:46
+ * @FilePath: \vue-maplibre\docs\examples\layer-native\3d-terrain.vue
+-->
+<script lang="ts" setup>
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type { HillshadeLayerSpecification, LngLatLike, RasterDEMSourceSpecification } from 'maplibre-gl'
+import { ref } from 'vue'
+
+const center = ref<LngLatLike>([11.39085, 47.27574])
+const zoom = ref(12)
+const isMapReady = ref(false)
+
+const hillshade: RasterDEMSourceSpecification = {
+  type: 'raster-dem',
+  url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json',
+  tileSize: 256
+}
+
+const layout: HillshadeLayerSpecification['layout'] = { visibility: 'visible' }
+const paint: HillshadeLayerSpecification['paint'] = { 'hillshade-shadow-color': '#473B24' }
+
+const terrainSource: RasterDEMSourceSpecification = {
+  type: 'raster-dem',
+  url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json'
+}
+
+function onMapReady(e: VmReadyObject) {
+  const { map } = e
+
+  map.on('load', () => {
+    map.resize()
+    isMapReady.value = true
+  })
+}
+</script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://demotiles.maplibre.org/style.json" :center="center" :zoom="zoom" @ready="onMapReady">
+      <VmLayerNative v-if="isMapReady" id="terrainSource" type="raster-dem" :source="terrainSource" />
+      <VmLayerNative v-if="isMapReady" id="hillshade" type="hillshade" :source="hillshade" :layout="layout" :paint="paint" />
+      <VmControlTerrain v-if="isMapReady" source="hillshade" position="top-left">
+        asd
+      </VmControlTerrain>
+    </VmMap>
+  </div>
+</template>
+
+```
+
+### openstreetmap.vue
+```vue
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-14 23:41:49
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-18 14:03:53
+ * @FilePath: \vue-maplibre\docs\examples\layer-native\openstreetmap.vue
+-->
+<script lang="ts" setup>
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type { LngLatLike, SourceSpecification } from 'maplibre-gl'
+import { ref } from 'vue'
+
+const center = ref<LngLatLike>([11.39085, 47.27574])
+const zoom = ref(1)
+const isMapReady = ref(false)
+
+const source: SourceSpecification = {
+  type: 'raster',
+  tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+  tileSize: 256,
+  minzoom: 0,
+  maxzoom: 19
+}
+
+function onMapReady(e: VmReadyObject) {
+  const { map } = e
+
+  map.on('load', () => {
+    map.resize()
+    isMapReady.value = true
+  })
+}
+</script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom" @ready="onMapReady">
+      <VmLayerNative v-if="isMapReady" id="openstreetmap-tiles" type="raster" :source="source" />
+    </VmMap>
+  </div>
+</template>
+
+```
+
+### vector.vue
+```vue
+<!--
+ * @Author: zouyaoji@https://github.com/zouyaoji
+ * @Date: 2024-06-15 18:37:26
+ * @Description: Do not edit
+ * @LastEditors: zouyaoji 370681295@qq.com
+ * @LastEditTime: 2024-06-18 16:18:53
+ * @FilePath: \vue-maplibre\docs\examples\layer-native\vector.vue
+-->
+<script lang="ts" setup>
+import type { VmReadyObject } from '@meteosci/vue-maplibre/es/utils'
+import type {
+  GeoJSONSourceSpecification,
+  LineLayerSpecification,
+  LngLatLike,
+  StyleSpecification,
+  SymbolLayerSpecification,
+  VectorSourceSpecification
+} from 'maplibre-gl'
+// import {
+//   SourceSpecification
+// } from 'maplibre-gl'
+import { ref } from 'vue'
+
+const center = ref<LngLatLike>([11.39085, 47.27574])
+const zoom = ref(1)
+const isMapReady = ref(false)
+
+const glyphsURL = `https://vue-maplibre.meteosci.com/font/glyphs`
+const spriteURL = `https://vue-maplibre.meteosci.com/font/sprite/sprite`
+
+const mapStyle = {
+  version: 8,
+  glyphs: `${glyphsURL}/{fontstack}/{range}.pbf`,
+  sprite: spriteURL,
+  sources: {},
+  layers: []
+} as StyleSpecification
+
+const layout: SymbolLayerSpecification['layout'] = {
+  'icon-image': 'custom-marker',
+  // get the year from the source's "year" property
+  'text-field': ['get', 'year'],
+  'text-font': ['Noto Sans Regular'],
+  'text-offset': [0, 1.25],
+  'text-anchor': 'top'
+}
+
+const source: GeoJSONSourceSpecification = {
+  type: 'geojson',
+  data: {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [100.4933, 13.7551]
+        },
+        properties: { year: '2004' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [6.6523, 46.5535]
+        },
+        properties: { year: '2006' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-123.3596, 48.4268]
+        },
+        properties: { year: '2007' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [18.4264, -33.9224]
+        },
+        properties: { year: '2008' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [151.195, -33.8552]
+        },
+        properties: { year: '2009' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [2.1404, 41.3925]
+        },
+        properties: { year: '2010' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-104.8548, 39.7644]
+        },
+        properties: { year: '2011' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-1.1665, 52.9539]
+        },
+        properties: { year: '2013' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-122.6544, 45.5428]
+        },
+        properties: { year: '2014' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [126.974, 37.5651]
+        },
+        properties: { year: '2015' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [7.1112, 50.7255]
+        },
+        properties: { year: '2016' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-71.0314, 42.3539]
+        },
+        properties: { year: '2017' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [39.2794, -6.8173]
+        },
+        properties: { year: '2018' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [26.0961, 44.4379]
+        },
+        properties: { year: '2019' }
+      },
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-114.0879, 51.0279]
+        },
+        properties: { year: '2020' }
+      }
+    ]
+  }
+}
+
+const sourceVector: VectorSourceSpecification = {
+  type: 'vector',
+  tiles: ['https://vue-maplibre.meteosci.com/mvt/china/{z}/{x}/{y}.mvt'],
+  minzoom: 0,
+  maxzoom: 8
+}
+
+const paintVector: LineLayerSpecification['paint'] = {
+  'line-color': 'rgba(219, 18, 18, 1)',
+  'line-width': 3
+}
+
+function onMapReady(e: VmReadyObject) {
+  const { map } = e
+
+  map.on('load', async () => {
+    map.resize()
+
+    // Add an image to use as a custom marker
+    const image = await map.loadImage('https://vue-maplibre.meteosci.com/images/osgeo-logo.png')
+    map.addImage('custom-marker', image.data)
+
+    isMapReady.value = true
+  })
+}
+</script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap :map-style="mapStyle" :center="center" :zoom="zoom" @ready="onMapReady">
+      <VmLayerNative v-if="isMapReady" id="conferences" type="symbol" :source="source" :layout="layout" />
+      <VmLayerNative
+        v-if="isMapReady"
+        id="vector-tiles"
+        type="line"
+        :source="sourceVector"
+        :minzoom="0"
+        :maxzoom="8"
+        source-layer="border"
+        :paint="paintVector"
+      />
+    </VmMap>
+  </div>
+</template>
+
+```
+
+
+---
+Title: Map
+URL: https://vue-maplibre.meteosci.com/en-US/component/map
+---
+
+# Map
+
+## Basic usage
+
+
+
+## API
+
+### Props
+
+<!-- prettier-ignore -->
+| Name | Description | Type | Default |
+| ---- | ----------- | ---- | ------- |
+| hash | If `true`, the map's position (zoom, center latitude, center longitude, bearing, and pitch) will be synced with the hash fragment of the page's URL. | ^[string]/^[boolean] | false |
+| interactive | If `false`, no mouse, touch, or keyboard listeners will be attached to the map, so it will not respond to interaction. | ^[boolean] | true |
+| bearingSnap | The threshold, measured in degrees, that determines when the map's bearing will snap to north. For example, with a `bearingSnap` of 7, if the user rotates the map within 7 degrees of north, the map will automatically snap to exact north.| ^[number] | 7 |
+| attributionControl | If set, an [AttributionControl](https://maplibre.org/maplibre-gl-js/docs/API/classes/AttributionControl/) will be added to the map with the provided options. | ^[boolean] | true |
+| maplibreLogo | If `true`, the MapLibre logo will be shown. | ^[boolean] | false |
+| logoPosition | A string representing the position of the MapLibre wordmark on the map. | ^[enum]`'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | bottom-left |
+| failIfMajorPerformanceCaveat | If `true`, map creation will fail if the performance of MapLibre GL JS would be dramatically worse than expected. | ^[boolean] | false |
+| preserveDrawingBuffer | If `true`, the map's canvas can be exported to a PNG using `map.getCanvas().toDataURL()`. This is `false` by default as a performance optimization. | ^[boolean] | false |
+| antialias | If `true`, the gl context will be created with MSAA antialiasing, which can be useful for antialiasing custom layers. This is `false` by default as a performance optimization. | ^[boolean] | false |
+| refreshExpiredTiles | If `false`, the map won't attempt to re-request tiles once they expire per their HTTP `cacheControl`/`expires` headers. | ^[boolean] | true |
+| maxBounds | If set, the map will be constrained to the given bounds. | ^[object]`LngLatBoundsLike` / ^[array]`[number, number]` | - |
+| scrollZoom | If `true`, the "scroll to zoom" interaction is enabled. [AroundCenterOptions](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/AroundCenterOptions/) are passed as options to [ScrollZoomHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/ScrollZoomHandler/)#enable. | ^[boolean] / ^[object]`AroundCenterOptions`| true |
+| minZoom | The minimum zoom level of the map (0-24). | ^[number] | 0 |
+| maxZoom | The maximum zoom level of the map (0-24). | ^[number] | 22 |
+| minPitch | The minimum pitch of the map (0-85). Values greater than 60 degrees are experimental and may result in rendering issues. If you encounter any, please raise an issue with details in the MapLibre project. | ^[number] | 0 |
+| maxPitch | The maximum pitch of the map (0-85). Values greater than 60 degrees are experimental and may result in rendering issues. If you encounter any, please raise an issue with details in the MapLibre project. | ^[number] | 60 |
+| boxZoom | If `true`, the "box zoom" interaction is enabled (see [BoxZoomHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/BoxZoomHandler/)). | ^[boolean] | true |
+| dragRotate | If `true`, the "drag to rotate" interaction is enabled (see [DragRotateHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/DragRotateHandler/)). | ^[boolean] | true |
+| dragPan | If `true`, the "drag to pan" interaction is enabled. An `Object` value is passed as options to [DragPanHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/DragPanHandler/)#enable. | ^[boolean] / ^[object]`DragPanOptions` | true |
+| keyboard | If `true`, keyboard shortcuts are enabled (see [KeyboardHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/KeyboardHandler/)). | ^[boolean] | true |
+| doubleClickZoom | If `true`, the "double click to zoom" interaction is enabled (see [DoubleClickZoomHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/DoubleClickZoomHandler/)). | ^[boolean] | true |
+| touchZoomRotate | If `true`, the "pinch to rotate and zoom" interaction is enabled. An `Object` value is passed as options to [TwoFingersTouchZoomRotateHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/TwoFingersTouchZoomRotateHandler/)#enable. | ^[boolean] / ^[Object]`AroundCenterOptions` | true |
+| touchPitch | If `true`, the "drag to pitch" interaction is enabled. An `Object` value is passed as options to [TwoFingersTouchPitchHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/TwoFingersTouchPitchHandler/)#enable. | ^[boolean] / ^[Object]`AroundCenterOptions` | true |
+| cooperativeGestures | If `true` or set to an options object, the map is only accessible on desktop while holding Command/Ctrl and only accessible on mobile with two fingers. Interacting with the map using normal gestures will trigger an informational screen. With this option enabled, "drag to pitch" requires a three-finger gesture. Cooperative gestures are disabled when a map enters fullscreen using [FullscreenControl](https://maplibre.org/maplibre-gl-js/docs/API/classes/FullscreenControl/). | ^[boolean] / ^[Object]`GestureOptions` | - |
+| trackResize | If `true`, the map will automatically resize when the browser window resizes. | ^[boolean] | true |
+| center | The initial geographical centerpoint of the map. If `center` is not specified in the constructor options, MapLibre GL JS will look for it in the map's style object. If it is not specified in the style, either, it will default to `[0, 0]` Note: MapLibre GL JS uses longitude, latitude coordinate order (as opposed to latitude, longitude) to match GeoJSON. | ^[object]`LngLatLike` / ^[array]`[number, number]` | [0, 0] |
+| zoom | The initial zoom level of the map. If `zoom` is not specified in the constructor options, MapLibre GL JS will look for it in the map's style object. If it is not specified in the style, either, it will default to `0`. | ^[number] | 0 |
+| bearing | The initial bearing (rotation) of the map, measured in degrees counter-clockwise from north. If `bearing` is not specified in the constructor options, MapLibre GL JS will look for it in the map's style object. If it is not specified in the style, either, it will default to `0`. | ^[number] | 0 |
+| pitch | The initial pitch (tilt) of the map, measured in degrees away from the plane of the screen (0-85). If `pitch` is not specified in the constructor options, MapLibre GL JS will look for it in the map's style object. If it is not specified in the style, either, it will default to `0`. Values greater than 60 degrees are experimental and may result in rendering issues. If you encounter any, please raise an issue with details in the MapLibre project. | ^[number] | 0 |
+| renderWorldCopies | If `true`, multiple copies of the world will be rendered side by side beyond -180 and 180 degrees longitude. | ^[boolean] | true |
+| maxTileCacheSize | The maximum number of tiles stored in the tile cache for a given source. If omitted, the cache will be dynamically sized based on the current viewport which can be set using `maxTileCacheZoomLevels` constructor options. | ^[number] | - |
+| maxTileCacheZoomLevels | The maximum number of zoom levels for which to store tiles for a given source. Tile cache dynamic size is calculated by multiplying `maxTileCacheZoomLevels` with the approximate number of tiles in the viewport for a given source. | ^[number] | 5 |
+| transformRequest | A callback run before the Map makes a request for an external URL. The callback can be used to modify the url, set headers, or set the credentials property for cross-origin requests. Expected to return an object with a `url` property and optionally `headers` and `credentials` properties. | ^[Function]`RequestTransformFunction` | - |
+| transformCameraUpdate | A callback run before the map's camera is moved due to user input or animation. The callback can be used to modify the new center, zoom, pitch and bearing. Expected to return an object containing center, zoom, pitch or bearing values to overwrite. | ^[Function]`CameraUpdateTransformFunction` | - |
+| locale | A patch to apply to the default localization table for UI strings, e.g. control tooltips. The `locale` object maps namespaced UI string IDs to translated strings in the target language; see [`src/ui/default_locale.js`](https://github.com/maplibre/maplibre-gl-js/blob/main/src/ui/default_locale.ts) for an example with all supported string IDs. The object may specify all UI strings (thereby adding support for a new translation) or only a subset of strings (thereby patching the default translation table). | ^[object]`any` | - |
+| fadeDuration | Controls the duration of the fade-in/fade-out animation for label collisions after initial map load, in milliseconds. This setting affects all symbol layers. This setting does not affect the duration of runtime styling transitions or raster tile cross-fading. | ^[number] | 300 |
+| crossSourceCollisions | If `true`, symbols from multiple sources can collide with each other during collision detection. If `false`, collision detection is run separately for the symbols in each source. | ^[boolean] | true |
+| collectResourceTiming | If `true`, Resource Timing API information will be collected for requests made by GeoJSON and Vector Tile web workers (this information is normally inaccessible from the main Javascript thread). Information will be returned in a `resourceTiming` property of relevant `data` events. | ^[boolean] | false |
+| clickTolerance | The max number of pixels a user can shift the mouse pointer during a click for it to be considered a valid click (as opposed to a mouse drag). | ^[number] | - |
+| bounds | The initial bounds of the map. If `bounds` is specified, it overrides `center` and `zoom` constructor options. | ^[object]`LngLatBoundsLike` / ^[array]`[number, number]` | - |
+| fitBoundsOptions | A [FitBoundsOptions](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/FitBoundsOptions/) options object to use _only_ when fitting the initial `bounds` provided above. | ^[object]`FitBoundsOptions`| - |
+| localIdeographFontFamily | Defines a CSS font-family for locally overriding generation of glyphs in the 'CJK Unified Ideographs', 'Hiragana', 'Katakana' and 'Hangul Syllables' ranges. In these ranges, font settings from the map's style will be ignored, except for font-weight keywords (light/regular/medium/bold). Set to `false`, to enable font settings from the map's style for these glyph ranges. The purpose of this option is to avoid bandwidth-intensive glyph server requests. (See [Use locally generated ideographs](https://maplibre.org/maplibre-gl-js/docs/examples/local-ideographs).) | ^[string] / ^[boolean] | 'sans-serif' |
+| mapStyle | The map's MapLibre style. This must be a JSON object conforming to the schema described in the [MapLibre Style Specification](https://maplibre.org/maplibre-style-spec/), or a URL to such JSON. | ^[object]`StyleSpecification` / ^[string] | - |
+| pitchWithRotate | If `false`, the map's pitch (tilt) control with "drag to rotate" interaction will be disabled. | ^[boolean] | true |
+| pixelRatio | The pixel ratio. The canvas' `width` attribute will be `container.clientWidth * pixelRatio` and its `height` attribute will be `container.clientHeight * pixelRatio`. Defaults to `devicePixelRatio` if not specified. | ^[number] | window.devicePixelRatio |
+| validateStyle | If false, style validation will be skipped. Useful in production environment. | ^[boolean] | true |
+| maxCanvasSize | The canvas' `width` and `height` max size. The values are passed as an array where the first element is max width and the second element is max height. You shouldn't set this above WebGl `MAX_TEXTURE_SIZE`. Defaults to [4096, 4096].| ^[array]`[number, number]` | [4096, 4096] |
+| containerId | The HTML element's string `id`, which MapLibre GL JS will render the map. | ^[string] | 'mapContainer' |
+| eventLayerId | The ID of a style layer. if provided this, Event will only be triggered if its location is within a visible feature in this layer. Compatible with `eventLayerId`: `mousedown`, `mouseup`, `mouseover`, `mouseout`, `mousemove`, `mouseenter`(required), `mouseleave`(required), `click`, `dblclick`, `contextmenu`, `touchstart`, `touchend`, `touchcancel` | ^[string] | - |
+
+### Events
+
+| Name           | Description                                              | Type                                                         |
+| -------------- | -------------------------------------------------------- | ------------------------------------------------------------ |
+| beforeLoad     | Triggers before the maplibreObject is loaded.            | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+| ready          | Triggers when the maplibreObject is successfully loaded. | ^[Function]`(readyObj: VmReadyObject) => void`               |
+| unready        | Triggers when the maplibreObject loading failed.         | ^[Function]`((e: any) => void`                               |
+| destroyed      | Triggers when the maplibreObject is destroyed.           | ^[Function]`(instance: VmComponentInternalInstance) => void` |
+| update:zoom    | Triggers when the zoom changed.                          | ^[Function]`(zoom: number) => void`                          |
+| update:center  | Triggers when the center changed.                        | ^[Function]`(center: number) => void`                        |
+| update:bearing | Triggers when the bearing changed.                       | ^[Function]`(bearing: number) => void`                       |
+| update:pitch   | Triggers when the pitch changed.                         | ^[Function]`(pitch: number) => void`                         |
+| touchEnd       | Triggers when touch end.                                 | ^[Function]`(evt: TouchEvent) => void`                       |
+
+### Slots
+
+| Name    | Description                                   |
+| ------- | --------------------------------------------- |
+| default | Default slot content of the vm-map component. |
+
+### Exposes
+
+| Name              | Description                                         | Type                                                 |
+| ----------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| load              | Load the component manually.                        | ^[Function]`() => Promise<VmReadyObject \| boolean>` |
+| unload            | Destroy the loaded component manually.              | ^[Function]`() => Promise<boolean>`                  |
+| reload            | Load the component manually.                        | ^[Function]`() => Promise<boolean>`                  |
+| creatingPromise   | Determine whether the component is created by this. | ^[object]`Promise<VmReadyObject>`                    |
+| maplibreObject    | The maplibreObject created by component.            | ^[object]`unknown`                                   |
+| getMaplibreObject | Get the maplibreObject created by component.        | ^[Function]`() => unknown`                           |
+
+## Vue Examples
+
+### basic.vue
+```vue
+<script lang="ts" setup>
+import type { LngLatLike } from 'maplibre-gl'
+import { ref } from 'vue'
+
+const center = ref<LngLatLike>([108, 32])
+const zoom = ref(1)
+</script>
+
+<template>
+  <div class="map-demo-container">
+    <VmMap map-style="https://vue-maplibre.meteosci.com/map/styleWan.json" :center="center" :zoom="zoom" />
+  </div>
+</template>
+
+```
+
+
+---
+Title: Changelog
+URL: https://vue-maplibre.meteosci.com/en-US/guide/changelog
+---
+
+<style scoped lang="scss">
+@at-root .hero-content {
+  padding: 32px;
+}
+</style>
+
+# Changelog
+
+On this page you can only see the latest 30 records of our [Changelog](https://github.com/meteosci/vue-maplibre/blob/dev/CHANGELOG.en-US.md).
+
+<VpChangelog />
+
+---
+Title: Commit Examples
+URL: https://vue-maplibre.meteosci.com/en-US/guide/commit-examples
+---
+
+# Commit Examples
+
+## Why this chapter exists
+
+Please refer to [Conventional Commits](https://www.conventionalcommits.org/) for more information.
+
+A good commit message enables us:
+
+1. To understand what the contributor is trying to do
+2. Automatically generates change log
+
+### Rule for writing commit message
+
+```md
+# (If applied, this commit will...) <subject> (Max 72 characters)
+
+# |<---- Using a Maximum Of 72 Characters ---->|
+
+# Explain why this change is being made
+
+# |<---- Try To Limit Each Line to a Maximum Of 72 Characters ---->|
+
+# Provide links or keys to any relevant tickets, articles or other resources
+
+# Use issues and merge requests' full URLs instead of short references,
+
+# as they are displayed as plain text outside of GitLab
+
+# --- COMMIT END ---
+
+# --------------------
+
+# Remember to
+
+# Capitalize the subject line
+
+# Use the imperative mood in the subject line
+
+# Do not end the subject line with a period
+
+# Subject must contain at least 3 words
+
+# Separate subject from body with a blank line
+
+# Commits that change 30 or more lines across at least 3 files should
+
+# describe these changes in the commit body
+
+# Use the body to explain what and why vs. how
+
+# Can use multiple lines with "-" for bullet points in body
+
+# For more information: https://chris.beams.io/posts/git-commit/
+
+# --------------------
+```
+
+### Template for commit messages
+
+Below is a template commit message for your reference.
+
+```md
+feat(components): [button] I did something with button
+
+Blank between subject and body is expected.(period is expected)
+Describes your change in one line or multi-line.
+Capitalize your first letter when starting a new line
+Please do not exceeds 72 characters per line, because that would be harder to comprehend.
+
+- You can also add bullet list symbol for better layout
+```
+
+For the subject header, the format is:
+
+```
+[type](scope): [messages]
+```
+
+You can checkout the allowed values for **type** and **scope** in [commitlint.config.js](https://github.com/meteosci/vue-maplibre/blob/dev/commitlint.config.js#L41),
+
+### Useful links
+
+[Keeping git commit history clean](https://about.gitlab.com/blog/2018/06/07/keeping-git-commit-history-clean/)
+
+---
+Title: Development FAQ
+URL: https://vue-maplibre.meteosci.com/en-US/guide/dev-faq
+---
+
+# Development FAQ
+
+Here are the problems that are easy to encounter in development.
+
+---
+Title: Local Development
+URL: https://vue-maplibre.meteosci.com/en-US/guide/dev-guide
+---
+
+# Local Development
+
+## Bootstrap project
+
+With command
+
+```shell
+pnpm i
+```
+
+the project will install all dependencies.
+
+## Website preview
+
+With command
+
+```shell
+pnpm docs:dev
+```
+
+the project will launch website for you to preview all existing component.
+
+---
+Title: Internationalization
+URL: https://vue-maplibre.meteosci.com/en-US/guide/i18n
+---
+
+# Internationalization
+
+Vue Maplibre components are using English **by default**, if you wish you use other
+languages, you can get you answer by keep reading.
+
+## Global configuration
+
+Vue Maplibre provides global configurations
+
+```typescript
+import VueMaplibre from '@meteosci/vue-maplibre'
+import zhCn from '@meteosci/vue-maplibre/es/locale/lang/zh-cn'
+
+app.use(VueMaplibre, {
+  locale: zhCn
+})
+```
+
+## ConfigProvider
+
+Vue Maplibre also provides a Vue component [ConfigProvider](/en-US/component/config-provider)
+for globally configuring locale and other settings.
+
+```Vue
+<template>
+  <vm-config-provider :locale="locale">
+    <app />
+  </vm-config-provider>
+</template>
+
+<script setup>
+  import { VmConfigProvider } from '@meteosci/vue-maplibre'
+  import zhCn from '@meteosci/vue-maplibre/es/locale/lang/zh-cn'
+
+  const locale = zhCn
+</script>
+```
+
+## CDN Usage
+
+If you are using Vue Maplibre via CDN, then you need to do this, let's again take
+unpkg as an example
+
+```html
+<script src="//unpkg.com/@meteosci/vue-maplibre/dist/locale/zh-cn"></script>
+<script>
+  app.use(VueMaplibre, {
+    locale: VueMaplibreLocaleZhCn
+  })
+</script>
+```
+
+Full documentation refer to: [ConfigProvider](/en-US/component/config-provider)
+
+[Supported Language List](https://github.com/meteosci/vue-maplibre/tree/dev/packages/locale/lang)
+
+<ul class="language-list">
+  <li>Simplified Chinese (zh-cn)</li>
+  <li>American English (en-us)</li>
+</ul>
+
+If you need any other languages, [PR](https://github.com/meteosci/vue-maplibre/pulls)
+is always welcomed, you only need to add a language file at
+[here](https://github.com/meteosci/vue-maplibre/tree/dev/packages/locale/lang).
+
+<style>
+  .language-list {
+    list-style: disc
+  }
+</style>
+
+---
+Title: Installation
+URL: https://vue-maplibre.meteosci.com/en-US/guide/installation
+---
+
+# Installation
+
+## Compatibility ^(0.0.1)
+
+Vue Maplibre can run on browsers that support last 2 versions.
+
+If you really need to support outdated browsers, please add [Babel](https://babeljs.io/) and Polyfill yourself.
+
+Since Vue 3 no longer supports IE11, Vue Maplibre does not support IE either.
+
+| version | ![Chrome](https://cdn.jsdelivr.net/npm/@browser-logos/chrome/chrome_32x32.png) <br> Chrome | ![IE](https://cdn.jsdelivr.net/npm/@browser-logos/edge/edge_32x32.png) <br> Edge | ![Firefox](https://cdn.jsdelivr.net/npm/@browser-logos/firefox/firefox_32x32.png) <br> Firefox | ![Safari](https://cdn.jsdelivr.net/npm/@browser-logos/safari/safari_32x32.png) <br> Safari |
+| ------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| 0.0.1 + | Chrome ≥ 85                                                                                | Edge ≥ 85                                                                        | Firefox ≥ 79                                                                                   | Safari ≥ 14.1                                                                              |
+
+### Version
+
+<!-- Vue Maplibre is currently in a rapid development iteration. -->
+
+[![VueMaplibre version badge](https://img.shields.io/npm/v/@meteosci/vue-maplibre.svg?style=flat-square)](https://www.npmjs.org/package/@meteosci/vue-maplibre)
+
+## Using Package Manager
+
+**We recommend using the package manager (NPM, [Yarn](https://classic.yarnpkg.com/lang/en/), [pnpm](https://pnpm.io/)) to install Vue Maplibre**,
+so that you can utilize bundlers like [Vite](https://vitejs.dev) and
+[webpack](https://webpack.js.org/).
+
+```shell
+# Choose a package manager you like.
+
+# NPM
+$ npm install @meteosci/vue-maplibre --save
+
+# Yarn
+$ yarn add @meteosci/vue-maplibre
+
+# pnpm
+$ pnpm install @meteosci/vue-maplibre
+```
+
+If your network environment is not good, it is recommended to use a mirror registry [cnpm](https://github.com/cnpm/cnpm) or [Alibaba](https://registry.npmmirror.com/).
+
+## Import in Browser
+
+Import Vue Maplibre through browser HTML tags directly, and use global variable `VueMaplibre`.
+
+According to different CDN providers, there are different introduction methods.
+Here we use [unpkg](https://unpkg.com) and [jsDelivr](https://jsdelivr.com) as example.
+You can also use other CDN providers.
+
+### unpkg
+
+```html
+<head>
+  <!-- Import style -->
+  <link rel="stylesheet" href="//unpkg.com/@meteosci/vue-maplibre/dist/index.css" />
+  <!-- Import Vue 3 -->
+  <script src="//unpkg.com/vue@3"></script>
+  <!-- Import component library -->
+  <script src="//unpkg.com/@meteosci/vue-maplibre"></script>
+</head>
+```
+
+### jsDelivr
+
+```html
+<head>
+  <!-- Import style -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@meteosci/vue-maplibre/dist/index.css" />
+  <!-- Import Vue 3 -->
+  <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
+  <!-- Import component library -->
+  <script src="//cdn.jsdelivr.net/npm/@meteosci/vue-maplibre"></script>
+</head>
+```
+
+
+
+## Hello World
+
+With CDN, we can easily use Vue Maplibre to
+write a Hello World page. [Online Demo](https://codepen.io/zouyaoji/pen/wvbPPNN)
+
+<iframe height="469" style="width: 100%;" scrolling="no" title="wvbPPNN" src="https://codepen.io/zouyaoji/embed/wvbPPNN?height=469&theme-id=light&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/zouyaoji/pen/wvbPPNN'>wvbPPNN</a> by zouyaoji
+  (<a href='https://codepen.io/zouyaoji'>@zouyaoji</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+If you are installing via package manager and want to use it with
+a packaging tool, please read the
+next section: [Quick Start](/en-US/guide/quickstart).
+
+---
+Title: Quick Start
+URL: https://vue-maplibre.meteosci.com/en-US/guide/quickstart
+---
+
+# Quick Start
+
+This section describes how to use Vue Maplibre in your project.
+
+## Usage
+
+### Full Import
+
+If you don’t care about the bundle size so much, it’s more convenient to use full import.
+
+```typescript
+import VueMaplibre from '@meteosci/vue-maplibre'
+// main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import '@meteosci/vue-maplibre/dist/index.css'
+
+const app = createApp(App)
+
+app.use(VueMaplibre)
+app.mount('#app')
+```
+
+#### Volar support
+
+If you use volar, please add the global component type definition to `compilerOptions.types` in `tsconfig.json`.
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    // ...
+    "types": ["@meteosci/vue-maplibre/global"]
+  }
+}
+```
+
+### On-demand Import
+
+Vue Maplibre provides out of box [Tree Shaking](https://webpack.js.org/guides/tree-shaking/)
+functionalities based on ES Module.
+
+> App.vue
+
+```vue
+<script setup>
+import { VmMap } from '@meteosci/vue-maplibre'
+</script>
+
+<template>
+  <VmMap map-style="https://demotiles.maplibre.org/style.json" />
+</template>
+```
+
+## Starter Template
+
+We provide a [Vite Template](https://github.com/meteosci/vue-maplibre-vite-starter).
+
+## Global Configuration
+
+## Let's Get Started
+
+You can bootstrap your project from now on. For each components usage, please
+refer to [the individual component documentation](/en-US/component/config-provider.html).
