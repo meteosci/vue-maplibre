@@ -20,7 +20,6 @@
     "clean:dist": "rimraf dist",
     "build": "pnpm run -C internal/build start",
     "build:theme": "pnpm run -C packages/theme-default build",
-    "build:indices": "tsx build/indices.ts",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "docs:dev": "pnpm run -C docs dev",

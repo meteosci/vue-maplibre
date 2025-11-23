@@ -1,5 +1,5 @@
 ---
-title: 'A Vue 3 MapLibreGL Framework'
+title: 'A Vue 3 based component library.'
 lang: en-US
 page: true
 ---

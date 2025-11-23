@@ -44,7 +44,7 @@ async function generateLLms() {
     }
 
     // URL
-    let url = `https://element-plus.org/${markdown
+    let url = `https://vue-maplibre.meteosci.com/${markdown
       .replace(/^docs\//, '')
       .replace(/\.(md|vue)$/, '')}`
     if (url.includes('/examples/')) {
@@ -112,9 +112,9 @@ async function generateLLms() {
   }
 
   const docsIndexContent = [
-    '# Element Plus - A Vue 3 based component library',
+    '# Vue Maplibre - A Vue 3 based component library',
     '',
-    '- Element Plus is a Vue 3 based component library for developers, designers and product managers, with a set of high-quality components and rich features for building modern web applications.',
+    '- Vue Maplibre is a Vue3 based component library of Maplibre GL for developers.',
     '',
     '## Documentation',
     '',
