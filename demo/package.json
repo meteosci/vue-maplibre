@@ -25,7 +25,7 @@
     "interactjs": "^1.10.27",
     "lodash": "^4.17.21",
     "lowdb": "7.0.1",
-    "maplibre-gl": "^5.13.0",
+    "maplibre-gl": "^5.14.0",
     "mitt": "^3.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.4",

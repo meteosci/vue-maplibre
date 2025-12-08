@@ -61,7 +61,7 @@
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "lodash-unified": "^1.0.3",
-    "maplibre-gl": "^5.13.0",
+    "maplibre-gl": "^5.14.0",
     "mitt": "^3.0.1",
     "three": "^0.181.2"
   },

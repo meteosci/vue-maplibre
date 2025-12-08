@@ -26,7 +26,7 @@
     "chalk": "^5.6.2",
     "consola": "^3.4.2",
     "fast-glob": "^3.3.3",
-    "maplibre-gl": "^5.13.0",
+    "maplibre-gl": "^5.14.0",
     "markdown-it-container": "^4.0.0",
     "unocss": "^66.5.9",
     "unplugin-icons": "^22.5.0",

@@ -18,9 +18,6 @@
   },
   "devDependencies": {
     "@pnpm/types": "^1001.0.0",
-    "@vitejs/plugin-vue": "5.2.4",
-    "@vitejs/plugin-vue-jsx": "4.2.0",
-    "algoliasearch": "^5.44.0",
     "gulp": "^5.0.1",
     "gulp-cli": "^3.1.0",
     "unbuild": "^3.6.1",
