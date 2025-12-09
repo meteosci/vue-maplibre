@@ -1077,7 +1077,7 @@ unpkg as an example
 <script src="//unpkg.com/@meteosci/vue-maplibre/dist/locale/zh-cn"></script>
 <script>
   app.use(VueMaplibre, {
-    locale: VueMaplibreLocaleZhCn
+    locale: VueMaplibreLocaleZhcn
   })
 </script>
 ```
