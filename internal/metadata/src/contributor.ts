@@ -1,12 +1,12 @@
-import path from 'path'
-import { existsSync } from 'fs'
-import glob from 'fast-glob'
-import { Octokit } from 'octokit'
-import consola from 'consola'
+import { existsSync } from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
+import { ensureDir, errorAndExit, projRoot, REPO_BRANCH, REPO_NAME, REPO_OWNER, writeJson } from '@vue-maplibre/build'
 import chalk from 'chalk'
+import consola from 'consola'
+import glob from 'fast-glob'
 import { chunk, mapValues, uniqBy } from 'lodash-unified'
-
-import { ensureDir, errorAndExit, projRoot, writeJson, REPO_BRANCH, REPO_NAME, REPO_OWNER } from '@vue-maplibre/build'
+import { Octokit } from 'octokit'
 
 interface FetchOption {
   key: string
@@ -47,7 +47,7 @@ interface ContributorInfo {
   count: number
 }
 
-const fetchCommits = async (options: FetchOption[]): Promise<Record<string, ApiResult>> => {
+async function fetchCommits(options: FetchOption[]): Promise<Record<string, ApiResult>> {
   const query = `{
     repository(owner: "${REPO_OWNER}", name: "${REPO_NAME}") {
       object(expression: "${REPO_BRANCH}") {
@@ -88,13 +88,14 @@ const fetchCommits = async (options: FetchOption[]): Promise<Record<string, ApiR
   )
 }
 
-const calcContributors = (commits: ApiResult['nodes']) => {
+function calcContributors(commits: ApiResult['nodes']) {
   const contributors: Record<string, ContributorInfo> = {}
   for (const { author } of commits) {
     const login = author.user?.login
-    if (!login) continue
+    if (!login)
+      continue
 
-    if (!contributors[login])
+    if (!contributors[login]) {
       contributors[login] = {
         login,
         name: author.name,
@@ -102,13 +103,14 @@ const calcContributors = (commits: ApiResult['nodes']) => {
         avatar: author.avatarUrl,
         count: 0
       }
+    }
 
     contributors[login].count++
   }
   return Object.values(contributors).sort((a, b) => b.count - a.count)
 }
 
-const getContributorsByComponents = async (components: string[]) => {
+async function getContributorsByComponents(components: string[]) {
   let options: FetchOption[] = components.flatMap(component => [
     { key: component, path: `packages/components/${component}` },
     { key: component, path: `packages/theme-default/src/${component}.scss` },
@@ -122,7 +124,8 @@ const getContributorsByComponents = async (components: string[]) => {
     for (const [i, result] of Object.values(results).entries()) {
       const component = options[i].key.replace(/\//g, '-')
       // const component = options[i].key
-      if (!commits[component]) commits[component] = []
+      if (!commits[component])
+        commits[component] = []
       commits[component].push(...result.nodes)
     }
 
@@ -139,7 +142,8 @@ const getContributorsByComponents = async (components: string[]) => {
 }
 
 async function getContributors() {
-  if (!process.env.GITHUB_TOKEN) throw new Error('GITHUB_TOKEN is empty')
+  if (!process.env.GITHUB_TOKEN)
+    throw new Error('GITHUB_TOKEN is empty')
 
   const components = await glob('**/*', {
     cwd: path.resolve(projRoot, 'packages/components'),
@@ -171,10 +175,12 @@ async function main() {
 
   let contributors: Record<string, ContributorInfo[]>
   if (process.env.DEV) {
-    if (existsSync(pathDest)) return
+    if (existsSync(pathDest))
+      return
     contributors = {}
-  } else {
-    contributors = await getContributors().catch(err => {
+  }
+  else {
+    contributors = await getContributors().catch((err) => {
       errorAndExit(err)
     })
   }

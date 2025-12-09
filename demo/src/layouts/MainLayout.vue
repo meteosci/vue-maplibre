@@ -7,7 +7,7 @@
  * @FilePath: \template-project\src\layouts\MainLayout.vue
 -->
 <script setup lang="ts">
-import type { CTEventProvider, CTMittEvents, ThemeOptions } from '@src/types'
+import type { CTEventProvider, ThemeOptions } from '@src/types'
 import type { Emitter } from 'mitt'
 import { ctKey } from '@src/config/key'
 import MainHeader from '@src/layouts/header/Index.vue'

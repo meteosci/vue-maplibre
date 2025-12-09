@@ -6,11 +6,11 @@
  * @LastEditTime: 2024-06-21 23:33:02
  * @FilePath: \vue-maplibre\internal\metadata\src\components.ts
  */
-import path from 'path'
-import glob from 'fast-glob'
+import path from 'node:path'
+import { ensureDir, projRoot, writeJson } from '@vue-maplibre/build'
 import chalk from 'chalk'
 import consola from 'consola'
-import { ensureDir, projRoot, writeJson } from '@vue-maplibre/build'
+import glob from 'fast-glob'
 
 const pathOutput = path.resolve(__dirname, '..', 'dist')
 

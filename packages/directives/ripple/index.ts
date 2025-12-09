@@ -37,7 +37,6 @@ function showRipple(evt, el, ctx, forceCenter) {
 
   const abort = () => {
     node.remove()
-    // eslint-disable-next-line ts/no-use-before-define
     clearTimeout(timer)
   }
   ctx.abort.push(abort)

@@ -26,14 +26,12 @@ export const useSearchStore = defineStore('search', {
   actions: {
     /**
      * @description 切换激活状态
-     * @param {object} state state
      */
     toggle() {
       this.active = !this.active
     },
     /**
      * @description 设置激活模式
-     * @param {object} state state
      * @param {boolean} active active
      */
     set(active: boolean) {
@@ -41,7 +39,6 @@ export const useSearchStore = defineStore('search', {
     },
     /**
      * @description 初始化
-     * @param {object} state state
      * @param {Array} menu menu
      */
     init(menu) {

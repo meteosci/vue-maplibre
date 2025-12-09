@@ -43,9 +43,8 @@ function resolveComponent(path) {
 /**
  * 构建路由列表
  * menuType 1=menu 2=btn 3=route
- * @param routers
+ * @param parent
  * @param list
- * @returns {[]}
  */
 function buildRouter(parent: RouteRecordRaw, list: Menu[]): RouteRecordRaw[] {
   if (parent == null) {
@@ -98,7 +97,6 @@ function buildRouter(parent: RouteRecordRaw, list: Menu[]): RouteRecordRaw[] {
  * 构建权限码列表
  * @param menuTree
  * @param permissionList
- * @returns {*}
  */
 function buildPermissions(menuTree, permissionList) {
   if (menuTree == null) {
@@ -119,7 +117,6 @@ function buildPermissions(menuTree, permissionList) {
 /**
  * 构建菜单
  * @param menuTree
- * @returns {[]}
  */
 function buildMenu(menuTree) {
   if (menuTree == null) {

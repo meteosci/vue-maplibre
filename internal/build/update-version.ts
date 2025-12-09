@@ -6,10 +6,9 @@
  * @Description:
  * @FilePath: \vue-maplibre\scripts\update-version.ts
  */
-import fs from 'fs'
-import { vmPackage, vmPackagePublish } from '@vue-maplibre/build'
-import { cyan, red, yellow, green } from '@vue-maplibre/build'
-import { getPackageManifest } from '@vue-maplibre/build'
+import fs from 'node:fs'
+import process from 'node:process'
+import { cyan, getPackageManifest, green, red, vmPackagePublish, yellow } from '@vue-maplibre/build'
 
 const tagVersion = process.env.TAG_VERSION
 const gitHead = process.env.GIT_HEAD
@@ -34,10 +33,12 @@ cyan(['NOTICE:', `$TAG_VERSION: ${tagVersion}`, `$GIT_HEAD: ${gitHead}`].join('\
       await fs.promises.writeFile(vmPackagePublish, JSON.stringify(json, null, 2), {
         encoding: 'utf-8'
       })
-    } catch (e) {
+    }
+    catch (e) {
       process.exit(1)
     }
-  } else {
+  }
+  else {
     console.log(json)
   }
 

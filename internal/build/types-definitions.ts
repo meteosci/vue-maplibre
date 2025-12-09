@@ -1,21 +1,22 @@
-import path from 'path'
-import * as vueCompiler from '@vue/compiler-sfc'
-import { Project } from 'ts-morph'
-import glob from 'fast-glob'
-import { mkdir, readFile, writeFile } from 'fs/promises'
-import { buildOutput, vmRoot, pkgRoot, projRoot } from './utils/paths'
-import consola from 'consola'
-import { excludeFiles, pathRewriter } from './utils/pkg'
 import type { SourceFile } from 'ts-morph'
-import { PKG_PREFIX, PKG_NAME } from './utils/constants'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import process from 'node:process'
+import * as vueCompiler from '@vue/compiler-sfc'
 import chalk from 'chalk'
+import consola from 'consola'
+import glob from 'fast-glob'
+import { Project } from 'ts-morph'
+import { PKG_NAME, PKG_PREFIX } from './utils/constants'
+import { buildOutput, pkgRoot, projRoot, vmRoot } from './utils/paths'
+import { excludeFiles, pathRewriter } from './utils/pkg'
 
 const TSCONFIG_PATH = path.resolve(projRoot, 'tsconfig.json')
 const outDir = path.resolve(buildOutput, 'types')
 /**
  * fork = require( https://github.com/egoist/vue-dts-gen/blob/main/src/index.ts
  */
-export const generateTypesDefinitions = async () => {
+export async function generateTypesDefinitions() {
   const project = new Project({
     compilerOptions: {
       // allowJs: true,
@@ -45,7 +46,7 @@ export const generateTypesDefinitions = async () => {
     emitOnlyDtsFiles: true
   })
 
-  const tasks = sourceFiles.map(async sourceFile => {
+  const tasks = sourceFiles.map(async (sourceFile) => {
     const relativePath = path.relative(pkgRoot, sourceFile.getFilePath())
     consola.trace(chalk.yellow(`Generating definition for file: ${chalk.bold(relativePath)}`))
 
@@ -55,7 +56,7 @@ export const generateTypesDefinitions = async () => {
       throw new Error(`Emit no file: ${chalk.bold(relativePath)}`)
     }
 
-    const subTasks = emitFiles.map(async outputFile => {
+    const subTasks = emitFiles.map(async (outputFile) => {
       const filepath = outputFile.getFilePath()
       await mkdir(path.dirname(filepath), {
         recursive: true
@@ -92,7 +93,7 @@ async function addSourceFiles(project: Project) {
 
   const sourceFiles: SourceFile[] = []
   await Promise.all([
-    ...filePaths.map(async file => {
+    ...filePaths.map(async (file) => {
       if (file.endsWith('.vue')) {
         const content = await readFile(file, 'utf-8')
         const hasTsNoCheck = content.includes('@ts-nocheck')
@@ -113,12 +114,13 @@ async function addSourceFiles(project: Project) {
           const sourceFile = project.createSourceFile(`${path.relative(process.cwd(), file)}.${lang}`, content)
           sourceFiles.push(sourceFile)
         }
-      } else {
+      }
+      else {
         const sourceFile = project.addSourceFileAtPath(file)
         sourceFiles.push(sourceFile)
       }
     }),
-    ...epPaths.map(async file => {
+    ...epPaths.map(async (file) => {
       const content = await readFile(path.resolve(vmRoot, file), 'utf-8')
       sourceFiles.push(project.createSourceFile(path.resolve(pkgRoot, file), content))
     })

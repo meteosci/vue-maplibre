@@ -6,8 +6,9 @@
  * @LastEditTime: 2024-06-08 19:14:08
  * @FilePath: \vue-maplibre\build\index.ts
  */
+
+export * from './utils/fs'
+export * from './utils/log'
 export * from './utils/paths'
 export * from './utils/pkg'
 export * from './utils/repo'
-export * from './utils/log'
-export * from './utils/fs'

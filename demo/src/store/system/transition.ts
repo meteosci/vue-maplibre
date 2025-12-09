@@ -20,7 +20,6 @@ export const useTransitionStore = defineStore('transition', {
   actions: {
     /**
      * @description 设置开启状态
-     * @param {object} context
      * @param {boolean} active 新的状态
      */
     async set(active) {
@@ -37,7 +36,6 @@ export const useTransitionStore = defineStore('transition', {
     },
     /**
      * 从数据库读取页面过渡动画设置
-     * @param {object} context
      */
     async load() {
       // store 赋值

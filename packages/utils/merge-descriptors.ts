@@ -60,7 +60,6 @@ function merge(dest, src, redefine) {
 
 /**
  * @param {...object} args
- * @returns {object}
  */
 export function mergeDescriptors(...args: any[]) {
   let redefine: boolean

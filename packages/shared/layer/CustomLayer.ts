@@ -54,7 +54,7 @@ export default class CustomLayer extends Base implements CustomLayerInterface {
   /**
    * 预渲染阶段的回调。
    * @param gl WebGL 渲染上下文。
-   * @param matrix 渲染矩阵。
+   * @param options 可选参数。
    */
   prerender(gl: WebGLRenderingContext | WebGL2RenderingContext, options: CustomRenderMethodInput) {
     // 实现 prerender 方法
@@ -63,7 +63,7 @@ export default class CustomLayer extends Base implements CustomLayerInterface {
   /**
    * 渲染阶段的回调。
    * @param gl WebGL 渲染上下文。
-   * @param matrix 渲染矩阵。
+   * @param options 可选参数。
    */
   render(gl: WebGLRenderingContext | WebGL2RenderingContext, options: CustomRenderMethodInput) {
     // 实现 render 方法

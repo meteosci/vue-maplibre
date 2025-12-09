@@ -45,10 +45,10 @@ export const useLogStore = defineStore('log', {
   actions: {
     /**
      * @description 添加一个日志
-     * @param {object} context
-     * @param {string} param message {string} 信息
-     * @param {string} param type {String} 类型
-     * @param {object} payload meta {Object} 附带的信息
+     * @param {object} context 日志内容对象
+     * @param {string} context.message 信息
+     * @param {string} [context.type] 类型
+     * @param {object} [context.meta] 附带的信息
      */
     push({ message, type = 'info', meta }) {
       this.log.push({

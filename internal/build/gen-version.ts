@@ -7,17 +7,19 @@
  * @FilePath: \vue-maplibre\internal\build\gen-version.ts
  */
 
-import { writeFile } from 'fs/promises'
-import path from 'path'
-import consola from 'consola'
+import { writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import process from 'node:process'
 import { vmRoot } from '@vue-maplibre/build'
+import consola from 'consola'
 import pkg from '../../packages/vue-maplibre/package.json' // need to be checked
 
 function getVersion() {
   const tagVer = process.env.TAG_VERSION
   if (tagVer) {
     return tagVer.startsWith('v') ? tagVer.slice(1) : tagVer
-  } else {
+  }
+  else {
     return pkg.version
   }
 }

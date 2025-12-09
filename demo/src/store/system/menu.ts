@@ -110,7 +110,6 @@ export const useMenuStore = defineStore('menu', {
     },
     /**
      * @description 设置侧边栏菜单
-     * @param {object} state state
      * @param {Array} menu menu setting
      */
     asideSet(menu) {

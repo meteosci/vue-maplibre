@@ -6,23 +6,24 @@
  * @Description:
  * @FilePath: \vue-maplibre\build\modules.ts
  */
-import { rollup } from 'rollup'
+
+import type { OutputOptions } from 'rollup'
+import commonjs from '@rollup/plugin-commonjs'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import VueMacros from 'unplugin-vue-macros/rollup'
-import css from 'rollup-plugin-css-only'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
-import esbuild from 'rollup-plugin-esbuild'
 import glob from 'fast-glob'
-import { vmRoot, pkgRoot } from './utils/paths'
-import { alias } from './plugins/alias'
-import { generateExternal, writeBundles } from './utils/rollup'
-import { excludeFiles } from './utils/pkg'
+import { rollup } from 'rollup'
+import css from 'rollup-plugin-css-only'
+import esbuild from 'rollup-plugin-esbuild'
+import VueMacros from 'unplugin-vue-macros/rollup'
 import { buildConfigEntries, target } from './build-info'
-import type { OutputOptions } from 'rollup'
+import { alias } from './plugins/alias'
+import { pkgRoot, vmRoot } from './utils/paths'
+import { excludeFiles } from './utils/pkg'
+import { generateExternal, writeBundles } from './utils/rollup'
 
-export const buildModules = async () => {
+export async function buildModules() {
   const input = excludeFiles(
     await glob('**/*.{js,ts,vue}', {
       cwd: pkgRoot,
@@ -55,7 +56,7 @@ export const buildModules = async () => {
         loaders: {
           '.vue': 'ts'
         }
-      }),
+      })
       // filesize({ reporter })
     ],
     external: await generateExternal({ full: false }),

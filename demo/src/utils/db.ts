@@ -39,13 +39,14 @@ db.write()
 export default db
 
 /**
- * @description 检查路径是否存在 不存在的话初始化
- * @param {object} payload dbName {string} 数据库名称
- * @param {object} payload path {string} 路径
- * @param {object} payload user {Boolean} 区分用户
- * @param {object} payload validator {Function} 数据校验钩子 返回 true 表示验证通过
- * @param {object} payload defaultValue {*} 初始化默认值
- * @returns {string} 可以直接使用的路径
+ * Initializes a path in the database with default values if necessary.
+ * @param {object} param0
+ * @param {string} [param0.dbName] - The database name.
+ * @param {string} [param0.path] - The path to initialize.
+ * @param {boolean} [param0.user] - Whether to use user-specific storage.
+ * @param {function} [param0.validator] - Function to validate the value.
+ * @param {*} [param0.defaultValue] - Default value to set if validation fails.
+ * @returns {object} An object containing the target and lastKey.
  */
 export function pathInit({
   dbName = 'database',
@@ -86,10 +87,11 @@ export function pathInit({
 /**
  * @description 将数据存储到指定位置 | 路径不存在会自动初始化
  * @description 效果类似于取值 dbName.path = value
- * @param {object} payload dbName {String} 数据库名称
- * @param {object} payload path {String} 存储路径
- * @param {object} payload value {*} 需要存储的值
- * @param {object} payload user {Boolean} 是否区分用户
+ * @param {object} payload 参数对象
+ * @param {string} payload.dbName 数据库名称
+ * @param {string} payload.path 存储路径
+ * @param {*} payload.value 需要存储的值
+ * @param {boolean} payload.user 是否区分用户
  */
 export function dbSet({ dbName = 'database', path = '', value = '', user = false }) {
   const { target, lastKey } = pathInit({ dbName, path, user })
@@ -99,12 +101,13 @@ export function dbSet({ dbName = 'database', path = '', value = '', user = false
 }
 
 /**
- * @description 获取数据
- * @description 效果类似于取值 dbName.path || defaultValue
- * @param {object} payload dbName {String} 数据库名称
- * @param {object} payload path {String} 存储路径
- * @param {object} payload defaultValue {*} 取值失败的默认值
- * @param {object} payload user {Boolean} 是否区分用户
+ * Retrieves data from the database at the specified path.
+ * @param {object} param0
+ * @param {string} [param0.dbName] - The database name.
+ * @param {string} [param0.path] - The path to retrieve.
+ * @param {*} [param0.defaultValue] - Default value to return if the path doesn't exist.
+ * @param {boolean} [param0.user] - Whether to use user-specific storage.
+ * @returns {*} The value at the specified path or the default value.
  */
 export function dbGet({ dbName = 'database', path = '', defaultValue = '', user = false }) {
   const { target, lastKey } = pathInit({ dbName, path, user, defaultValue })
@@ -113,8 +116,14 @@ export function dbGet({ dbName = 'database', path = '', defaultValue = '', user 
 }
 
 /**
- * @description 获取存储数据库对象
- * @param {object} payload user {Boolean} 是否区分用户
+ * Retrieves or initializes a database value at the specified path.
+ * @param {object} param0
+ * @param {string} [param0.dbName] - The database name.
+ * @param {string} [param0.path] - The path to retrieve or initialize.
+ * @param {boolean} [param0.user] - Whether to use user-specific storage.
+ * @param {function} [param0.validator] - Function to validate the value.
+ * @param {*} [param0.defaultValue] - Default value to set if validation fails.
+ * @returns {*} The value at the specified path or the target object.
  */
 export function database({
   dbName = 'database',

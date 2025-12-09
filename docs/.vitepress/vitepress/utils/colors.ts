@@ -9,7 +9,6 @@ export function getCssVarName(namespace: string, type: string) {
 /**
  * get css var value by css var name
  * @param name
- * @returns
  */
 export function getCssVarValue(name: string) {
   const val = ref(

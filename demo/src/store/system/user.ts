@@ -24,7 +24,6 @@ export const useUserStore = defineStore('user', {
   actions: {
     /**
      * @description 设置用户数据
-     * @param {object} context
      * @param {*} info info
      */
     async set(info) {
@@ -41,7 +40,6 @@ export const useUserStore = defineStore('user', {
     },
     /**
      * @description 从数据库取用户数据
-     * @param {object} context
      */
     async load() {
       // store 赋值

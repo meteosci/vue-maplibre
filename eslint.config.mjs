@@ -47,7 +47,7 @@ export default antfu({
     '**/tests/**',
     'packages/*/es',
     'packages/*/lib',
-    'internal/',
+    'internal/obfuscator',
     'demo/src/assets/',
     '.github',
     'packages/theme-default/src/fonts',
@@ -80,7 +80,8 @@ export default antfu({
     'unused-imports/no-unused-vars': 'off',
     'no-console': 'off',
     'dot-notation': 'off',
-    'ts/explicit-function-return-type': 'off'
+    'ts/explicit-function-return-type': 'off',
+    'ts/no-use-before-define': 'off'
   }
 },
 // vue
@@ -97,6 +98,8 @@ export default antfu({
 {
   rules: {
     'style/semi': ['error', 'never'],
-    'style/comma-dangle': ['error', 'never']
+    'style/comma-dangle': ['error', 'never'],
+    'pnpm/json-enforce-catalog': 'off',
+    'yaml/sort-keys': 'off'
   }
 })

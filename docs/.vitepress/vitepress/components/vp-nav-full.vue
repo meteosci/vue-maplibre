@@ -9,6 +9,8 @@ defineProps<{
   fullScreen: boolean
 }>()
 
+defineEmits(['close'])
+
 const { lock, cleanup } = useLockScreen()
 const fullscreen = ref()
 </script>

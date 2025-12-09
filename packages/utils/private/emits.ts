@@ -12,25 +12,21 @@ export const commonEmits = {
   /**
    * Triggers before the maplibreObject is loaded.
    * @param instance
-   * @returns
    */
   beforeLoad: (instance: VmComponentInternalInstance) => true,
   /**
    * Triggers when the maplibreObject is successfully loaded.
    * @param readyObj
-   * @returns
    */
   ready: (readyObj: VmReadyObject) => true,
   /**
    * Triggers when the maplibreObject loading failed.
    * @param e
-   * @returns
    */
   unready: (e: any) => true,
   /**
    * Triggers when the maplibreObject is destroyed.
    * @param instance
-   * @returns
    */
   destroyed: (instance: VmComponentInternalInstance) => true
 }

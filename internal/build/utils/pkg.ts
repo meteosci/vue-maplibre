@@ -6,29 +6,29 @@
  * @Description:
  * @FilePath: \vue-maplibre\build\utils\pkg.ts
  */
+import type { ProjectManifest } from '@pnpm/types'
+import type { Module } from '../build-info'
 import { findWorkspacePackages } from '@pnpm/find-workspace-packages'
 import { buildConfig } from '../build-info'
 import { PKG_NAME, PKG_PREFIX } from './constants'
 import { projRoot } from './paths'
-import type { Module } from '../build-info'
-import type { ProjectManifest } from '@pnpm/types'
 
 export const getWorkspacePackages = () => findWorkspacePackages(projRoot)
-export const getWorkspaceNames = async (dir = projRoot) => {
+export async function getWorkspaceNames(dir = projRoot) {
   const pkgs = await findWorkspacePackages(projRoot)
   const result = pkgs
-    .filter(pkg => pkg.dir.startsWith(dir))
+    .filter(pkg => pkg.rootDir.startsWith(dir))
     .map(pkg => pkg.manifest.name)
     .filter((name): name is string => !!name)
   return result
 }
 
-export const getPackageManifest = (pkgPath: string) => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+export function getPackageManifest(pkgPath: string) {
+  // eslint-disable-next-line ts/no-require-imports
   return require(pkgPath) as ProjectManifest
 }
 
-export const getPackageDependencies = (pkgPath: string): Record<'dependencies' | 'peerDependencies', string[]> => {
+export function getPackageDependencies(pkgPath: string): Record<'dependencies' | 'peerDependencies', string[]> {
   const manifest = getPackageManifest(pkgPath)
   const { dependencies = {}, peerDependencies = {} } = manifest
 
@@ -39,7 +39,7 @@ export const getPackageDependencies = (pkgPath: string): Record<'dependencies' |
 }
 
 /** used for type generator */
-export const pathRewriter = (module: Module) => {
+export function pathRewriter(module: Module) {
   const config = buildConfig[module]
 
   return (id: string) => {
@@ -49,7 +49,7 @@ export const pathRewriter = (module: Module) => {
   }
 }
 
-export const excludeFiles = (files: string[]) => {
+export function excludeFiles(files: string[]) {
   const excludes = ['node_modules', 'test', 'mock', 'gulpfile', 'dist']
   return files.filter(path => !excludes.some(exclude => path.includes(exclude)))
 }

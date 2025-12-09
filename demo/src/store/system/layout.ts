@@ -39,7 +39,6 @@ export const useLayoutStore = defineStore('layout', {
   actions: {
     /**
      * 切换全局布局
-     * @param {*} state
      * @param {*} layoutOpts
      */
     toggleGlobalLayout(layoutOpts) {
@@ -50,7 +49,6 @@ export const useLayoutStore = defineStore('layout', {
     },
     /**
      * 切换 DynamicRender 页面布局
-     * @param {*} state
      * @param {*} layoutOpts
      */
     toggleDynamicRenderPageLayout(layoutOpts) {

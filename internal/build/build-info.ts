@@ -6,10 +6,10 @@
  * @Description:
  * @FilePath: \vue-maplibre\build\build-info.ts
  */
-import path from 'path'
-import { vmOutput } from './utils/paths'
-import { PKG_NAME } from './utils/constants'
 import type { ModuleFormat } from 'rollup'
+import path from 'node:path'
+import { PKG_NAME } from './utils/constants'
+import { vmOutput } from './utils/paths'
 
 export const modules = ['esm', 'cjs'] as const
 export type Module = typeof modules[number]

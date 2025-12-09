@@ -6,13 +6,14 @@
  * @Description:
  * @FilePath: \vue-maplibre\build\utils\process.ts
  */
-import { spawn } from 'child_process'
+import { spawn } from 'node:child_process'
+import process from 'node:process'
 import chalk from 'chalk'
 import consola from 'consola'
 import { projRoot } from './paths'
 
-export const run = async (command: string, cwd: string = projRoot) =>
-  new Promise<void>((resolve, reject) => {
+export async function run(command: string, cwd: string = projRoot) {
+  return new Promise<void>((resolve, reject) => {
     const [cmd, ...args] = command.split(' ')
     consola.info(`run: ${chalk.green(`${cmd} ${args.join(' ')}`)}`)
     const app = spawn(cmd, args, {
@@ -23,11 +24,13 @@ export const run = async (command: string, cwd: string = projRoot) =>
 
     const onProcessExit = () => app.kill('SIGHUP')
 
-    app.on('close', code => {
+    app.on('close', (code) => {
       process.removeListener('exit', onProcessExit)
 
-      if (code === 0) resolve()
+      if (code === 0)
+        resolve()
       else reject(new Error(`Command failed. \n Command: ${command} \n Code: ${code}`))
     })
     process.on('exit', onProcessExit)
   })
+}

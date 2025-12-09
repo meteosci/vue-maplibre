@@ -6,8 +6,8 @@
  * @Description:
  * @FilePath: \vue-maplibre\build\plugins\alias.ts
  */
-import { PKG_NAME, PKG_PREFIX } from '../utils/constants'
 import type { Plugin } from 'rollup'
+import { PKG_NAME, PKG_PREFIX } from '../utils/constants'
 
 export function alias(): Plugin {
   const themeDefault = 'theme-default'
@@ -17,7 +17,8 @@ export function alias(): Plugin {
   return {
     name: 'vue-maplibre-alias-plugin',
     resolveId(id) {
-      if (!id.startsWith(sourceThemeDefault)) return
+      if (!id.startsWith(sourceThemeDefault))
+        return
       return {
         id: id.replaceAll(sourceThemeDefault, bundleThemeDefault),
         external: 'absolute'

@@ -6,33 +6,35 @@
  * @Description:
  * @FilePath: \vue-maplibre\build\gulpfile.ts
  */
-import path from 'path'
-import { mkdir, copyFile } from 'fs/promises'
-import { copy } from 'fs-extra'
-import { series, parallel } from 'gulp'
-import { run } from './utils/process'
-import { runTask, withTaskName } from './utils/gulp'
-import { buildOutput, vmOutput, vmPackage, projRoot, vmRoot } from './utils/paths'
-import { buildConfig } from './build-info'
+
 import type { TaskFunction } from 'gulp'
 import type { Module } from './build-info'
+import { copyFile, mkdir } from 'node:fs/promises'
+import path from 'node:path'
+import { copy } from 'fs-extra'
+import { parallel, series } from 'gulp'
+import { buildConfig } from './build-info'
+import { runTask, withTaskName } from './utils/gulp'
+import { buildOutput, projRoot, vmOutput, vmPackage, vmRoot } from './utils/paths'
+import { run } from './utils/process'
 
-export const copyFiles = () =>
-  Promise.all([
+export function copyFiles() {
+  return Promise.all([
     copyFile(vmPackage, path.join(vmOutput, 'package.json')),
     copyFile(path.resolve(projRoot, 'README.md'), path.resolve(vmOutput, 'README.md')),
     copyFile(path.resolve(projRoot, 'typings/global.d.ts'), path.resolve(vmOutput, 'global.d.ts')),
     copyFile(path.resolve(vmRoot, 'package-publish.json'), path.resolve(vmOutput, 'package.json'))
   ])
+}
 
-export const copyTypesDefinitions: TaskFunction = done => {
+export const copyTypesDefinitions: TaskFunction = (done) => {
   const src = path.resolve(buildOutput, 'types', 'packages')
-  const copyTypes = (module: Module) => withTaskName(`copyTypes:${module}`, () => copy(src, buildConfig[module].output.path, { recursive: true }))
+  const copyTypes = (module: Module) => withTaskName(`copyTypes:${module}`, () => copy(src, buildConfig[module].output.path))
 
   return parallel(copyTypes('esm'), copyTypes('cjs'))(done)
 }
 
-export const copyFullStyle = async () => {
+export async function copyFullStyle() {
   await mkdir(path.resolve(vmOutput, 'dist'), { recursive: true })
   await copyFile(path.resolve(vmOutput, 'theme-default/index.css'), path.resolve(vmOutput, 'dist/index.css'))
 }
@@ -55,7 +57,7 @@ export default series(
   parallel(copyTypesDefinitions, copyFiles)
 ) as any
 
-export * from './types-definitions'
-export * from './modules'
 export * from './full-bundle'
+export * from './modules'
+export * from './types-definitions'
 // export * from './helper'

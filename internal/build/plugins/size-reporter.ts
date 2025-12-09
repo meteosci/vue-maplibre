@@ -6,10 +6,11 @@
  * @Description:
  * @FilePath: \vue-cesium@next\build\plugins\size-reporter.ts
  */
-import { cyan, bold, yellow, green } from 'chalk'
-import { command } from '../utils/log'
+
 import type { FileSizeReporter } from 'rollup-plugin-filesize'
+import chalk from 'chalk'
+import { command } from '../utils/log'
 
 export const reporter: FileSizeReporter = (opt, outputOptions, info) => {
-  return command(`${cyan(bold(info.fileName))}: bundle size ${yellow(info.bundleSize)} -> minified ${green(info.minSize)}`)
+  return command(`${chalk.cyan(chalk.bold(info.fileName))}: bundle size ${chalk.yellow(info.bundleSize)} -> minified ${chalk.green(info.minSize)}`)
 }

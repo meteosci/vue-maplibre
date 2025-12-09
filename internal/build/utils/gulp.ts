@@ -6,8 +6,8 @@
  * @Description:
  * @FilePath: \vue-maplibre\build\utils\gulp.ts
  */
-import { run } from './process'
 import type { TaskFunction } from 'gulp'
+import { run } from './process'
 
 export const withTaskName: any = <T extends TaskFunction>(name: string, fn: T) => Object.assign(fn, { displayName: name })
 

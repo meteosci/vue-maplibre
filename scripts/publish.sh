@@ -17,7 +17,7 @@ pnpm update:version
 pnpm build
 
 cd dist/vue-maplibre
-npm publish --tag beta --access public --registry ${REGISTRY}
+npm publish --tag latest --access public --registry ${REGISTRY}
 cd -
 
 echo "✅ Publish completed"

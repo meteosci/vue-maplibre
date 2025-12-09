@@ -39,7 +39,6 @@ export const useThemeStore = defineStore('theme', {
   actions: {
     /**
      * @description 将 vuex 中的主题应用到 dom
-     * @param {object} state state
      */
     dom() {
       const oldThemeClass = `theme-${oldThemeName}`
@@ -59,7 +58,7 @@ export const useThemeStore = defineStore('theme', {
     },
     /**
      * @description 激活一个主题
-     * @param {string} themeValue 需要激活的主题名称
+     * @param {string} themeName 需要激活的主题名称
      */
     async set(themeName) {
       oldThemeName = this.activeName

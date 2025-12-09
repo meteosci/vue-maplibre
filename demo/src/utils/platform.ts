@@ -45,7 +45,7 @@ export const enum EPlatformType {
 
 /**
  * 获取当前运行程序平台。
- * @returns
+ * @returns {*} 平台信息
  */
 export function getPlatformInfo() {
   const userAgent = navigator.userAgent

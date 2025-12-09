@@ -1,3 +1,8 @@
+trustPolicy: no-downgrade
+
+shellEmulator: true
+
+catalogMode: prefer
 
 packages:
   - 'packages/*'

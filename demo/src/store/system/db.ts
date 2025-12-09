@@ -19,13 +19,12 @@ export const useDBStore = defineStore('db', {
   // optional actions
   actions: {
     /**
-     * @description 将数据存储到指定位置 | 路径不存在会自动初始化
-     * @description 效果类似于取值 dbName.path = value
-     * @param {object} context
-     * @param {object} payload dbName {String} 数据库名称
-     * @param {object} payload path {String} 存储路径
-     * @param {object} payload value {*} 需要存储的值
-     * @param {object} payload user {Boolean} 是否区分用户
+     * @description 设置存储数据
+     * @param {object} param0
+     * @param {string} param0.dbName 数据库名称
+     * @param {string} param0.path 存储路径
+     * @param {*} param0.value 存储值
+     * @param {boolean} param0.user 是否区分用户
      */
     set({ dbName = 'database', path = '', value = '', user = false }) {
       dbSet({ dbName, path, value, user })
@@ -34,18 +33,18 @@ export const useDBStore = defineStore('db', {
      * @description 获取数据
      * @description 效果类似于取值 dbName.path || defaultValue
      * @param {object} context
-     * @param {object} payload dbName {String} 数据库名称
-     * @param {object} payload path {String} 存储路径
-     * @param {object} payload defaultValue {*} 取值失败的默认值
-     * @param {object} payload user {Boolean} 是否区分用户
+     * @param {string} context.dbName 数据库名称
+     * @param {string} context.path 存储路径
+     * @param {*} context.defaultValue 取值失败的默认值
+     * @param {boolean} context.user 是否区分用户
      */
     get({ dbName = 'database', path = '', defaultValue = '', user = false }) {
       return dbGet({ dbName, path, defaultValue, user })
     },
     /**
-     * @description 获取存储数据库对象
-     * @param {object} context
-     * @param {object} payload user {Boolean} 是否区分用户
+     * 获取存储数据库对象
+     * @param param0
+     * @param param0.user 是否区分用户
      */
     database({ user = false } = {}) {
       return getDatabase({
@@ -53,10 +52,11 @@ export const useDBStore = defineStore('db', {
         defaultValue: ''
       })
     },
+
     /**
-     * @description 清空存储数据库对象
-     * @param {object} context
-     * @param {object} payload user {Boolean} 是否区分用户
+     * 清空存储数据库对象
+     * @param param0
+     * @param param0.user 是否区分用户
      */
     databaseClear({ user = false } = {}) {
       return getDatabase({

@@ -27,7 +27,6 @@ const distBundle = path.resolve(vmOutput, 'theme-default')
 /**
  * compile theme-default scss & minify
  * not use sass.sync().on('error', sass.logError) to throw exception
- * @returns
  */
 function buildThemeChalk() {
   const sass = gulpSass(dartSass)
@@ -49,7 +48,6 @@ function buildThemeChalk() {
 
 /**
  * using `postcss` and `cssnano` to compress CSS
- * @returns
  */
 function compressWithCssnano() {
   const processor = postcss([

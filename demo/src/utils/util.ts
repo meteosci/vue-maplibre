@@ -61,8 +61,6 @@ export function randomLenNum(len, date) {
 /**
  *  将hex颜色转成rgb
  * @param hex
- * @param opacity
- * @returns
  */
 export function hexToRgb(hex: string) {
   return {
@@ -78,7 +76,6 @@ export function hexToRgb(hex: string) {
  * @param minValue
  * @param maxValue
  * @param key
- * @returns
  */
 export function filterDataByRange(data: any[], minValue, maxValue, key = 'value') {
   return data.filter(item => item[key] >= minValue && item[key] <= maxValue)

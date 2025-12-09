@@ -6,28 +6,28 @@
  * @Description:
  * @FilePath: \vue-maplibre\internal\build\full-bundle.ts
  */
-import path from 'path'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import { rollup } from 'rollup'
+import path from 'node:path'
 import commonjs from '@rollup/plugin-commonjs'
-import vue from '@vitejs/plugin-vue'
-import VueMacros from 'unplugin-vue-macros/rollup'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import esbuild, { minify as minifyPlugin } from 'rollup-plugin-esbuild'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
-import filesize from 'rollup-plugin-filesize'
-import { parallel } from 'gulp'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import glob from 'fast-glob'
+import { parallel } from 'gulp'
 import { camelCase, capitalize } from 'lodash'
+import { rollup } from 'rollup'
+import esbuild, { minify as minifyPlugin } from 'rollup-plugin-esbuild'
+// import filesize from 'rollup-plugin-filesize'
+// import { TaskFunction } from 'undertaker'
+import VueMacros from 'unplugin-vue-macros/rollup'
 import { version } from '../../packages/vue-maplibre/version'
-import { reporter } from './plugins/size-reporter'
-import { alias } from './plugins/alias'
-import { vmRoot, vmOutput, localeRoot } from './utils/paths'
-import { formatBundleFilename, generateExternal, writeBundles } from './utils/rollup'
-import { withTaskName } from './utils/gulp'
-import { PKG_BRAND_NAME, PKG_CAMELCASE_LOCAL_NAME, PKG_CAMELCASE_NAME } from './utils/constants'
 import { target } from './build-info'
-import { TaskFunction } from 'undertaker'
+import { alias } from './plugins/alias'
+// import { reporter } from './plugins/size-reporter'
+import { PKG_BRAND_NAME, PKG_CAMELCASE_LOCAL_NAME, PKG_CAMELCASE_NAME } from './utils/constants'
+import { withTaskName } from './utils/gulp'
+import { localeRoot, vmOutput, vmRoot } from './utils/paths'
+import { formatBundleFilename, generateExternal, writeBundles } from './utils/rollup'
 
 const banner = `/*! ${PKG_BRAND_NAME} v${version} */\n`
 
@@ -64,8 +64,8 @@ async function buildFullEntry(minify: boolean) {
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),
       // options
-      preventAssignment: true
-    }),
+      'preventAssignment': true
+    })
     // filesize()
   ]
 
@@ -91,9 +91,9 @@ async function buildFullEntry(minify: boolean) {
       exports: 'named',
       name: PKG_CAMELCASE_NAME,
       globals: {
-        vue: 'Vue',
+        'vue': 'Vue',
         'maplibre-gl': 'maplibregl',
-        three: 'THREE'
+        'three': 'THREE'
       },
       sourcemap: minify,
       banner
@@ -112,7 +112,7 @@ async function buildFullLocale(minify: boolean) {
     absolute: true
   })
   return Promise.all(
-    files.map(async file => {
+    files.map(async (file) => {
       const filename = path.basename(file, '.ts')
       const name = capitalize(camelCase(filename))
 
@@ -123,7 +123,7 @@ async function buildFullLocale(minify: boolean) {
             minify,
             sourceMap: minify,
             target
-          }),
+          })
           // filesize({ reporter })
         ]
       })

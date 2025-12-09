@@ -6,12 +6,13 @@
  * @Description:
  * @FilePath: \vue-maplibre\internal\build\utils\rollup.ts
  */
+
+import type { OutputOptions, RollupBuild } from 'rollup'
+import { PKG_NAME } from './constants'
 import { vmPackage } from './paths'
 import { getPackageDependencies } from './pkg'
-import { PKG_NAME } from './constants'
-import type { OutputOptions, RollupBuild } from 'rollup'
 
-export const generateExternal = async (options: { full: boolean }) => {
+export async function generateExternal(options: { full: boolean }) {
   const { dependencies, peerDependencies } = getPackageDependencies(vmPackage)
   return (id: string) => {
     const packages: string[] = ['vue', 'maplibre-gl', 'three', ...peerDependencies]

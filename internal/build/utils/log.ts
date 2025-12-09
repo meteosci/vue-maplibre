@@ -6,16 +6,15 @@
  * @Description:
  * @FilePath: \vue-maplibre\build\utils\log.ts
  */
-import process from 'process'
+import process from 'node:process'
 import chalk from 'chalk'
 import consola from 'consola'
 
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 const [command, info, error] = ['command', 'info', 'error'].map((symbol: string) => {
   return (msg: string) => `[${symbol}] ${msg}`
 })
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-const [group, endGroup] = ['group', 'endgroup'].map(symbol => {
+
+const [group, endGroup] = ['group', 'endgroup'].map((symbol) => {
   return (groupMsg: string) => `##[${symbol}] ${groupMsg}`
 })
 
@@ -40,4 +39,4 @@ export function errorAndExit(err: Error): never {
   process.exit(1)
 }
 
-export { command, info, error, group, endGroup }
+export { command, endGroup, error, group, info }
