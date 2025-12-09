@@ -1,1 +1,0 @@
-import{d as t,r as e,aq as s,M as c,N as m,_ as r}from"./framework.DcpHC_4N.js";const u=t({__name:"basic",setup(p){const o=e([108,32]),a=e(1);return(l,_)=>{const n=s("VmMap");return m(),c("div",{class:"map-demo-container"},[r(n,{"map-style":"https://vue-maplibre.meteosci.com/map/styleWan.json",center:o.value,zoom:a.value},null,8,["center","zoom"])])}}});export{u as _};
